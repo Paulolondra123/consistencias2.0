@@ -20,6 +20,7 @@ class AuthService {
       perfil: user.perfil,
       fecha_registro: user.fecha_registro,
       estado: user.estado,
+      distrito: user.distrito,
       isAuthenticated: true
     };
     return jwt.sign(payload, 'secretkey');

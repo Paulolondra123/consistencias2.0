@@ -1,7 +1,8 @@
 const express = require('express');
 //const AuthController = require('../controllers/authController');
 const router = express.Router();
-//const vendedorRoutes = require('./vendedorRoutes'); // Importa las rutas del vendedor
+const departamentalRoutes = require('./departamentalRoutes'); // Importa las rutas del vendedor
+const distritalRoutes = require('./distritalRoutes'); // Importa las rutas del vendedor
 
 // Ruta de inicio
 router.get('/', (req, res) => {
@@ -24,17 +25,17 @@ router.get('/Usuarios', (req, res) => {
 });
   
 // Ruta de medidas
-/* router.get('/Medidas', (req, res) => {
-    res.render('medidas',{title: 'Medidas🧱'});
+router.get('/Cyd', (req, res) => {
+    res.render('cyd',{title: 'Consistencias🧱'});
 });
 
 // Ruta de categorias
-router.get('/Categorias', (req, res) => {
-    res.render('categorias',{title: 'Categorias🐊'});
+router.get('/Bonozona', (req, res) => {
+    res.render('bonozona',{title: 'bonozona🐊'});
 });
 
 // Ruta de productos
-router.get('/Productos', (req, res) => {
+/*router.get('/Productos', (req, res) => {
     res.render('productos',{title: 'Productos📦'});
 });
 
@@ -68,8 +69,10 @@ router.get('/Nueva-compra', (req, res) => {
     res.render('compras',{title: 'Compras📝'});
 }); */
 
-// Usa las rutas específicas para el vendedor
-//router.use('/vendedor', vendedorRoutes);
+// Usa las rutas específicas para el departamental
+router.use('/departamental', departamentalRoutes);
 
+// Usa las rutas específicas para el vendedor
+router.use('/distrital', distritalRoutes);
 
 module.exports = router;

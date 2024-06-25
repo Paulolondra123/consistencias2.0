@@ -120,7 +120,7 @@ const verificarAutenticacion = async () => {
                     timer: 1500,
                     showConfirmButton: false
                 });
-                window.location.href = `${baseURL1}/distrital/usuarios`;
+                window.location.href = `${baseURL1}/distrital/cyd`;
             } else if (perfil === 'ADMINISTRADOR') {
                 await Swal.fire({
                     title: "Logueado correctamente!",
@@ -136,7 +136,7 @@ const verificarAutenticacion = async () => {
                     timer: 1500,
                     showConfirmButton: false
                 });
-                window.location.href = `${baseURL1}/departamental/usuarios`;
+                window.location.href = `${baseURL1}/departamental/cyd`;
             } else {
                 window.location.href = `${baseURL1}/login`;
             }

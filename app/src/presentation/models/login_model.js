@@ -39,7 +39,7 @@ const bcrypt = require('bcryptjs');
 
             // Consultar la base de datos para obtener el usuario
             const query = `
-                SELECT id_usuario, nombres, apellidos, perfil, usuario, contraseña, estado, fecha_registro, primerlogin 
+                SELECT id_usuario, nombres, apellidos, perfil, usuario, contraseña, estado, fecha_registro, primerlogin, distrito 
                 FROM usuario WHERE usuario = '${username}';
             `;
             // Ejecutar la consulta con parámetros
@@ -68,6 +68,7 @@ const bcrypt = require('bcryptjs');
                         perfil: usuario.perfil,
                         fecha_registro: usuario.fecha_registro,
                         primerlogin: usuario.primerlogin,
+                        distrito: usuario.distrito,
                         estado: usuario.estado,
                     };
                 }

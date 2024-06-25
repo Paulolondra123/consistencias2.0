@@ -78,6 +78,63 @@ function mayus(e) {
   e.value = e.value.toUpperCase();
 }
 //*********************************poner en mayuscula**********************************/
+const getAlldistrito = async () => {
+  try {
+    // Verificar si el token está presente en el localStorage
+    const token = localStorage.getItem("token");
+    if (!token) {
+      // Si el token no está presente, redirigir al usuario a la página de inicio de sesión
+      window.location.href = "http://127.0.0.1:5500/frond/login.html";
+      return; // Detener la ejecución del código
+    }
+    const response = await fetch("http://localhost:3009/DDE/distrito",{
+      method:"GET",
+      headers:{
+        Authorization: `Bearer ${token}`,
+      }
+    });
+    if (!response.ok) {
+      throw new Error("Error en la solicitud");
+    }
+    const result = await response.json();
+    //console.log(result.data)
+    if (result.error) {
+      console.error("Error:", result.message);
+      return [];
+    } else {
+      return result.data;
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
+    return [];
+  }
+};
+
+const populateSelect = (selectElement, options, valueFieldName, textFieldName) => {
+  selectElement.innerHTML = '<option value="">Seleccione una opción</option>';
+  options.forEach(option => {
+      const optionElement = document.createElement("option");
+      optionElement.value = option[valueFieldName];
+      optionElement.textContent = option[textFieldName];
+      selectElement.appendChild(optionElement);
+  });
+};
+
+const populateFormSelects = async () => {
+    const distritoSelect = document.getElementById("distrito");
+
+    const distrito = await getAlldistrito();
+
+    populateSelect(distritoSelect, distrito, "cod_dis", "distrito_descripcion");
+
+    // Inicializa Select2 en los selectores después de haber poblado las opciones
+    $(document).ready(function() {
+        $('#distrito').select2();
+    });
+};
+
+// Llama a esta función para poblar los select cuando la página se carga
+populateFormSelects();
 
 //***********************************crear usuario*************************************/
 const formAgregarUsuario = document.getElementById("form");

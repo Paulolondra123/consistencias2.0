@@ -61,12 +61,12 @@ class LoginController {
               fecha_registro: user.fecha_registro,
               username: user.usuario,
               estado: user.estado,
+              distrito: user.distrito,
               primerlogin: user.primerlogin,
               isAuthenticated: true // Agregar isAuthenticated al payload
           };
           const token = jwt.sign(tokenPayload, 'secretkey');
           console.log("Tipo de token:", typeof token); // Agregar este registro de consola
-
           /* // Establecer la sesión del usuario
           req.session.user = user;
           req.session.isAuthenticated = true; */

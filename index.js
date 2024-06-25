@@ -69,15 +69,15 @@ const indexRoutes = require('./app/src/presentation/routes/index')
 const authRoutes = require('./app/src/presentation/routes/authRoutes')
 const usuarioRoutes = require('./app/src/presentation/routes/usuarioRoutes')
 //const dashboardRoutes = require('./app/src/presentation/routes/dashboardRoutes')
-//const medidaRoutes = require('./app/src/presentation/routes/medidaRoutes')
-//const categoriaRoutes = require('./app/src/presentation/routes/categoriaRoutes')
+const cydRoutes = require('./app/src/presentation/routes/cydRoutes')
+const bonozonaRoutes = require('./app/src/presentation/routes/bonozonaRoutes')
 //const productosRoutes = require('./app/src/presentation/routes/productosRoutes')
 //const clienteRoutes = require('./app/src/presentation/routes/clienteRoutes')
 //const ventaRoutes = require('./app/src/presentation/routes/ventaRoutes')
 //const proveedorRoutes = require('./app/src/presentation/routes/proveedorRouter')
 //const compraRoutes = require('./app/src/presentation/routes/compraRoutes')
 const perfilRoutes = require('./app/src/presentation/routes/perfilRoutes')
-//const downloadpdf = require('./app/src/presentation/routes/imprimir')
+//const downloadpdf = require('./app/src/presentation/routes/pdfRoutes')
 
 
 
@@ -88,8 +88,8 @@ app.use(indexRoutes);
 app.use(authRoutes);
 app.use(usuarioRoutes,authMiddleware);
 //app.use(dashboardRoutes,authMiddleware);
-//app.use(medidaRoutes,authMiddleware);
-//app.use(categoriaRoutes,authMiddleware);
+app.use(cydRoutes,authMiddleware);
+app.use(bonozonaRoutes,authMiddleware);
 //app.use(productosRoutes,authMiddleware);
 //app.use(clienteRoutes,authMiddleware);
 //app.use(ventaRoutes,authMiddleware);
@@ -110,5 +110,5 @@ const PORT = process.env.PORT || 3000;
 // app.use('/La_holandesa/protected', authMiddleware, protectedRoutes);
 
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`Servidor corriendo en http://localhost:${PORT}/usuarios`);
 });
