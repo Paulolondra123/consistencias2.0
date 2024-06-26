@@ -8,6 +8,7 @@ const bcrypt = require('bcryptjs');
 const mssql = require('mssql');
 
 
+
 class Usersmodel {
   // Método para obtener todos los usuarios
   static async getAll() {
@@ -186,54 +187,6 @@ static async distrito() {
   }
 } 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  /* static async getAll() {
-    try {
-      const pool = await connectToPostgres();
-      if (!pool) {
-        throw new Error('Error al conectar con PostgreSQL');
-      }
-      const result = await pool.query('SELECT * FROM usuario');
-      await disconnectFromPostgres(pool);
-      //console.log(result.rows)
-      if (result.rows.length === 0) {
-        return { data: null, error: true, message: 'No hay usuarios registrados' };
-      }
-
-      //const rows = result.rows.map(row =>  {
-      //  return {...row, foto: row.foto? Buffer.from(row.foto).toString('base64') : null}
-      //}) 
-
-      //return { data: rows, error: false };
-
-      return { data: result.rows, error: false };
-    } catch (error) {
-      return { data: null, error: true, message: error.message };
-    }
-  } */
 }
 
 

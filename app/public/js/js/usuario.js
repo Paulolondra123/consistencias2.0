@@ -1,22 +1,14 @@
-const baseURL = 'http://localhost:3009';
-
-const obtenerTokenre = () => {
-  // Hacer una solicitud HTTP al servidor para obtener el token
-  const token = localStorage.getItem("token");
-  if (!token) {
-    // Si el token no está presente, redirigir al usuario a la página de inicio de sesión
-    window.location.href = `${baseURL}/login`;
-    return; // Detener la ejecución del código
-  }
-  return token;
-};
 // Función para obtener el token del servidor
 const obtenerToken = async () => {
   try {
-
-    const token = obtenerTokenre();
-
-    const respuesta = await fetch(`${baseURL}/usuario_aut`, {
+    // Hacer una solicitud HTTP al servidor para obtener el token
+    const token = localStorage.getItem("token");
+    if (!token) {
+      // Si el token no está presente, redirigir al usuario a la página de inicio de sesión
+      window.location.href = "http://localhost:3009/login";
+      return; // Detener la ejecución del código
+    }
+    const respuesta = await fetch('http://localhost:3009/usuario_aut', {
       method: 'GET',
       headers: {
         "Content-Type": "application/json",
@@ -73,21 +65,29 @@ obtenerToken();
 
 
 
+
+
 //*********************************poner en mayuscula**********************************/
 function mayus(e) {
   e.value = e.value.toUpperCase();
 }
 //*********************************poner en mayuscula**********************************/
+
+
+
+
+
+
 const getAlldistrito = async () => {
   try {
     // Verificar si el token está presente en el localStorage
     const token = localStorage.getItem("token");
     if (!token) {
       // Si el token no está presente, redirigir al usuario a la página de inicio de sesión
-      window.location.href = "http://127.0.0.1:5500/frond/login.html";
+      window.location.href = "http://localhost:3009/login";
       return; // Detener la ejecución del código
     }
-    const response = await fetch("http://localhost:3009/DDE/distrito",{
+    const response = await fetch("http://localhost:3009/distrito",{
       method:"GET",
       headers:{
         Authorization: `Bearer ${token}`,
@@ -136,6 +136,7 @@ const populateFormSelects = async () => {
 // Llama a esta función para poblar los select cuando la página se carga
 populateFormSelects();
 
+
 //***********************************crear usuario*************************************/
 const formAgregarUsuario = document.getElementById("form");
 
@@ -145,26 +146,22 @@ formAgregarUsuario.addEventListener("submit", async function (event) {
   // Obtener los valores del formulario, incluida la foto
   const nombres = document.getElementById("nombres").value;
   const apellidos = document.getElementById("apellidos").value;
-  //const foto = document.getElementById("foto").files[0];
-  const perfil = document.getElementById("perfil").value; // Nuevo campo de perfil
+  const perfil = document.getElementById("perfil").value; 
+  const distrito = document.getElementById("distrito").value; 
   const usuario = document.getElementById("usuario").value;
   const contraseña = document.getElementById("contraseña").value;
 
-  // Crear un objeto FormData para enviar datos de formulario, incluida la foto
-  /* const formData = new FormData();
-  formData.append("nombres", nombres);
-  formData.append("apellidos", apellidos);
-  //formData.append("foto", foto); // Agregar la foto al FormData
-  formData.append("perfil", perfil);
-  formData.append("usuario", usuario);
-  formData.append("password", contraseña); */
-
   try {
     // Verificar si el token está presente en el localStorage
-    const token = obtenerTokenre();
+    const token = localStorage.getItem("token");
+    if (!token) {
+      // Si el token no está presente, redirigir al usuario a la página de inicio de sesión
+      window.location.href = "http://localhost:3009/login";
+      return; // Detener la ejecución del código
+    }
     // Enviar los datos al servidor para crear el nuevo usuario
     const response = await fetch(
-      `${baseURL}/create_users`,
+      "http://localhost:3009/create_users",
       {
         method: "POST",
         headers: {
@@ -176,6 +173,7 @@ formAgregarUsuario.addEventListener("submit", async function (event) {
                 nombres,
                 apellidos,
                 perfil,
+                distrito,
                 usuario,
                 contraseña
             }),
@@ -232,6 +230,7 @@ const Users = ({
   nombres,
   apellidos,
   perfil,
+  distrito,
   usuario,
   fecha_registro,
   estado,
@@ -250,15 +249,6 @@ const Users = ({
     estado === true ? "btn btn-outline-success" : "btn btn-outline-danger";
   const buttontxt = estado === true ? "SI" : "NO";
 
-  // Mostrar la contraseña como asteriscos
-  /* const maskedPassword = contraseña.replace(/./g, '*'); */
-  // Mostrar solo los últimos 4 caracteres de la contraseña cifrada
-  /* const maskedPassword = `******${contraseña.slice(-4)}`; */
-  // Mostrar la contraseña cifrada como asteriscos
-  /* const maskedPassword = '*'.repeat(contraseña.length); */
-  // Mostrar los primeros 2 y últimos 2 caracteres de la contraseña cifrada
-  /* const maskedPassword = `${contraseña.slice(0, 2)}..${contraseña.slice(-2)}`; */
-  /* <!--<td style="width:10%;"><img src="data:image/jpeg;base64,${foto}" class="img-responsive img-fluid" alt="Responsive image"></td>--> */
   return `
             <tr id="user-row-${id_usuario}">  <!-- Agregar un ID único para la fila --> 
                 <td>${id_usuario}</td>
@@ -266,6 +256,7 @@ const Users = ({
                 <td>${apellidos}</td>
                 <td>${usuario}</td>
                 <td>${perfil}</td>
+                <td>${distrito}</td>
                 <td>${formattedDate}</td>
                 <td>
                     <div class="container-btn-state">
@@ -290,18 +281,6 @@ const Users = ({
     `;
 };
 
-/* const render = (data) => {
-    const filteredUsers = data.filter(user => user.estado == true);
-    const sortedUsers = filteredUsers.sort((a, b) => a.id_usuario - b.id_usuario);
-  
-    if (Array.isArray(sortedUsers) && sortedUsers.length > 0) {
-      const cardsHTML = sortedUsers.map(item => Users(item)).join('');
-      paginaUsers.innerHTML = cardsHTML;
-    } else {
-      paginaUsers.innerHTML = '<tr><td colspan="8">NO SE ENCONTRARON USUARIOS.</td></tr>';
-    }
-  }; */
-
 const render = (data) => {
   const sortedUsers = data.sort((a, b) => {
     // Si a está habilitado y b no, a debe ir antes que b
@@ -323,40 +302,52 @@ const render = (data) => {
     // Verificar si la tabla ya ha sido inicializada
     if (!$.fn.DataTable.isDataTable("#myTable")) {
       // Si la tabla no ha sido inicializada, inicializar DataTables
-      $("#myTable").DataTable({
-        language: {
-          // Configuración del idioma
-          decimal: "",
-          emptyTable: "No hay información",
-          info: "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-          infoEmpty: "Mostrando 0 to 0 of 0 Entradas",
-          infoFiltered: "(Filtrado de _MAX_ total entradas)",
-          infoPostFix: "",
-          thousands: ",",
-          lengthMenu: "Mostrar _MENU_ Entradas",
-          loadingRecords: "Cargando...",
-          processing: "Procesando...",
-          search: "Buscar:",
-          zeroRecords: "Sin resultados encontrados",
-          paginate: {
-            first: "Primero",
-            last: "Ultimo",
-            next: ">",
-            previous: "<",
+      $(document).ready(function() {
+        // Inicializar DataTables
+        var table = $('#myTable').DataTable({
+          language: {
+            decimal: "",
+            emptyTable: "No hay información",
+            info: "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+            infoEmpty: "Mostrando 0 to 0 of 0 Entradas",
+            infoFiltered: "(Filtrado de _MAX_ total entradas)",
+            infoPostFix: "",
+            thousands: ",",
+            lengthMenu: "Mostrar _MENU_ Entradas",
+            loadingRecords: "Cargando...",
+            processing: "Procesando...",
+            search: "Buscar:",
+            zeroRecords: "Sin resultados encontrados",
+            paginate: {
+              first: "Primero",
+              last: "Ultimo",
+              next: ">",
+              previous: "<"
+            }
           },
-        },
-        lengthMenu: [
-          [5, 10, 25, 50, -1],
-          [5, 10, 25, 50, "Todos"],
-        ], // Opciones de longitud de página
-        pageLength: 5, // Mostrar 5 filas por página de manera predeterminada
-        responsive: true,
-        autoWidth: true,
-        autoWidth: true,
-        order: [], // No ordenar ninguna columna al inicio
-        //order: [[0, 'desc']], // Ordenar la primera columna (columna del ID) de forma descendente al inicio
+          lengthMenu: [
+            [5, 10, 25, 50, -1],
+            [5, 10, 25, 50, "Todos"]
+          ],
+          pageLength: 5,
+          responsive: true,
+          autoWidth: true,
+          order: [],
+          searching: true // Deshabilitar el buscador global
+        });
+  
+        // Buscador por nombre
+        //$('#nombreBuscador').on('keyup', function() {
+        //  table.column(1).search(this.value).draw();
+        //});
+  
+        // Buscador por perfil
+        //$('#perfilBuscador').on('keyup', function() {
+        //  table.column(4).search(this.value).draw();
+        //});
       });
     }
+  
   } else {
     paginaUsers.innerHTML =
       '<tr><td colspan="8">NO SE ENCONTRARON USUARIOS.</td></tr>';
@@ -366,9 +357,13 @@ const render = (data) => {
 const getAll = async () => {
   try {
     // Verificar si el token está presente en el localStorage
-    const token = obtenerTokenre();
-
-    const response = await fetch(`${baseURL}/Users`, {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      // Si el token no está presente, redirigir al usuario a la página de inicio de sesión
+      window.location.href = "http://localhost:3009/login";
+      return; // Detener la ejecución del código
+    }
+    const response = await fetch("http://localhost:3009/Users", {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -438,7 +433,11 @@ const toggleEditMode = (id_usuario) => {
   }
 };
 
-//*****************************editar usuario y guardar********************************/
+
+
+
+
+//*****************************EDITAR USUARIO Y GUARDAR********************************/
 const editUser = (id_usuario) => {
   const row = document.getElementById(`user-row-${id_usuario}`);
   const cells = row.getElementsByTagName("td");
@@ -509,9 +508,14 @@ const saveChanges = async (id_usuario, valoresOriginales) => {
     });
     if (isConfirmed) {
       // Verificar si el token está presente en el localStorage
-      const token = obtenerTokenre();
+      const token = localStorage.getItem("token");
+      if (!token) {
+        // Si el token no está presente, redirigir al usuario a la página de inicio de sesión
+        window.location.href = "http://localhost:3009/login";
+        return; // Detener la ejecución del código
+      }
       const response = await fetch(
-        `${baseURL}/Users/${id_usuario}`,
+        `http://localhost:3009/Users/${id_usuario}`,
         {
           method: "PUT",
           headers: {
@@ -574,15 +578,21 @@ const saveChanges = async (id_usuario, valoresOriginales) => {
     getAll();
   }
 };
-//*****************************editar usuario y guardar********************************/
+//*****************************EDITAR USUARIO Y GUARDAR********************************/
 
-//*******************************inavilitar, habilitar*********************************/
+
+
+
+
+
+
+//*******************************INHABILITAR, HABILITAR*********************************/
 const changeState = async (userId, currentState) => {
   try {
     let newState = true;
     let buttonText = "Habilitar";
-    if (currentState == true) {
-      newState = false;
+    if (currentState == 1) {
+      newState = 0;
       buttonText = "Inhabilitar";
     }
     // Mostrar el SweetAlert2 antes de cambiar el estado
@@ -599,9 +609,14 @@ const changeState = async (userId, currentState) => {
 
     if (isConfirmed) {
       // Verificar si el token está presente en el localStorage
-      const token = obtenerTokenre();
+      const token = localStorage.getItem("token");
+      if (!token) {
+        // Si el token no está presente, redirigir al usuario a la página de inicio de sesión
+        window.location.href = "http://localhost:3009/login";
+        return; // Detener la ejecución del código
+      }
       const response = await fetch(
-        `${baseURL}/Users/${userId}/state`,
+        `http://localhost:3009/Users/${userId}/state`,
         {
           method: "PUT",
           headers: {
@@ -653,9 +668,13 @@ const changeState = async (userId, currentState) => {
   }
 };
 
-//*******************************inavilitar, habilitar*********************************/
+//*******************************INHABILITAR, HABILITAR*********************************/
 
-//*************************************eliminar**************************************/
+
+
+
+
+//*************************************ELIIMINAR**************************************/
 const deleteUser = async (userId) => {
   try {
     // Mostrar el SweetAlert2 antes de eliminar el usuario
@@ -672,9 +691,14 @@ const deleteUser = async (userId) => {
 
     if (isConfirmed) {
       // Verificar si el token está presente en el localStorage
-      const token = obtenerTokenre();
+      const token = localStorage.getItem("token");
+      if (!token) {
+        // Si el token no está presente, redirigir al usuario a la página de inicio de sesión
+        window.location.href = "http://localhost:3009/login";
+        return; // Detener la ejecución del código
+      }
       const response = await fetch(
-        `${baseURL}/Users_delete/${userId}`,
+        `http://localhost:3009/Users_delete/${userId}`,
         {
           method: "DELETE",
           headers: {
@@ -727,135 +751,6 @@ const deleteUser = async (userId) => {
     getAll(); // Función para actualizar la tabla
   }
 };
-//*************************************eliminar**************************************/
+//*************************************ELIMINAR**************************************/
 
 getAll();
-
-
-
-
-
-
-
-
-
-
-
-
-  //*************************************notificaciones**************************************/
-  
-  const getAllProducto = async () => {
-    try {
-        // Verificar si el token está presente en el localStorage
-        const token = obtenerTokenre();
-        const response = await fetch(`${baseURL}/productos_stock`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            }
-        });
-        if (!response.ok) {
-            throw new Error("Error en la solicitud");
-        }
-        const result = await response.json();
-        //console.log(result.data)
-        if (result.error) {
-            console.error("Error:", result.message);
-            return [];
-        } else {
-            return result.data;
-        }
-    } catch (error) {
-        console.error("Error:", error.message);
-        return [];
-    }
-};
-  
-document.addEventListener('DOMContentLoaded', async (event) => {
-  const notificationBadge = document.getElementById('notification-badge');
-  const notificationLink = document.getElementById('notification-link');
-  const notificationBell = document.getElementById('notification-bell');
-  const notificationContent = document.getElementById('notification-content');
-
-  function showNotificationBadge() {
-    notificationBadge.style.display = 'block';
-  }
-
-  function hideNotificationBadge() {
-    notificationBadge.style.display = 'none';
-  }
-
-  const productos = await getAllProducto();
-  const productosBajoStock = productos.filter(producto => producto.stock < 5);
-
-  if (productosBajoStock.length > 0) {
-    showNotificationBadge();
-    notificationBell.classList.add('shake');
-    notificationContent.innerHTML = ''; // Limpiar el contenido de notificaciones
-
-    const notificationTimes = JSON.parse(localStorage.getItem('notificationTimes')) || {};
-
-    productosBajoStock.forEach(producto => {
-      if (!notificationTimes[producto.id_producto]) {
-        notificationTimes[producto.id_producto] = new Date().toISOString();
-      }
-    });
-
-    localStorage.setItem('notificationTimes', JSON.stringify(notificationTimes));
-
-    const calculateTimeElapsed = (startTime) => {
-      const currentTime = new Date();
-      const startTimeDate = new Date(startTime);
-      const diffTime = Math.abs(currentTime - startTimeDate);
-      const diffMinutes = Math.floor(diffTime / (1000 * 60));
-      const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
-      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-
-      if (diffDays > 0) {
-        return `Hace ${diffDays} dia${diffDays > 1 ? 's' : ''}`;
-      } else if (diffHours > 0) {
-        return `Hace ${diffHours} hora${diffHours > 1 ? 's' : ''}`;
-      } else {
-        return `Hace ${diffMinutes} minuto${diffMinutes > 1 ? 's' : ''}`;
-      }
-    };
-
-    productosBajoStock.forEach(producto => {
-      const notificationItem = document.createElement('a');
-      notificationItem.href = "/productos";
-      notificationItem.className = "dropdown-item";
-      const timeElapsed = document.createElement('small');
-
-      timeElapsed.textContent = calculateTimeElapsed(notificationTimes[producto.id_producto]);
-      setInterval(() => {
-        timeElapsed.textContent = calculateTimeElapsed(notificationTimes[producto.id_producto]);
-      }, 60000); // Actualizar cada minuto
-
-      notificationItem.innerHTML = `
-        <h6 class="fw-normal mb-0">${producto.nombre_producto}: <br> ${producto.stock} en stock</h6>
-      `;
-      notificationItem.appendChild(timeElapsed);
-      notificationContent.appendChild(notificationItem);
-
-      const divider = document.createElement('hr');
-      divider.className = "dropdown-divider";
-      notificationContent.appendChild(divider);
-    });
-
-    /* const seeAllItem = document.createElement('a');
-    seeAllItem.href = "#";
-    seeAllItem.className = "dropdown-item text-center";
-    seeAllItem.textContent = "See all notifications";
-    notificationContent.appendChild(seeAllItem); */
-  } else {
-    localStorage.removeItem('notificationTime');
-    hideNotificationBadge();
-    notificationBell.classList.remove('shake');
-  }
-
-  notificationLink.addEventListener('click', () => {
-    notificationBell.classList.remove('shake');
-    hideNotificationBadge();
-  });
-});
-
-  //*************************************notificaciones**************************************/

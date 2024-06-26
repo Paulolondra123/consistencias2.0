@@ -34,41 +34,12 @@
                   <div class="row mb-3">
                     <div class="col-md-3 mb-3">
                       <label for="inputNombre" class="form-label">Distrito:</label>
-                      <select class="form-select" id="distrito" required>
+                      <select class="form-select form-select-sm mb-3" id="distrito" required>
                       </select>
                     </div>
                     <div class="col-md-2 mb-3">
                       <label for="inputGestion" class="form-label">Gestion:</label>
-                      <select class="form-select" id="gestion">
-                        <option value="2011">2011</option>
-                        <option value="1998">2011</option>
-                        <option value="1999">2011</option>
-                        <option value="2000">2011</option>
-                        <option value="2001">2011</option>
-                        <option value="2002">2011</option>
-                        <option value="2003">2011</option>
-                        <option value="2004">2011</option>
-                        <option value="2005">2011</option>
-                        <option value="2006">2011</option>
-                        <option value="2007">2011</option>
-                        <option value="2008">2008</option>
-                        <option value="2009">2009</option>
-                        <option value="2010">2010</option>
-                        <option value="2011">2011</option>
-                        <option value="2012">2012</option>
-                        <option value="2013">2013</option>
-                        <option value="2014">2014</option>
-                        <option value="2015">2015</option>
-                        <option value="2016">2016</option>
-                        <option value="2017">2017</option>
-                        <option value="2018">2018</option>
-                        <option value="2019">2019</option>
-                        <option value="2020">2020</option>
-                        <option value="2021">2021</option>
-                        <option value="2022">2022</option>
-                        <option value="2023">2023</option>
-                        <option value="2024">2024</option>
-                      </select>
+                      <input type="number" class="form-control" id="gestion">
                     </div>
                     <div class="col-md-2 mb-3">
                       <label for="inputApellido" class="form-label">Mes:</label>
@@ -159,7 +130,40 @@
     </div>
     <!-- Content Padre End -->
     <%- include('partials/scripts/scripts') %>
-    
+    <script>
+      // JavaScript para mostrar/ocultar el formulario
+      document.addEventListener("DOMContentLoaded", function () {
+        const btnAgregarUsuario = document.querySelector("#btnAgregarUsuario");
+        const formAgregarUsuario = document.querySelector("#myForm");
+        const contenidoPadre = document.querySelector(".padre");
+
+        btnAgregarUsuario.addEventListener("click", function (event) {
+          event.stopPropagation(); // Detiene la propagación del evento
+          formAgregarUsuario.classList.add("visuali"); // Muestra el formulario con animación
+          contenidoPadre.classList.add("blur"); // Aplica el efecto de desenfoque al contenedor padre
+        });
+
+        formAgregarUsuario.addEventListener("submit", function (event) {
+          event.stopPropagation(); // Detiene la propagación del evento
+          formAgregarUsuario.classList.remove("visuali"); // Oculta el formulario después de enviarlo
+          contenidoPadre.classList.remove("blur"); // Elimina el efecto de desenfoque del contenedor padre
+          // Aquí puedes agregar código para manejar el envío del formulario
+        });
+
+        window.addEventListener("click", function (event) {
+          if (
+            !event.target.matches("#btnAgregarUsuario") &&
+            !formAgregarUsuario.contains(event.target) &&
+            !event.target.closest(".select2-container")
+          ) {
+            if (formAgregarUsuario.classList.contains("visuali")) {
+              formAgregarUsuario.classList.remove("visuali"); // Quita la clase para ocultar el formulario
+              contenidoPadre.classList.remove("blur"); // Elimina el efecto de desenfoque del contenedor padre
+            }
+          }
+        });
+      });
+    </script>
     <script src="/js/bonozona.js"></script>
 </body>
 

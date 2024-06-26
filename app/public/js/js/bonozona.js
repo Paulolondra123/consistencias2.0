@@ -1,4 +1,5 @@
-let datosUsuario = null
+let datosUsuario = null;
+let coddis = null;
 
 // Función para obtener el token del servidor
 const obtenerToken = async () => {
@@ -7,7 +8,7 @@ const obtenerToken = async () => {
       const token = localStorage.getItem("token");
       if (!token) {
         // Si el token no está presente, redirigir al usuario a la página de inicio de sesión
-        window.location.href = "http://localhost:3009/login.html";
+        window.location.href = "http://localhost:3009/login";
         return; // Detener la ejecución del código
       }
       const respuesta = await fetch('http://localhost:3009/usuario_aut', {
@@ -81,7 +82,7 @@ const obtenerToken = async () => {
       const token = localStorage.getItem("token");
       if (!token) {
         // Si el token no está presente, redirigir al usuario a la página de inicio de sesión
-        window.location.href = "http://localhost:3009/login.html";
+        window.location.href = "http://localhost:3009/login";
         return; // Detener la ejecución del código
       }
       const response = await fetch("http://localhost:3009/distrito",{
@@ -147,38 +148,45 @@ const obtenerToken = async () => {
         optionElement.textContent = option[textFieldName];
         selectElement.appendChild(optionElement);
     });
-  };
-  
-  const populateFormSelects = async () => {
-      const distritoSelect = document.getElementById("distrito");
-      //const gestionSelect = document.getElementById("gestion");
-  
-      const distrito = await getAlldistrito();
-      //const gestion = await getAllgestion();
-  
-      populateSelect(distritoSelect, distrito, "cod_dis", "distrito_descripcion");
-      //populateSelect(gestionSelect, gestion,"gestion", "gestion");
-  
-      // Seleccionar automáticamente el distrito si datosUsuario está disponible y cod_dis no es 700
-      if (datosUsuario) {
-        const userDistrito = datosUsuario.distrito;
-        if (userDistrito !== 700) {
-            distritoSelect.value = userDistrito;
-            distritoSelect.disabled = true; // Bloquear el select si distrito no es 700
+};
+
+const initializeSelect2 = () => {
+    $('#distrito').select2({ width: 'resolve' });
+};
+
+const adjustSelect2Width = () => {
+    $('#distrito').select2('destroy').select2({ width: '100%' });
+};
+
+const populateFormSelects = async () => {
+    const distritoSelect = document.getElementById("distrito");
+
+    try {
+        const distrito = await getAlldistrito();
+
+        populateSelect(distritoSelect, distrito, "cod_dis", "distrito_descripcion");
+
+        // Seleccionar automáticamente el distrito si datosUsuario está disponible y cod_dis no es 700
+        if (datosUsuario) {
+            const userDistrito = datosUsuario.distrito;
+            if (userDistrito !== 700) {
+                distritoSelect.value = userDistrito;
+                distritoSelect.disabled = true; // Bloquear el select si distrito no es 700
+            }
         }
-      }
 
-      // Inicializa Select2 en los selectores después de haber poblado las opciones
-      $(document).ready(function() {
-          $('#distrito').select2();
-          //$('#gestion').select2();
-      });
-  };
-  
-  // Llama a esta función para poblar los select cuando la página se carga
-  populateFormSelects();
+        // Inicializa Select2 después de haber poblado las opciones
+        initializeSelect2();
 
+        // Ajustar Select2 al cambiar el tamaño de la ventana
+        window.addEventListener('resize', adjustSelect2Width);
+    } catch (error) {
+        console.error("Error al poblar los select:", error);
+    }
+};
 
+// Llama a esta función para poblar los select cuando la página se carga
+document.addEventListener('DOMContentLoaded', populateFormSelects);
 
 
 
@@ -187,7 +195,8 @@ const obtenerToken = async () => {
 
   document.getElementById("formbuscar").addEventListener("submit", async function (event) {
     event.preventDefault(); // Evitar que se recargue la página al enviar el formulario
-  
+    
+    coddis = null;
     // Obtener los valores del formulario
     const distrito = document.getElementById("distrito").value;
     const gestion = document.getElementById("gestion").value;
@@ -210,8 +219,8 @@ const obtenerToken = async () => {
     const distrito = document.getElementById("distrito").value;
     const gestion = document.getElementById("gestion").value;
     const mes = document.getElementById("mes").value;
-    const coddis = document.getElementById("coddis").value;
-  
+    coddis = document.getElementById("coddis").value;
+
     // Validar campos
     if (!distrito || !gestion || !mes || !coddis) {
       showWarningToast('Por favor, complete todos los campos requeridos');
@@ -370,7 +379,8 @@ const obtenerToken = async () => {
         datosTabla.push(rowData);
     }
 
-    try {
+    if (!coddis) {
+      try {
         const response = await fetch('http://localhost:3009/pdf', {
             method: 'POST',
             headers: {
@@ -399,4 +409,36 @@ const obtenerToken = async () => {
         console.error('Error:', error.message);
         alert('Error al generar el PDF');
     }
+    } else {
+      try {
+        const response = await fetch('http://localhost:3009/pdfmaestros', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ datosTabla }) // Enviar datos de la tabla
+        });
+
+        if (!response.ok) {
+            throw new Error('Error en la solicitud');
+        }
+
+        const blob = await response.blob();
+
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = 'reporte.pdf';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+
+    } catch (error) {
+        console.error('Error:', error.message);
+        alert('Error al generar el PDF');
+    }
+    }
+    
 });
