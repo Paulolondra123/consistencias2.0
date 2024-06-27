@@ -148,16 +148,16 @@ input[readonly] {
 
 /* Estilos para el cuadro de selección */
 .select2-container .select2-selection {
-    background-color: black; /* Cambia el color de fondo */
-    border-color: #000000; /* Cambia el color del borde */
-    color: #333; /* Cambia el color del texto */
+    background-color: var(--white); /* Cambia el color de fondo */
+    border-color: var(--gris-claro); /* Cambia el color del borde */
+    color: #000; /* Cambia el color del texto */
   }
   
   /* Estilos para las opciones del menú desplegable */
   .select2-container .select2-dropdown {
-    background-color: black; /* Cambia el color de fondo */
-    border-color: #ccc; /* Cambia el color del borde */
-    color: #5a5959; /* Cambia el color del texto */
+    background-color: var(--white); /* Cambia el color de fondo */
+    border-color: var(--gris-claro); /* Cambia el color del borde */
+    color: #000; /* Cambia el color del texto */
   }
 body * {
     font-size: 15px; /* Cambia el tamaño del texto y de todos los elementos dentro del body */

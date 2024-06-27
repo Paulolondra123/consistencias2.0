@@ -18,94 +18,78 @@
     <div class="container-fluid position-relative d-flex p-0 padre">
         <%- include('partials/navegacion/sidebar') %>
             <!-- Content Start -->
-            <div class="content position-relative">
+            <div class="content position-relative bg-white">
                 <%- include('partials/navegacion/navbar') %>
 
                     <!-- Chart Start -->
-        <div class="container-fluid pt-4 px-4" id="chart">
-            <div class="row g-4 mb-4">
-              <div class="bg-secondary rounded p-4 col-12">
+        <div class="container-fluid pt-0 px-4 d-flex " id="chart">
+            <div class="row g-4 col-md-6">
+              <div class="text-dark rounded p-4 ">
                 <!-- Top div with title and button -->
-                <div class="d-flex align-items-center mb-4">
-                  <h6 class="mb-0">    </h6>
+                <div
+                  class="d-flex align-items-center justify-content-between mb-4"
+                >
+                  <h6 class="mb-0 font-title text-dark">Bono zona</h6>
                 </div>
                 <!-- Responsive Horizontal Form -->
                 <form id="formbuscar">
-                  <div class="row mb-3">
-                    <div class="col-md-3 mb-3">
-                      <label for="inputNombre" class="form-label">Distrito:</label>
-                      <select class="form-select form-select-sm mb-3" id="distrito" required>
-                      </select>
+                  <div class="row ">
+                    <div class="col-md-12 mb-3">
+                      <div class="">
+                        <label for="inputNombre" class="form-label">DISTRITO:</label>
+                        <select class="form-select mb-3" id="distrito" required>
+                        </select>
+                      </div>
                     </div>
-                    <div class="col-md-2 mb-3">
-                      <label for="inputGestion" class="form-label">Gestion:</label>
-                      <input type="number" class="form-control" id="gestion">
-                    </div>
-                    <div class="col-md-2 mb-3">
-                      <label for="inputApellido" class="form-label">Mes:</label>
-                      <select class="form-select" id="mes">
-                        <option value="1">Enero</option>
-                        <option value="2">Febrero</option>
-                        <option value="3">Marzo</option>
-                        <option value="4">Abril</option>
-                        <option value="5">Mayo</option>
-                        <option value="6">Juni</option>
-                        <option value="7">Julio</option>
-                        <option value="8">Agosto</option>
-                        <option value="9">Septiembre</option>
-                        <option value="10">Octubre</option>
-                        <option value="11">Noviembre</option>
-                        <option value="12">Diciembre</option>
-                      </select>
+                    <div class="d-flex justify-content-between col-md-12">
+                      <div class="col-md-5 mb-3">
+                          <label for="inputGestion" class="form-label">GESTION:</label>
+                          <select type="number" class="form-control bg-claro-gris" id="gestion">
+                          </select>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                          <label for="inputApellido" class="form-label">MES:</label>
+                          <select class="form-select text-dark" id="mes">
+                          </select>
+                      </div>
                     </div>
                     <div class="col-md-3 mb-3 d-flex align-items-end">
-                      <button type="submit" class="btn btn-primary col-md-6">Buscar</button>
+                      <button type="submit" class="btn btn-primary text-white ">Buscar</button>
                     </div>
                   </div>
                 </form>
                 <div class="row mb-3">
                   <div class="row mb-3"></div>
-                    <div class="col-md-6 mb-3 align-items-end">
-                      <label for="nombres" class="form-label">BUASCAR MAESTROS CON BONO ZONA</label>
-                      <input type="text" class="form-control col-md-5" placeholder="CODIGO SIE" id="coddis" required>
+                    <div class="col-md-9 mb-3 align-items-end">
+                      <label for="nombres" class="form-label">BUSCAR MAESTROS CON BONO ZONA</label>
+                      <input type="text" class="form-control col-md-6 bg-claro-gris" placeholder="CODIGO SIE" id="coddis" required>
                     </div>
-                    <form id="buscarmaestros" class="col-md-6 mb-3 align-items-end d-flex">
-                      <button type="submit" class="btn btn-primary col-md-3">Buscar</button>
+                    <form id="buscarmaestros" class="col-md-3 mb-3 align-items-end d-flex">
+                      <button type="submit" class="btn btn-primary col-md-12 text-white">Buscar</button>
                     </form>
                   </div>
-                  <form class="col-md-12 mb-3 align-items-end d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary col-md-2" id="imprimir" style="display: none;">Descargar</button>
-                  </form>
                 </div>
               </div>
+              <div class="col-md-6">
+                <form class="col-md-12 mb-3 d-flex justify-content-start align-items-start">
+                  <button type="submit" class="btn btn-primary col-md-2" id="imprimir" style="display: none;">PDF</button>
+                </form>
+              </div>
             </div>
+
           <div class="container-fluid pt-4 px-4" id="chart">
             <div class="row g-4">
-              <div class="bg-secondary text-center rounded p-4">
-                
-                <!-- <form >
-                  <div class="row mb-3 gap-3">
-                  </div>
-                  <div class="mb-3 gap-3 d-flex ">
-                    <div class="col-md-5 mb-3 d-flex align-items-center gap-5">
-                      <label for="inputApellido" class="form-label">SIE:</label>
-                      <input type="text" class="form-control" id="sie" placeholder="Ingrese codigo SIE">
-                    </div>
-                    <div class="col-md-5 mb-3 d-flex ">
-                      <button type="submit" class="btn btn-primary col-md-3">Buscar</button>
-                    </div>
-                  </div>
-                  <div class="row mb-3 gap-3">
-                    <div class="col-md-8 mb-3 d-flex gap-3">
-                      <label for="inputApellido" class="form-label">U.E. con bono zona:</label>
-                      <input type="text" class="form-control" id="UE" placeholder="">
-                    </div>
-                  </div>
-                </form> -->
+              
+              <div class="text-center rounded p-4">
+                <div class="col-md-6">
+                  <form class="col-md-12 mb-3">
+                    <button type="submit" class="btn btn-primary col-md-2" id="imprimir" style="display: none;">PDF</button>
+                  </form>
+                </div>
                 <div class="table-responsive">
-                  <table id="myTable" class="display table align-middle table-bordered table-hover mb-0">
+                  <table id="myTable" class="text-dark display table align-middle table-bordered table-hover mb-0">
                     <thead>
-                      <tr class="text-white">
+                      <tr class="text-dark">
                         <th>DISTRITO</th>
                         <th>UNIDADA EDUCATIVA</th>
                       </tr>

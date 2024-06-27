@@ -152,10 +152,68 @@ const obtenerToken = async () => {
 
 const initializeSelect2 = () => {
     $('#distrito').select2({ width: 'resolve' });
+    $('#gestion').select2({ width: 'resolve' });
+    $('#mes').select2({ width: 'resolve' });
 };
 
 const adjustSelect2Width = () => {
     $('#distrito').select2('destroy').select2({ width: '100%' });
+    $('#gestion').select2('destroy').select2({ width: '100%' });
+    $('#mes').select2('destroy').select2({ width: '100%' });
+};
+
+const populateGestionSelect = () => {
+    const gestionSelect = document.getElementById("gestion");
+    const currentYear = new Date().getFullYear();
+    const startYear = 1978;
+
+    gestionSelect.innerHTML = ''; // Limpiar el select antes de llenarlo
+
+    for (let year = startYear; year <= currentYear; year++) {
+        const optionElement = document.createElement("option");
+        optionElement.value = year;
+        optionElement.textContent = year;
+        gestionSelect.appendChild(optionElement);
+    }
+
+    // Inicializa Select2 después de haber poblado las opciones
+    $('#gestion').select2({ width: 'resolve' });
+
+    // Ajustar Select2 al cambiar el tamaño de la ventana
+    window.addEventListener('resize', adjustSelect2Width);
+};
+
+const populateMesSelect = () => {
+    const mesSelect = document.getElementById("mes");
+    const meses = [
+        { value: 1, text: 'Enero' },
+        { value: 2, text: 'Febrero' },
+        { value: 3, text: 'Marzo' },
+        { value: 4, text: 'Abril' },
+        { value: 5, text: 'Mayo' },
+        { value: 6, text: 'Junio' },
+        { value: 7, text: 'Julio' },
+        { value: 8, text: 'Agosto' },
+        { value: 9, text: 'Septiembre' },
+        { value: 10, text: 'Octubre' },
+        { value: 11, text: 'Noviembre' },
+        { value: 12, text: 'Diciembre' }
+    ];
+
+    mesSelect.innerHTML = ''; // Limpiar el select antes de llenarlo
+
+    meses.forEach(mes => {
+        const optionElement = document.createElement("option");
+        optionElement.value = mes.value;
+        optionElement.textContent = mes.text;
+        mesSelect.appendChild(optionElement);
+    });
+
+    // Inicializa Select2 después de haber poblado las opciones
+    $('#mes').select2({ width: 'resolve' });
+
+    // Ajustar Select2 al cambiar el tamaño de la ventana
+    window.addEventListener('resize', adjustSelect2Width);
 };
 
 const populateFormSelects = async () => {
@@ -176,13 +234,17 @@ const populateFormSelects = async () => {
         }
 
         // Inicializa Select2 después de haber poblado las opciones
-        initializeSelect2();
+        $('#distrito').select2({ width: 'resolve' });
 
         // Ajustar Select2 al cambiar el tamaño de la ventana
         window.addEventListener('resize', adjustSelect2Width);
     } catch (error) {
         console.error("Error al poblar los select:", error);
     }
+
+    // Poblar los selects de gestión y mes
+    populateGestionSelect();
+    populateMesSelect();
 };
 
 // Llama a esta función para poblar los select cuando la página se carga
@@ -320,7 +382,7 @@ document.addEventListener('DOMContentLoaded', populateFormSelects);
     // Crear el encabezado de la tabla
     const thead = document.createElement('thead');
     thead.innerHTML = `
-      <tr class="text-white">
+      <tr class="text-dark">
         ${coddis ? `
           <th>RDA</th>
           <th>MAESTRO_A</th>
