@@ -1,10 +1,38 @@
 /********** Template CSS **********/
+@font-face {
+    font-family: 'MiTipografia';
+    src: url('../font/MSung_HK_Medium.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+}
+.font-title{
+    font-family: 'MiTipografia';
+    font-size: 28px;
+    font-weight: 900;
+}
+
+.fonts{
+    font-family: 'MiTipografia';
+    font-size: 18px;
+    font-weight: 700;
+
+}
+
 :root {
     --primary: #dabf61;
     --secondary: #191C24;
     --light: #6C7293;
     --dark: #000000;
-    /* --dark: #f7fff7; */
+    --gris-claro: #cccccc54; 
+    --sucess: #359EFF;
+    --white: #ffffff;
+}
+
+.table-rounded {
+    border-radius: 5px;
+}
+.table-rounded th, .table-rounded td {
+    border: 1px solid #dee2e6;
 }
 
 /* animacion para la campanita de notificaciones */
@@ -132,7 +160,7 @@ input[readonly] {
     color: #5a5959; /* Cambia el color del texto */
   }
 body * {
-    font-size: 16px; /* Cambia el tamaño del texto y de todos los elementos dentro del body */
+    font-size: 15px; /* Cambia el tamaño del texto y de todos los elementos dentro del body */
   }
   
   /* Puedes ajustar el tamaño de otros elementos según sea necesario */
@@ -307,33 +335,33 @@ body * {
 /*** Navbar ***/
 .sidebar .navbar .navbar-nav .nav-link {
     padding: 7px 20px;
-    color: var(--light);
-    font-weight: 500;
-    border-left: 3px solid var(--secondary);
-    border-radius: 0 30px 30px 0;
+    color: var(--dark);
+    border-left: 5px solid var(--white);
+    border-radius: 0 5px 5px 0;
     outline: none;
 }
 
 .sidebar .navbar .navbar-nav .nav-link:hover,
 .sidebar .navbar .navbar-nav .nav-link.active {
-    color: var(--primary);
-    background: var(--dark);
-    border-color: var(--primary);
+    color: var(--dark);
+    background: var(--gris-claro);
+    border-color: var(--sucess);
 }
 
 .sidebar .navbar .navbar-nav .nav-link i {
-    width: 40px;
-    height: 40px;
+    width: 20px;
+    height: 20px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: var(--dark);
+    /* background: var(--white); */
     border-radius: 40px;
 }
 
 .sidebar .navbar .navbar-nav .nav-link:hover i,
 .sidebar .navbar .navbar-nav .nav-link.active i {
-    background: var(--secondary);
+    /* background: var(--white); */
+    background: transparent;
 }
 
 .sidebar .navbar .dropdown-toggle::after {
@@ -363,35 +391,37 @@ body * {
 }
 
 .content .navbar .navbar-nav .nav-link {
-    margin-left: 25px;
-    padding: 12px 0;
+    margin-left: 10px; /* Ajusta la distancia izquierda */
+    padding: 8px 0; /* Ajusta el relleno para reducir la altura */
     color: var(--light);
     outline: none;
 }
 
+
 .content .navbar .navbar-nav .nav-link:hover,
 .content .navbar .navbar-nav .nav-link.active {
-    color: var(--primary);
+    color: var(--gris-claro);
 }
 
 .content .navbar .sidebar-toggler,
 .content .navbar .navbar-nav .nav-link i {
-    width: 40px;
-    height: 40px;
+    width: 30px; /* Reduce el tamaño del ícono */
+    height: 30px; /* Reduce el tamaño del ícono */
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: var(--dark);
-    border-radius: 40px;
+    background: var(--gris-claro);
+    border-radius: 30px; /* Ajusta el borde redondeado */
 }
 
+
 .content .navbar .dropdown-item {
-    color: var(--light);
+    color: var(--dark);
 }
 
 .content .navbar .dropdown-item:hover,
 .content .navbar .dropdown-item.active {
-    background: var(--dark);
+    background: var(--gris-claro);
 }
 
 .content .navbar .dropdown-toggle::after {
@@ -410,7 +440,7 @@ body * {
 
 @media (max-width: 575.98px) {
     .content .navbar .navbar-nav .nav-link {
-        margin-left: 15px;
+        margin-left: 5px; /* Ajusta la distancia izquierda */
     }
 }
 

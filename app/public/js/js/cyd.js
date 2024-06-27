@@ -312,7 +312,7 @@ const mostrarDatosEnFormulari = (data, queryType) => {
   // Crear el encabezado de la tabla
   const thead = document.createElement('thead');
   thead.innerHTML = `
-    <tr class="text-white">
+    <tr class="text-dark">
     ${queryType === 'first' 
       ? `<th>GESTION</th><th>MES</th><th>DISTRITO</th><th>SERVICIO</th><th>ITEM</th><th>HORAS</th>`
       : queryType === 'second' 
