@@ -29,7 +29,7 @@
 }
 
 .table-rounded {
-    border-radius: 5px;
+    border-radius: 50%;
 }
 .table-rounded th, .table-rounded td {
     border: 1px solid #dee2e6;

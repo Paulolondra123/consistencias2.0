@@ -67,29 +67,37 @@
     <div class="container-fluid position-relative d-flex p-0 padre">
         <%- include('partials/navegacion/sidebar') %>
             <!-- Content Start -->
-            <div class="content position-relative">
+            <div class="content position-relative bg-white">
                 <%- include('partials/navegacion/navbar') %>
 
                     <!-- Chart Start -->
-        <div class="container-fluid pt-4 px-4" id="chart">
+        <div class="container-fluid pt-0 px-4" id="chart">
           <div class="row g-4">
-            <div class="bg-secondary text-center rounded p-4">
+            <div class="text-center rounded p-4">
               <div
                 class="d-flex align-items-center justify-content-between mb-4"
               >
-                <h6 class="mb-0">Registro Usuario</h6>
-                <button
+                <h6 class="mb-0 font-title text-dark">Registro Usuario</h6>
+              </div>
+              <div class="row mb-3 gap-3">
+                <div class="col-md-10 mb-3">
+                  <input type="search" class="form-control bg-claro-gris" id="carnet" placeholder="Buscar...">
+                </div>
+                <div class="col-md-2 mb-3 d-flex justify-content-end row">
+                  <button type="submit" id="btnAgregarUsuario" class="btn btn-primary text-white">Registrar</button>
+                </div>
+              </div>
+              <!-- <button
                   type="button"
                   class="btn btn2-primary m-2"
                   id="btnAgregarUsuario"
                 >
                   Registrar
-                </button>
-              </div>
+                </button> -->
               <div class="table-responsive">
                 <table id="myTable" class="table align-middle table-bordered table-hover mb-0">
                   <thead>
-                    <tr class="text-white">
+                    <tr class="text-dark">
                       <th scope="col">#</th>
                       <th scope="col">Nombres</th>
                       <th scope="col">Apellidos</th>
