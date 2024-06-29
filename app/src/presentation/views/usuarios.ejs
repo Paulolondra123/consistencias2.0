@@ -16,22 +16,22 @@
     <!-- Form Registro Start-->
     <div
       id="myForm"
-      class="visual position-absolute top-50 start-50 translate-middle bg-secondary rounded col-sm-12 col-xl-5"
+      class="visual position-absolute top-50 start-50 translate-middle bg-white rounded col-sm-12 col-xl-5"
     >
-      <div class="bg-secondary rounded h-100 p-4">
-        <h6 class="mb-4">Registrar Usuario</h6>
+      <div class="bg-white rounded h-100 p-4">
+        <h6 class="mb-4 font-sub-title text-dark">Registrar Usuario</h6>
         <form id="form">
           <div class="mb-3">
-            <label for="nombres" class="form-label">Nombres</label>
-            <input type="text" class="form-control" id="nombres" required />
+            <label for="nombres" class="form-label text-dark">NOMBRES</label>
+            <input type="text" class="form-control bg-claro-gris" id="nombres" required />
           </div>
           <div class="mb-3">
-            <label for="apellidos" class="form-label">Apellidos</label>
-            <input type="text" class="form-control" id="apellidos" required />
+            <label for="apellidos" class="form-label text-dark">APELLIDOS</label>
+            <input type="text" class="form-control bg-claro-gris" id="apellidos" required />
           </div>
           <div class="mb-3">
-            <label for="perfil" class="form-label">Perfil</label>
-            <select class="form-select" id="perfil" required>
+            <label for="perfil" class="form-label text-dark">PERFIL</label>
+            <select class="form-select text-dark" id="perfil" required>
               <option value="">Seleccione una opción</option>
               <option value="ADMINISTRADOR">ADMINISTRADOR</option>
               <option value="DEPARTAMENTAL">DEPARTAMENTAL</option>
@@ -39,17 +39,17 @@
             </select>
           </div>
           <div class="mb-3">
-            <label for="distrito" class="form-label">distrito</label>
+            <label for="distrito" class="form-label text-dark">DISTRITO</label>
             <br>
             <select class="form-select" id="distrito" required>
             </select>
           </div>
           <div class="mb-3">
-            <label for="usuario" class="form-label">Usuario</label>
+            <label for="usuario" class="form-label text-dark">USUARIO</label>
             <input type="text" class="form-control" id="usuario" required />
           </div>
           <div class="mb-3">
-            <label for="contraseña" class="form-label">Contraseña</label>
+            <label for="contraseña" class="form-label text-dark">CONTRASEÑA</label>
             <input
               type="password"
               class="form-control"
@@ -71,55 +71,56 @@
                 <%- include('partials/navegacion/navbar') %>
 
                     <!-- Chart Start -->
-        <div class="container-fluid pt-0 px-4" id="chart">
-          <div class="row g-4">
-            <div class="text-center rounded p-4">
-              <div
-                class="d-flex align-items-center justify-content-between mb-4"
-              >
-                <h6 class="mb-0 font-title text-dark">Registro Usuario</h6>
-              </div>
-              <div class="row mb-3 gap-3">
-                <div class="col-md-10 mb-3">
-                  <input type="search" class="form-control bg-claro-gris" id="carnet" placeholder="Buscar...">
-                </div>
-                <div class="col-md-2 mb-3 d-flex justify-content-end row">
-                  <button type="submit" id="btnAgregarUsuario" class="btn btn-primary text-white">Registrar</button>
-                </div>
-              </div>
-              <!-- <button
-                  type="button"
-                  class="btn btn2-primary m-2"
-                  id="btnAgregarUsuario"
-                >
-                  Registrar
-                </button> -->
-              <div class="table-responsive">
-                <table id="myTable" class="table align-middle table-bordered table-hover mb-0">
-                  <thead>
-                    <tr class="text-dark">
-                      <th scope="col">#</th>
-                      <th scope="col">Nombres</th>
-                      <th scope="col">Apellidos</th>
-                      <th scope="col">Usuario</th>
-                      <th scope="col">Perfil</th>
-                      <th scope="col">Distrito</th>
-                      <th scope="col">Fecha de <br> Registro</th>
-                      <th scope="col">Habilitado</th>
-                      <th scope="col">Acciones</th>
-                    </tr>
-                  </thead>
-                  <tbody id="usuarios">
-                    <!--mostrar tabla usuario-->
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Chart End -->
-
-                    <%- include('partials/footer/footer') %>
+                    <div class="back-minedu pt-1">
+                      <div class="container-fluid pt-0 px-4" id="chart">
+                        <div class="row g-4">
+                          <div class="text-center rounded p-4">
+                            <div
+                              class="d-flex align-items-center justify-content-between mb-4"
+                            >
+                              <h6 class="mb-0 font-title text-dark">Registro Usuario</h6>
+                            </div>
+                            <div class="row mb-3 gap-3">
+                              <div class="col-md-10 mb-3">
+                                <input type="search" class="form-control bg-claro-gris pe-none" id="carnet">
+                              </div>
+                              <div class="col-md-2 mb-3 d-flex justify-content-end row">
+                                <button type="submit" id="btnAgregarUsuario" class="btn btn-primary text-white">Registrar</button>
+                              </div>
+                            </div>
+                            <!-- <button
+                                type="button"
+                                class="btn btn2-primary m-2"
+                                id="btnAgregarUsuario"
+                              >
+                                Registrar
+                              </button> -->
+                            <div class="table-responsive">
+                              <table id="myTable" class="bg-white table align-middle table-bordered table-hover mb-0">
+                                <thead>
+                                  <tr class="text-dark">
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nombres</th>
+                                    <th scope="col">Apellidos</th>
+                                    <th scope="col">Usuario</th>
+                                    <th scope="col">Perfil</th>
+                                    <th scope="col">Distrito</th>
+                                    <th scope="col">Fecha de <br> Registro</th>
+                                    <th scope="col">Habilitado</th>
+                                    <th scope="col">Acciones</th>
+                                  </tr>
+                                </thead>
+                                <tbody id="usuarios">
+                                  <!--mostrar tabla usuario-->
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <%- include('partials/footer/footer') %>
+                    </div>
+                    <!-- Chart End -->
             </div>
             <!-- Content End -->
             <!-- Back to Top -->

@@ -11,6 +11,8 @@ dotenv.config();
 
 const app = express();
 
+
+
 // Configurar bodyParser para analizar datos de formularios
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

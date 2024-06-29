@@ -5,10 +5,31 @@
     font-weight: 100 900;
     font-style: normal;
 }
+
+.back-minedu{
+    background-image: url(http://localhost:3009/minedu-background-2021-cruz.png);
+    background-size: contain;
+    background-repeat: inherit;
+}
+
+.font-sub-title{
+    font-family: 'MiTipografia';
+    font-size: 18px;
+    font-weight: 900;
+    #66b2ff
+}
+
 .font-title{
     font-family: 'MiTipografia';
     font-size: 28px;
     font-weight: 900;
+}
+
+.font-svg{
+    background-image: url(http://localhost:3009/fono-azul.jpg);
+    background-size: 100% 100%;
+    background-position: ;
+    background-repeat: no-repeat;
 }
 
 .fonts{
@@ -23,17 +44,12 @@
     --secondary: #191C24;
     --light: #6C7293;
     --dark: #000000;
-    --gris-claro: #cccccc54; 
-    --sucess: #359EFF;
+    --gris-claro: #eeeeee; 
+    --sucess: #0073e6;
     --white: #ffffff;
 }
 
-.table-rounded {
-    border-radius: 50%;
-}
-.table-rounded th, .table-rounded td {
-    border: 1px solid #dee2e6;
-}
+
 
 /* animacion para la campanita de notificaciones */
 @keyframes shake {

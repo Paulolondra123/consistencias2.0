@@ -22,90 +22,90 @@
                 <%- include('partials/navegacion/navbar') %>
 
                     <!-- Chart Start -->
-        <div class="container-fluid pt-0 px-4 d-flex " id="chart">
-            <div class="row g-4 col-md-6">
-              <div class="text-dark rounded p-4 ">
-                <!-- Top div with title and button -->
-                <div
-                  class="d-flex align-items-center justify-content-between mb-4"
-                >
-                  <h6 class="mb-0 font-title text-dark">Bono zona</h6>
-                </div>
-                <!-- Responsive Horizontal Form -->
-                <form id="formbuscar">
-                  <div class="row ">
-                    <div class="col-md-12 mb-3">
-                      <div class="">
-                        <label for="inputNombre" class="form-label">DISTRITO:</label>
-                        <select class="form-select mb-3" id="distrito" required>
-                        </select>
+                    <div class="back-minedu">
+                      <div class="container-fluid pt-0 px-4 d-flex" id="chart">
+                    <div class="row g-4 col-md-6">
+                      <div class="text-dark rounded p-4 ">
+                        <!-- Top div with title and button -->
+                        <div
+                          class="d-flex align-items-center justify-content-between mb-4"
+                        >
+                          <h6 class="mb-0 font-title text-dark">Bono zona</h6>
+                        </div>
+                        <!-- Responsive Horizontal Form -->
+                        <form id="formbuscar">
+                          <div class="row ">
+                            <div class="col-md-12 mb-3">
+                              <div class="">
+                                <label for="inputNombre" class="form-label">DISTRITO:</label>
+                                <select class="form-select mb-3" id="distrito" required>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="d-flex justify-content-between col-md-12">
+                              <div class="col-md-5 mb-3">
+                                  <label for="inputGestion" class="form-label">GESTION:</label>
+                                  <select type="number" class="form-control bg-claro-gris" id="gestion">
+                                  </select>
+                              </div>
+                              <div class="col-md-6 mb-3">
+                                  <label for="inputApellido" class="form-label">MES:</label>
+                                  <select class="form-select text-dark" id="mes">
+                                  </select>
+                              </div>
+                            </div>
+                            <div class="col-md-3 mb-3 d-flex align-items-end">
+                              <button type="submit" class="btn btn-primary text-white ">Buscar</button>
+                            </div>
+                          </div>
+                        </form>
+                        <div class="row mb-3">
+                          <div class="row mb-3"></div>
+                            <div class="col-md-9 mb-3 align-items-end">
+                              <label for="nombres" class="form-label">BUSCAR MAESTROS CON BONO ZONA</label>
+                              <input type="text" class="form-control col-md-6 bg-claro-gris" placeholder="CODIGO SIE" id="coddis" required>
+                            </div>
+                            <form id="buscarmaestros" class="col-md-3 mb-3 align-items-end d-flex">
+                              <button type="submit" class="btn btn-primary col-md-12 text-white">Buscar</button>
+                            </form>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <div class="d-flex justify-content-between col-md-12">
-                      <div class="col-md-5 mb-3">
-                          <label for="inputGestion" class="form-label">GESTION:</label>
-                          <select type="number" class="form-control bg-claro-gris" id="gestion">
-                          </select>
+                      <div class="col-md-6">
+                        <form class="col-md-12 mb-3 d-flex justify-content-start align-items-start">
+                          <button type="submit" class="btn btn-primary col-md-2" id="imprimir" style="display: none;">PDF</button>
+                        </form>
                       </div>
-                      <div class="col-md-6 mb-3">
-                          <label for="inputApellido" class="form-label">MES:</label>
-                          <select class="form-select text-dark" id="mes">
-                          </select>
                       </div>
-                    </div>
-                    <div class="col-md-3 mb-3 d-flex align-items-end">
-                      <button type="submit" class="btn btn-primary text-white ">Buscar</button>
-                    </div>
-                  </div>
-                </form>
-                <div class="row mb-3">
-                  <div class="row mb-3"></div>
-                    <div class="col-md-9 mb-3 align-items-end">
-                      <label for="nombres" class="form-label">BUSCAR MAESTROS CON BONO ZONA</label>
-                      <input type="text" class="form-control col-md-6 bg-claro-gris" placeholder="CODIGO SIE" id="coddis" required>
-                    </div>
-                    <form id="buscarmaestros" class="col-md-3 mb-3 align-items-end d-flex">
-                      <button type="submit" class="btn btn-primary col-md-12 text-white">Buscar</button>
-                    </form>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <form class="col-md-12 mb-3 d-flex justify-content-start align-items-start">
-                  <button type="submit" class="btn btn-primary col-md-2" id="imprimir" style="display: none;">PDF</button>
-                </form>
-              </div>
-            </div>
 
-          <div class="container-fluid pt-4 px-4" id="chart">
-            <div class="row g-4">
-              
-              <div class="text-center rounded p-4">
-                <div class="col-md-6">
-                  <form class="col-md-12 mb-3">
-                    <button type="submit" class="btn btn-primary col-md-2" id="imprimir" style="display: none;">PDF</button>
-                  </form>
-                </div>
-                <div class="table-responsive">
-                  <table id="myTable" class="text-dark display table align-middle table-bordered table-hover mb-0">
-                    <thead>
-                      <tr class="text-dark">
-                        <th>DISTRITO</th>
-                        <th>UNIDADA EDUCATIVA</th>
-                      </tr>
-                    </thead>
-                    <tbody id="medida">
-                      
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Chart End -->
-                      
-  
-                    <%- include('partials/footer/footer') %>
+                      <div class="container-fluid pt-4 px-4 bg-" >
+                        <div class="row g-4">
+                          
+                          <div class="text-center rounded p-4">
+                            <div class="col-md-6">
+                              <form class="col-md-12 mb-3">
+                                <button type="submit" class="btn btn-primary col-md-2" id="imprimir" style="display: none;">PDF</button>
+                              </form>
+                            </div>
+                            <div class="table-responsive">
+                              <table id="myTable" class="bg-white text-dark display table align-middle table-bordered table-hover mb-0">
+                                <thead>
+                                  <tr class="text-dark">
+                                    <th>DISTRITO</th>
+                                    <th>UNIDADA EDUCATIVA</th>
+                                  </tr>
+                                </thead>
+                                <tbody id="medida">
+                                  
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <%- include('partials/footer/footer') %>
+                    </div>
+                    <!-- Chart End -->                      
             </div>
             <!-- Content End -->
             <!-- Back to Top -->
