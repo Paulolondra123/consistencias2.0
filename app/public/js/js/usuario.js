@@ -33,31 +33,31 @@ const obtenerToken = async () => {
 // Función para mostrar los datos en un formulario HTML
 const mostrarDatosEnFormulario = (datosUsuario) => {
 
-    const userNavTop = document.getElementById('usernavtop');
-    const userNav = document.getElementById('usernav');
-    const perfi = document.getElementById('perfi');
+  const userNavTop = document.getElementById('usernavtop');
+  const userNav = document.getElementById('usernav');
+  const perfi = document.getElementById('perfi');
 
-    // Obtener los datos del usuario
-    let { nombres, apellidos, perfil } = datosUsuario;
+  // Obtener los datos del usuario
+  let { nombres, apellidos, perfil } = datosUsuario;
 
-    // Convertir la primera letra de cada palabra a mayúscula y el resto a minúscula
-    nombres = nombres.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
-    apellidos = apellidos.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
-    perfill = perfil.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
-
-
-    // Obtener el primer nombre y el primer apellido
-    const primerNombre = nombres.split(' ')[0];
-    const primerApellido = apellidos.split(' ')[0];
+  // Convertir la primera letra de cada palabra a mayúscula y el resto a minúscula
+  nombres = nombres.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
+  apellidos = apellidos.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
+  perfill = perfil.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
 
 
-    // Establecer el valor del span con el nombre del usuario
-    userNavTop.textContent = `${primerNombre} ${primerApellido}`;
+  // Obtener el primer nombre y el primer apellido
+  const primerNombre = nombres.split(' ')[0];
+  const primerApellido = apellidos.split(' ')[0];
 
-    // Establecer el valor del h6 con el nombre del usuario
-    userNav.textContent = `${primerNombre} ${primerApellido}`;
 
-    perfi.textContent = `${perfill}`;
+  // Establecer el valor del span con el nombre del usuario
+  userNavTop.textContent = `${primerNombre} ${primerApellido}`;
+
+  // Establecer el valor del h6 con el nombre del usuario
+  userNav.textContent = `${primerNombre} ${primerApellido}`;
+
+  perfi.textContent = `${perfill}`;
 };
 // Llamar a la función para obtener el token
 obtenerToken();
@@ -87,9 +87,9 @@ const getAlldistrito = async () => {
       window.location.href = "http://localhost:3009/login";
       return; // Detener la ejecución del código
     }
-    const response = await fetch("http://localhost:3009/distrito",{
-      method:"GET",
-      headers:{
+    const response = await fetch("http://localhost:3009/distrito", {
+      method: "GET",
+      headers: {
         Authorization: `Bearer ${token}`,
       }
     });
@@ -113,24 +113,24 @@ const getAlldistrito = async () => {
 const populateSelect = (selectElement, options, valueFieldName, textFieldName) => {
   selectElement.innerHTML = '<option value="">Seleccione una opción</option>';
   options.forEach(option => {
-      const optionElement = document.createElement("option");
-      optionElement.value = option[valueFieldName];
-      optionElement.textContent = option[textFieldName];
-      selectElement.appendChild(optionElement);
+    const optionElement = document.createElement("option");
+    optionElement.value = option[valueFieldName];
+    optionElement.textContent = option[textFieldName];
+    selectElement.appendChild(optionElement);
   });
 };
 
 const populateFormSelects = async () => {
-    const distritoSelect = document.getElementById("distrito");
+  const distritoSelect = document.getElementById("distrito");
 
-    const distrito = await getAlldistrito();
+  const distrito = await getAlldistrito();
 
-    populateSelect(distritoSelect, distrito, "cod_dis", "distrito_descripcion");
+  populateSelect(distritoSelect, distrito, "cod_dis", "distrito_descripcion");
 
-    // Inicializa Select2 en los selectores después de haber poblado las opciones
-    $(document).ready(function() {
-        $('#distrito').select2();
-    });
+  // Inicializa Select2 en los selectores después de haber poblado las opciones
+  $(document).ready(function () {
+    $('#distrito').select2();
+  });
 };
 
 // Llama a esta función para poblar los select cuando la página se carga
@@ -146,8 +146,8 @@ formAgregarUsuario.addEventListener("submit", async function (event) {
   // Obtener los valores del formulario, incluida la foto
   const nombres = document.getElementById("nombres").value;
   const apellidos = document.getElementById("apellidos").value;
-  const perfil = document.getElementById("perfil").value; 
-  const distrito = document.getElementById("distrito").value; 
+  const perfil = document.getElementById("perfil").value;
+  const distrito = document.getElementById("distrito").value;
   const usuario = document.getElementById("usuario").value;
   const contraseña = document.getElementById("contraseña").value;
 
@@ -170,13 +170,13 @@ formAgregarUsuario.addEventListener("submit", async function (event) {
         },
         //: formData, // Usar el FormData que contiene la foto
         body: JSON.stringify({
-                nombres,
-                apellidos,
-                perfil,
-                distrito,
-                usuario,
-                contraseña
-            }),
+          nombres,
+          apellidos,
+          perfil,
+          distrito,
+          usuario,
+          contraseña
+        }),
       });
 
     if (response.ok) {
@@ -271,9 +271,8 @@ const Users = ({
                         <ul class="dropdown-menu ">
                             <li><a id="actualizar" class="dropdown-item" onclick="toggleEditMode(${id_usuario})" class="dropdown-item" href="#">Actualizar</a></li>
                             <li><a onclick="deleteUser(${id_usuario})" class="dropdown-item" href="#">Eliminar</a></li>
-                            <li><a onclick="changeState(${id_usuario}, ${estado})" class="dropdown-item" href="#" id="change-state-${id_usuario}">${
-    estado ? "Inhabilitar" : "Habilitar"
-  }</a></li>
+                            <li><a onclick="changeState(${id_usuario}, ${estado})" class="dropdown-item" href="#" id="change-state-${id_usuario}">${estado ? "Inhabilitar" : "Habilitar"
+    }</a></li>
                         </ul>
                     </div>
                 </td>
@@ -302,9 +301,9 @@ const render = (data) => {
     // Verificar si la tabla ya ha sido inicializada
     if (!$.fn.DataTable.isDataTable("#myTable")) {
       // Si la tabla no ha sido inicializada, inicializar DataTables
-      $(document).ready(function() {
+      $(document).ready(function () {
         // Inicializar DataTables
-        var table = $('#myTable').DataTable({
+        $('#myTable').DataTable({
           language: {
             decimal: "",
             emptyTable: "No hay información",
@@ -335,19 +334,19 @@ const render = (data) => {
           order: [],
           searching: true // Deshabilitar el buscador global
         });
-  
+
         // Buscador por nombre
         //$('#nombreBuscador').on('keyup', function() {
         //  table.column(1).search(this.value).draw();
         //});
-  
+
         // Buscador por perfil
         //$('#perfilBuscador').on('keyup', function() {
         //  table.column(4).search(this.value).draw();
         //});
       });
     }
-  
+
   } else {
     paginaUsers.innerHTML =
       '<tr><td colspan="8">NO SE ENCONTRARON USUARIOS.</td></tr>';

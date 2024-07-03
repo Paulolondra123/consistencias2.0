@@ -18,72 +18,72 @@
         <%- include('partials/navegacion/navbar') %> 
         
         <!-- Chart Start -->
-        <div class="container-fluid pt-4 px-4">
+        <div class="back-minedu pt-1">
+          <div class="container-fluid pt-0 px-3">
             <div class="row g-4">
-                <div class="col-sm-6 col-xl-12">
-                  <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
-                    <h6 class="mb-0">Informacion personal</h6>
+                <div class="col-sm-6 col-xl-12 pt-3">
+                  <div class="rounded d-flex align-items-center justify-content-between px-4">
+                    <h6 class="mb-0 font-title text-dark">Informacion personal</h6>
                   </div>
                 </div>
-                
                 <div class="col-sm-12 col-xl-6">
-                    <div class="bg-secondary rounded h-100 p-4">
-                        <h6 class="mb-4">Datos</h6>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control pe-none" id="nombres"
-                                placeholder="............"  >
-                            <label for="floatingInput">Nombres:</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                          <input type="text" class="form-control pe-none" id="apellidos"
+                    <div class=" rounded h-100 p-4">
+                        <h6 class="mb-4 text-dark font-sub-title">DATOS DEL USUARIO</h6>
+                        <div class="mb-3">
+                          <label for="inputNombre" class="form-label text-dark">NOMBRES:</label>
+                          <input type="text" class="form-control pe-none bg-claro-gris" id="nombres"
                               placeholder="............"  >
-                          <label for="floatingInput">Apellidos:</label>
                         </div>
-                        <div class="form-floating mb-3">
-                          <input type="text" class="form-control pe-none" id="usuario" 
+                        <div class="mb-3">
+                          <label for="inputNombre" class="form-label text-dark">APELLIDOS:</label>
+                          <input type="text" class="form-control pe-none bg-claro-gris" id="apellidos"
                               placeholder="............"  >
-                          <label for="floatingInput">Usuario:</label>
                         </div>
-                        <div class="form-floating mb-3">
-                          <input type="text" class="form-control pe-none" id="perfil"
+                        <div class="mb-3">
+                          <label for="inputNombre" class="form-label text-dark">USUARIO:</label>
+                          <input type="text" class="form-control pe-none bg-claro-gris" id="usuario" 
                               placeholder="............"  >
-                          <label for="floatingInput">Pefil:</label>
                         </div>
-                        <div class="form-floating mb-3">
-                          <input type="text" class="form-control pe-none" id="fecha"
+                        <div class="mb-3">
+                          <label for="inputNombre" class="form-label text-dark">PERFIL:</label>
+                          <input type="text" class="form-control pe-none bg-claro-gris" id="perfil"
                               placeholder="............"  >
-                          <label for="floatingInput">Fecha de registro:</label>
+                        </div>
+                        <div class=" mb-3">
+                          <label for="inputNombre" class="form-label text-dark">FECHA DE REGISTRO:</label>
+                          <input type="text" class="form-control pe-none bg-claro-gris" id="fecha"
+                              placeholder="............"  >
                         </div>
                     </div>
                 </div>
   
                 <div class="col-sm-12 col-xl-6">
-                  <div class="bg-secondary rounded h-100 p-4">
-                      <h6 class="mb-4">Cambiar Contraseña</h6>
+                  <div class="rounded h-100 p-4">
+                      <h6 class="mb-4 font-sub-title text-dark">CAMBIAR CONTRASEÑA</h6>
                       <form id="change-password-form">
                           <div class="mb-3">
-                            <div class="form-floating mb-3">
-                              <input type="password" class="form-control" id="contraseña_actual"
+                            <div class="mb-3">
+                              <label for="inputNombre" class="form-label text-dark">CONTRASEÑA ACTUAL:</label>
+                              <input type="password" class="form-control bg-claro-gris" id="contraseña_actual"
                                   placeholder="Contraseña actual" value="" >
-                              <label for="floatingInput">Contraseña actual:</label>
                             </div>
                             <!-- <div class="form-text">We'll never share your email with anyone else.
                             </div> -->
                           </div>
                           <div class="mb-3">
-                            <div class="form-floating mb-3">
-                              <input type="password" class="form-control" id="nueva_contraseña"
+                            <div class="mb-3">
+                              <label for="inputNombre" class="form-label text-dark">NUEVA CONTRASEÑA:</label>
+                              <input type="password" class="form-control bg-claro-gris" id="nueva_contraseña"
                                   placeholder="Nueva contraseña" value="" >
-                              <label for="floatingInput">Nueva contraseña:</label>
                             </div>
                             <!-- <div class="form-text">We'll never share your email with anyone else.
                             </div> -->
                           </div>
                           <div class="mb-3">
-                            <div class="form-floating mb-3">
-                              <input type="password" class="form-control" id="confirmar_contraseña"
+                            <div class="mb-3">
+                              <label for="inputNombre" class="form-label text-dark">CONFIRMAR CONTRASEÑA:</label>
+                              <input type="password" class="form-control bg-claro-gris" id="confirmar_contraseña"
                                   placeholder="Confirmar contraseña" value="" >
-                              <label for="floatingInput">Confirmar contraseña:</label>
                             </div>
                             <!-- <div class="form-text">We'll never share your email with anyone else.
                             </div> -->
@@ -95,10 +95,9 @@
   
             </div>
           </div>
-          <!-- Chart End -->
-
-        
-        <%- include('partials/footer/footer') %>
+          <%- include('partials/footer/footer') %>
+        </div>
+          <!-- Chart End -->        
       </div>
       <!-- Content End -->
       <!-- Back to Top -->

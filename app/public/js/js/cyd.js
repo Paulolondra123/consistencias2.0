@@ -305,6 +305,12 @@ document.getElementById("formbuscar").addEventListener("submit", async function 
 
 // Función para mostrar los datos en la tabla HTML
 const mostrarDatosEnFormulari = (data, queryType) => {
+
+  // Destruir DataTable existente si ya está inicializada
+  if ($.fn.DataTable.isDataTable('#myTable')) {
+    $('#myTable').DataTable().destroy();
+  }
+
   // Obtener referencia a la tabla
   const table = document.getElementById('myTable');
   table.innerHTML = ''; // Limpiar el contenido anterior de la tabla
@@ -312,7 +318,7 @@ const mostrarDatosEnFormulari = (data, queryType) => {
   // Crear el encabezado de la tabla
   const thead = document.createElement('thead');
   thead.innerHTML = `
-    <tr class="text-dark">
+    <tr class="text-white" style="background: #002060;">
     ${queryType === 'first' 
       ? `<th>GESTION</th><th>MES</th><th>DISTRITO</th><th>SERVICIO</th><th>ITEM</th><th>HORAS</th>`
       : queryType === 'second' 
@@ -375,4 +381,78 @@ const mostrarDatosEnFormulari = (data, queryType) => {
     `;
     tbody.appendChild(tr);
   });
+  // Inicializar DataTables
+  $(document).ready(function () {
+    $('#myTable').DataTable({
+      language: {
+        decimal: "",
+        emptyTable: "No hay información",
+        info: "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+        infoEmpty: "Mostrando 0 to 0 of 0 Entradas",
+        infoFiltered: "(Filtrado de _MAX_ total entradas)",
+        infoPostFix: "",
+        thousands: ",",
+        lengthMenu: "Mostrar _MENU_ Entradas",
+        loadingRecords: "Cargando...",
+        processing: "Procesando...",
+        search: "Buscar:",
+        zeroRecords: "Sin resultados encontrados",
+        paginate: {
+          first: "Primero",
+          last: "Ultimo",
+          next: ">",
+          previous: "<"
+        }
+      },
+      lengthMenu: [
+        [5, 10, 25, 50, -1],
+        [5, 10, 25, 50, "Todos"]
+      ],
+      pageLength: 10,
+      responsive: true,
+      autoWidth: true,
+      order: [],
+      searching: true // Deshabilitar el buscador global
+    });
+  });
 };
+
+const limpiarTabla = () => {
+  const table = document.getElementById('myTable');
+  table.innerHTML = '';
+  if ($.fn.DataTable.isDataTable('#myTable')) {
+    $('#myTable').DataTable().clear().destroy();
+  }
+};
+
+/* $('#myTable').DataTable({
+  language: {
+    decimal: "",
+    emptyTable: "No hay información",
+    info: "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+    infoEmpty: "Mostrando 0 to 0 of 0 Entradas",
+    infoFiltered: "(Filtrado de _MAX_ total entradas)",
+    infoPostFix: "",
+    thousands: ",",
+    lengthMenu: "Mostrar _MENU_ Entradas",
+    loadingRecords: "Cargando...",
+    processing: "Procesando...",
+    search: "Buscar:",
+    zeroRecords: "Sin resultados encontrados",
+    paginate: {
+      first: "Primero",
+      last: "Ultimo",
+      next: ">",
+      previous: "<"
+    }
+  },
+  lengthMenu: [
+    [5, 10, 25, 50, -1],
+    [5, 10, 25, 50, "Todos"]
+  ],
+  pageLength: 5,
+  responsive: true,
+  autoWidth: true,
+  order: [],
+  searching: true // Deshabilitar el buscador global
+}); */

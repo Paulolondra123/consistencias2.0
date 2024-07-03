@@ -79,7 +79,7 @@ const bonozonaRoutes = require('./app/src/presentation/routes/bonozonaRoutes')
 //const proveedorRoutes = require('./app/src/presentation/routes/proveedorRouter')
 //const compraRoutes = require('./app/src/presentation/routes/compraRoutes')
 const perfilRoutes = require('./app/src/presentation/routes/perfilRoutes')
-//const downloadpdf = require('./app/src/presentation/routes/pdfRoutes')
+const maesbono = require('./app/src/presentation/routes/maesbono')
 
 
 
@@ -98,7 +98,7 @@ app.use(bonozonaRoutes,authMiddleware);
 //app.use(proveedorRoutes,authMiddleware);
 //app.use(compraRoutes,authMiddleware);
 app.use(perfilRoutes,authMiddleware);
-//app.use(downloadpdf);
+app.use(maesbono);
 
 
 //app.use('/auth', authRoutes);

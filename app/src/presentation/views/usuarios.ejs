@@ -46,14 +46,14 @@
           </div>
           <div class="mb-3">
             <label for="usuario" class="form-label text-dark">USUARIO</label>
-            <input type="text" class="form-control" id="usuario" required />
+            <input type="text" class="form-control bg-claro-gris" id="usuario" required />
           </div>
           <div class="mb-3">
             <label for="contraseña" class="form-label text-dark">CONTRASEÑA</label>
             <input
               type="password"
-              class="form-control"
-              id="contraseña"
+              class="form-control bg-claro-gris"
+              id="contraseña" 
               required
             />
           </div>
@@ -71,8 +71,8 @@
                 <%- include('partials/navegacion/navbar') %>
 
                     <!-- Chart Start -->
-                    <div class="back-minedu pt-1">
-                      <div class="container-fluid pt-0 px-4" id="chart">
+                    <div class="container-fluid back-minedu pt-1">
+                      <div class="pt-0 px-4" id="chart">
                         <div class="row g-4">
                           <div class="text-center rounded p-4">
                             <div
@@ -98,14 +98,14 @@
                             <div class="table-responsive">
                               <table id="myTable" class="bg-white table align-middle table-bordered table-hover mb-0">
                                 <thead>
-                                  <tr class="text-dark">
+                                  <tr class="text-white" style="background: #002060;">
                                     <th scope="col">#</th>
                                     <th scope="col">Nombres</th>
                                     <th scope="col">Apellidos</th>
                                     <th scope="col">Usuario</th>
                                     <th scope="col">Perfil</th>
                                     <th scope="col">Distrito</th>
-                                    <th scope="col">Fecha de <br> Registro</th>
+                                    <th scope="col">Fecha de Registro</th>
                                     <th scope="col">Habilitado</th>
                                     <th scope="col">Acciones</th>
                                   </tr>

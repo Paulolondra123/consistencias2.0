@@ -40,7 +40,7 @@ class Usersmodel {
       `;
     } else {
       query = `
-      select     (RTRIM(s.cod_dis)+'-'+  RTRIM(s.descripcion))AS DISTRITO,  (RTRIM(r.cod_ue)+'-'+  RTRIM(r.des_ue))AS UNIDAD_EDUCATIVA 
+      select     (RTRIM(s.cod_dis)+'-'+  RTRIM(s.descripcion))AS DISTRITO,  (RTRIM(r.cod_ue)+'-'+  RTRIM(r.des_ue))AS UNIDAD_EDUCATIVA, RTRIM(r.cod_ue) CODIGO_SIE 
         FROM	 b_planilla b INNER JOIN
               b_rue r on b.cod_ue = r.cod_ue inner join
               b_distrito s on b.cod_dis = s.cod_dis inner join

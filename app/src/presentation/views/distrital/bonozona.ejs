@@ -2,164 +2,148 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <%= title %>
-    </title>
-    <meta content="" name="keywords" />
-    <meta content="" name="description" />
-    <%- include('partials/links/links') %>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    <%= title %>
+  </title>
+  <meta content="" name="keywords" />
+  <meta content="" name="description" />
+  <%- include('partials/links/links') %>
 </head>
 
 <body>
 
-    <!-- Content Padre Start -->
-    <div class="container-fluid position-relative d-flex p-0 padre">
-        <%- include('partials/navegacion/sidebar') %>
-            <!-- Content Start -->
-            <div class="content position-relative">
-                <%- include('partials/navegacion/navbar') %>
+  <!-- Content Padre Start -->
+  <div class="container-fluid position-relative d-flex p-0 padre">
+    <%- include('partials/navegacion/sidebar') %>
+      <!-- Content Start -->
+      <div class="content position-relative bg-white">
+        <%- include('partials/navegacion/navbar') %>
 
-                    <!-- Chart Start -->
-        <div class="container-fluid pt-4 px-4" id="chart">
-            <div class="row g-4 mb-4">
-              <div class="bg-secondary rounded p-4 col-12">
-                <!-- Top div with title and button -->
-                <div class="d-flex align-items-center mb-4">
-                  <h6 class="mb-0">    </h6>
-                </div>
-                <!-- Responsive Horizontal Form -->
-                <form id="formbuscar">
-                  <div class="row mb-3">
-                    <div class="col-md-3 mb-3">
-                      <label for="inputNombre" class="form-label">Distrito:</label>
-                      <select class="form-select" id="distrito" required>
-                      </select>
-                    </div>
-                    <div class="col-md-2 mb-3">
-                      <label for="inputGestion" class="form-label">Gestion:</label>
-                      <select class="form-select" id="gestion">
-                        <option value="2011">2011</option>
-                        <option value="1998">2011</option>
-                        <option value="1999">2011</option>
-                        <option value="2000">2011</option>
-                        <option value="2001">2011</option>
-                        <option value="2002">2011</option>
-                        <option value="2003">2011</option>
-                        <option value="2004">2011</option>
-                        <option value="2005">2011</option>
-                        <option value="2006">2011</option>
-                        <option value="2007">2011</option>
-                        <option value="2008">2008</option>
-                        <option value="2009">2009</option>
-                        <option value="2010">2010</option>
-                        <option value="2011">2011</option>
-                        <option value="2012">2012</option>
-                        <option value="2013">2013</option>
-                        <option value="2014">2014</option>
-                        <option value="2015">2015</option>
-                        <option value="2016">2016</option>
-                        <option value="2017">2017</option>
-                        <option value="2018">2018</option>
-                        <option value="2019">2019</option>
-                        <option value="2020">2020</option>
-                        <option value="2021">2021</option>
-                        <option value="2022">2022</option>
-                        <option value="2023">2023</option>
-                        <option value="2024">2024</option>
-                      </select>
-                    </div>
-                    <div class="col-md-2 mb-3">
-                      <label for="inputApellido" class="form-label">Mes:</label>
-                      <select class="form-select" id="mes">
-                        <option value="1">Enero</option>
-                        <option value="2">Febrero</option>
-                        <option value="3">Marzo</option>
-                        <option value="4">Abril</option>
-                        <option value="5">Mayo</option>
-                        <option value="6">Juni</option>
-                        <option value="7">Julio</option>
-                        <option value="8">Agosto</option>
-                        <option value="9">Septiembre</option>
-                        <option value="10">Octubre</option>
-                        <option value="11">Noviembre</option>
-                        <option value="12">Diciembre</option>
-                      </select>
-                    </div>
-                    <div class="col-md-3 mb-3 d-flex align-items-end">
-                      <button type="submit" class="btn btn-primary col-md-6">Buscar</button>
-                    </div>
+          <!-- Chart Start -->
+          <div class="container-fluid back-minedu">
+            <div class="pt-0 px-4 d-flex" id="chart">
+              <div class="row g-4 col-md-6">
+                <div class="text-dark rounded pt-4 px-4">
+                  <!-- Top div with title and button -->
+                  <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h6 class="mb-0 font-title text-dark">Bono zona</h6>
                   </div>
-                </form>
-                <div class="row mb-3">
-                  <div class="row mb-3"></div>
-                    <div class="col-md-6 mb-3 align-items-end">
-                      <label for="nombres" class="form-label">BUASCAR MAESTROS CON BONO ZONA</label>
-                      <input type="text" class="form-control col-md-5" placeholder="CODIGO SIE" id="coddis" required>
+                  <!-- Responsive Horizontal Form -->
+                  <form id="formbuscar">
+                    <div class="row ">
+                      <div class="col-md-12 mb-3">
+                        <div class="">
+                          <label for="inputNombre" class="form-label">DISTRITO:</label>
+                          <select class="form-select mb-3" id="distrito" required>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="d-flex justify-content-between col-md-12">
+                        <div class="col-md-5 mb-3">
+                          <label for="inputGestion" class="form-label">GESTION:</label>
+                          <select type="number" class="form-control bg-claro-gris" id="gestion">
+                          </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="inputApellido" class="form-label">MES:</label>
+                          <select class="form-select text-dark" id="mes">
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-3 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary text-white ">Buscar</button>
+                      </div>
                     </div>
-                    <form id="buscarmaestros" class="col-md-6 mb-3 align-items-end d-flex">
-                      <button type="submit" class="btn btn-primary col-md-3">Buscar</button>
+                  </form>
+                  <div class="row mb-3">
+                    <div class="row mb-3"></div>
+                    <div class="col-md-9 mb-3 align-items-end">
+                      <label for="nombres" class="form-label">BUSCAR MAESTROS CON BONO ZONA</label>
+                      <input type="text" class="form-control col-md-6 bg-claro-gris" placeholder="CODIGO SIE"
+                        id="coddis" required>
+                    </div>
+                    <form id="buscarmaestros" class="col-md-3 mb-3 align-items-end d-flex">
+                      <button type="submit" class="btn btn-primary col-md-12 text-white">Buscar</button>
                     </form>
                   </div>
-                  <form class="col-md-12 mb-3 align-items-end d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary col-md-2" id="imprimir" style="display: none;">Descargar</button>
-                  </form>
                 </div>
               </div>
+              <div class="col-md-6">
+                <form class="col-md-12 mb-3 d-flex justify-content-start align-items-start">
+                  <button type="submit" class="btn btn-primary col-md-2" id="imprimir"
+                    style="display: none;">PDF</button>
+                </form>
+              </div>
+              
             </div>
-          <div class="container-fluid pt-4 px-4" id="chart">
-            <div class="row g-4">
-              <div class="bg-secondary text-center rounded p-4">
-                
-                <!-- <form >
-                  <div class="row mb-3 gap-3">
-                  </div>
-                  <div class="mb-3 gap-3 d-flex ">
-                    <div class="col-md-5 mb-3 d-flex align-items-center gap-5">
-                      <label for="inputApellido" class="form-label">SIE:</label>
-                      <input type="text" class="form-control" id="sie" placeholder="Ingrese codigo SIE">
-                    </div>
-                    <div class="col-md-5 mb-3 d-flex ">
-                      <button type="submit" class="btn btn-primary col-md-3">Buscar</button>
-                    </div>
-                  </div>
-                  <div class="row mb-3 gap-3">
-                    <div class="col-md-8 mb-3 d-flex gap-3">
-                      <label for="inputApellido" class="form-label">U.E. con bono zona:</label>
-                      <input type="text" class="form-control" id="UE" placeholder="">
-                    </div>
-                  </div>
-                </form> -->
+
+            <div class="container-fluid px-4 row g-4">
+              <div class="text-center rounded p-4">
+
                 <div class="table-responsive">
-                  <table id="myTable" class="display table align-middle table-bordered table-hover mb-0">
+                  <table id="myTable"
+                    class="bg-white text-dark display table align-middle table-bordered table-hover mb-0">
                     <thead>
-                      <tr class="text-white">
+                      <tr class="text-white" style="background: #002060;">
                         <th>DISTRITO</th>
                         <th>UNIDADA EDUCATIVA</th>
+                        <th>ACCIONES</th>
                       </tr>
                     </thead>
                     <tbody id="medida">
-                      
+
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
+            <%- include('partials/footer/footer') %>
           </div>
           <!-- Chart End -->
-                      
-  
-                    <%- include('partials/footer/footer') %>
-            </div>
-            <!-- Content End -->
-            <!-- Back to Top -->
-            <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-            <!-- Back to Top -->
-    </div>
-    <!-- Content Padre End -->
-    <%- include('partials/scripts/scripts') %>
-    
+      </div>
+      <!-- Content End -->
+      <!-- Back to Top -->
+      <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+      <!-- Back to Top -->
+  </div>
+  <!-- Content Padre End -->
+  <%- include('partials/scripts/scripts') %>
+    <script>
+      // JavaScript para mostrar/ocultar el formulario
+      document.addEventListener("DOMContentLoaded", function () {
+        const btnAgregarUsuario = document.querySelector("#btnAgregarUsuario");
+        const formAgregarUsuario = document.querySelector("#myForm");
+        const contenidoPadre = document.querySelector(".padre");
+
+        btnAgregarUsuario.addEventListener("click", function (event) {
+          event.stopPropagation(); // Detiene la propagación del evento
+          formAgregarUsuario.classList.add("visuali"); // Muestra el formulario con animación
+          contenidoPadre.classList.add("blur"); // Aplica el efecto de desenfoque al contenedor padre
+        });
+
+        formAgregarUsuario.addEventListener("submit", function (event) {
+          event.stopPropagation(); // Detiene la propagación del evento
+          formAgregarUsuario.classList.remove("visuali"); // Oculta el formulario después de enviarlo
+          contenidoPadre.classList.remove("blur"); // Elimina el efecto de desenfoque del contenedor padre
+          // Aquí puedes agregar código para manejar el envío del formulario
+        });
+
+        window.addEventListener("click", function (event) {
+          if (
+            !event.target.matches("#btnAgregarUsuario") &&
+            !formAgregarUsuario.contains(event.target) &&
+            !event.target.closest(".select2-container")
+          ) {
+            if (formAgregarUsuario.classList.contains("visuali")) {
+              formAgregarUsuario.classList.remove("visuali"); // Quita la clase para ocultar el formulario
+              contenidoPadre.classList.remove("blur"); // Elimina el efecto de desenfoque del contenedor padre
+            }
+          }
+        });
+      });
+    </script>
     <script src="/js/bonozona.js"></script>
 </body>
 
