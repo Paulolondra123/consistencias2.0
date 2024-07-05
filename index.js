@@ -14,8 +14,8 @@ const app = express();
 
 
 // Configurar bodyParser para analizar datos de formularios
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true, limit: '300mb' }));
+app.use(bodyParser.json({ limit: '300mb' }));
 
 const corsOptions = {
   origin: ['http://localhost:3009', 'https://la-holandesa-vercel-kwld.vercel.app','https://la-holandesa.vercel.app'],

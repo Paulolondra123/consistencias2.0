@@ -13,9 +13,9 @@ router.post('/bonozona', Users.getAll);
 // Ruta para obtener los distritos
 router.get('/gestion', Users.gestion);
 
-
 router.post('/pdf', (req, res) => {
    const { datosTabla } = req.body;
+   //console.log(JSON.stringify({ datosTabla }));
 
    // Crear un nuevo documento PDF en orientación horizontal con margen de 10
    const doc = new PDFDocument({ layout: 'landscape', margin: 10 });
@@ -126,116 +126,172 @@ router.post('/pdf', (req, res) => {
 router.post('/xls', async (req, res) => {
     const { datosTabla } = req.body;
 
-    const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet('Reporte');
+    try {
+        const workbook = new ExcelJS.Workbook();
 
-    // Establecer propiedades del documento
-    workbook.creator = 'Nombre del Creador';
-    workbook.lastModifiedBy = 'Nombre del Modificador';
-    workbook.created = new Date();
-    workbook.modified = new Date();
+        // Establecer propiedades del documento
+        workbook.creator = 'Nombre del Creador';
+        workbook.lastModifiedBy = 'Nombre del Modificador';
+        workbook.created = new Date();
+        workbook.modified = new Date();
 
-    // Añadir imagen
-    const imagePath = path.join(__dirname, '../../../public/img/Chakana.png');
-    const imageId = workbook.addImage({
-        filename: imagePath,
-        extension: 'png',
-    });
+        // Añadir imágenes
+        const imagePath = path.join(__dirname, '../../../public/img/Chakana_texto.png');
+        const imageId = workbook.addImage({
+            filename: imagePath,
+            extension: 'png',
+        });
 
-    worksheet.addImage(imageId, {
-        tl: { col: 0, row: 0 },
-        ext: { width: 80, height: 80 }
-    });
+        const imagePathline = path.join(__dirname, '../../../public/img/line.png');
+        const imageIdline = workbook.addImage({
+            filename: imagePathline,
+            extension: 'png',
+        });
 
-    // Añadir encabezado
-    worksheet.mergeCells('C1:F1');
-    worksheet.getCell('C1').value = 'REPORTE DE BONO ZONA';
-    worksheet.getCell('C1').alignment = { vertical: 'middle', horizontal: 'center' };
-    worksheet.getCell('C1').font = { size: 14, bold: true };
+        // Configuración de márgenes
+        const pageSetupConfig = {
+            orientation: 'landscape',
+            margins: {
+                left: 0.30, // margen izquierdo en pulgadas
+                right: 0, // margen derecho en pulgadas
+                top: 0.25, // margen superior en pulgadas
+                bottom: 0.25, // margen inferior en pulgadas
+                header: 0.1, // margen del encabezado en pulgadas
+                footer: 0.1 // margen del pie de página en pulgadas
+            }
+        };
 
-    worksheet.mergeCells('C2:F2');
-    worksheet.getCell('C2').value = 'CENTROS EDUCATIVOS';
-    worksheet.getCell('C2').alignment = { vertical: 'middle', horizontal: 'center' };
-    worksheet.getCell('C2').font = { size: 12, bold: true };
+        const createWorksheetWithHeader = (sheetName) => {
+            const worksheet = workbook.addWorksheet(sheetName, { pageSetup: pageSetupConfig });
 
-    // Añadir texto adicional del encabezado
-    worksheet.mergeCells('B3:C3');
-    worksheet.getCell('B3').value = 'ESTADO PLURINACIONAL DE';
-    worksheet.getCell('B3').alignment = { vertical: 'middle', horizontal: 'left' };
-    worksheet.getCell('B3').font = { size: 5 };
+            worksheet.addImage(imageId, {
+                tl: { col: 1.5, row: .5 },
+                ext: { width: 200, height: 80 }
+            });
 
-    worksheet.mergeCells('D3:E3');
-    worksheet.getCell('D3').value = 'BOLIVIA';
-    worksheet.getCell('D3').alignment = { vertical: 'middle', horizontal: 'center' };
-    worksheet.getCell('D3').font = { name: 'Arial', size: 19 };
+            // Configurar las columnas para la tabla de datos
+            worksheet.columns = [
+                { header: '', key: 'col1', width: 2 },  // Columna A
+                { header: '', key: 'col2', width: 10 },  // Columna B (ancho ajustado)
+                { header: '', key: 'col3', width: 10 },  // Columna C
+                { header: '', key: 'col4', width: 10 },  // Columna D
+                { header: '', key: 'col5', width: 10 },  // Columna E
+                { header: '', key: 'col6', width: 10 },
+                { header: '', key: 'col7', width: 18 },
+                { header: '', key: 'col8', width: 18 },
+                { header: '', key: 'col9', width: 10 },
+                { header: '', key: 'col10', width: 10 },
+                { header: '', key: 'col11', width: 10 },
+                { header: '', key: 'col12', width: 10 },
+                { header: '', key: 'col13', width: 2 }
+            ];
 
-    worksheet.mergeCells('B4:C4');
-    worksheet.getCell('B4').value = 'MINISTERIO DE EDUCACION';
-    worksheet.getCell('B4').alignment = { vertical: 'middle', horizontal: 'left' };
-    worksheet.getCell('B4').font = { size: 5 };
+            // Calcular el ancho total de las columnas de la 1 a la 12
+            const totalWidth = worksheet.columns.slice(1, 12).reduce((acc, col) => acc + col.width * 7,83, 0);
 
-    worksheet.mergeCells('B5:C5');
-    worksheet.getCell('B5').value = 'DIRECCION DEPARTAMENTAL DE';
-    worksheet.getCell('B5').alignment = { vertical: 'middle', horizontal: 'left' };
-    worksheet.getCell('B5').font = { size: 5 };
-
-    worksheet.mergeCells('B6:C6');
-    worksheet.getCell('B6').value = 'EDUCACION DE SANTA CRUZ';
-    worksheet.getCell('B6').alignment = { vertical: 'middle', horizontal: 'left' };
-    worksheet.getCell('B6').font = { size: 5 };
-
-    // Añadir líneas horizontales
-    const addHorizontalLines = (startRow) => {
-        const row = worksheet.getRow(startRow);
-        row.eachCell((cell, colNumber) => {
-            cell.border = {
-                top: { style: 'thin' },
+            const headerImagePosition = {
+                tl: { col: 1, row: 5 },
+                ext: { width: totalWidth, height: 8 }
             };
+
+            worksheet.addImage(imageIdline, headerImagePosition);
+
+            // Añadir encabezado y centrar
+            const mergeRange1 = `A2:M2`; // Ajustar el rango según el número total de columnas (A a M para 14 columnas)
+            const mergeRange2 = `A3:M3`; // Ajustar el rango según el número total de columnas (A a M para 14 columnas)
+
+            // Añadir encabezado
+            worksheet.mergeCells(mergeRange1);
+            worksheet.getCell('A2').value = 'REPORTE DE BONO ZONA';
+            worksheet.getCell('A2').alignment = { vertical: 'middle', horizontal: 'center' };
+            worksheet.getCell('A2').font = { size: 14, bold: true };
+
+            worksheet.mergeCells(mergeRange2);
+            worksheet.getCell('A3').value = 'CENTROS EDUCATIVOS';
+            worksheet.getCell('A3').alignment = { vertical: 'middle', horizontal: 'center' };
+            worksheet.getCell('A3').font = { size: 12, bold: true };
+
+            // Añadir encabezados de la tabla
+            worksheet.getRow(5).getCell(4).value = 'DISTRITO EDUCATIVO'; // Mover a la columna D
+            worksheet.getRow(5).getCell(9).value = 'CENTROS EDUCATIVOS'; // Mantener en la columna E
+            worksheet.getRow(5).font = { bold: true }; // Encabezados de las columnas
+
+            // Combinar las celdas C, D y E en la fila 5
+            worksheet.mergeCells('D5:F5');
+            const mergedCell = worksheet.getCell('D5');
+            mergedCell.alignment = { vertical: 'middle', horizontal: 'left', indent: 3 }; // Centrar texto
+
+            // Combinar las celdas J, K y L en la fila 5 y centrar texto
+            worksheet.mergeCells('I5:K5');
+            const mergedCellJKL = worksheet.getCell('I5');
+            mergedCellJKL.alignment = { vertical: 'middle', horizontal: 'left' }; // Ajustar la alineación horizontal y el margen izquierdo
+
+            return worksheet;
+        };
+
+        // Añadir datos a la tabla y combinarlas celdas en cada fila
+        const maxRowsPerPage = 23; // Ajusta según el número de filas que quieres por página
+        let currentSheetIndex = 1;
+        let currentWorksheet = createWorksheetWithHeader(`Reporte ${currentSheetIndex}`);
+        let currentRowIndex = 7; // Comenzar después del encabezado
+
+        datosTabla.forEach((row, index) => {
+            if ((index + 1) % maxRowsPerPage === 0) {
+
+                // Calcular el ancho total de las columnas de la 1 a la 11 para la imagen de pie de página
+                const footerTotalWidth = currentWorksheet.columns.slice(1, 12).reduce((acc, col) => acc + col.width * 7,83, 0);
+
+                // Añadir imagen de pie de página al final de la hoja antes de pasar a la siguiente
+                const footerImagePosition = {
+                    tl: { col: 1, row: 29},
+                    ext: { width: footerTotalWidth, height: 8 }
+                };
+                currentWorksheet.addImage(imageIdline, footerImagePosition);
+
+                
+                currentSheetIndex++;
+                currentWorksheet = createWorksheetWithHeader(`Reporte ${currentSheetIndex}`);
+                currentRowIndex = 7;
+            }
+
+            const newRow = currentWorksheet.getRow(currentRowIndex);
+            newRow.height = 21; // Aumentar la altura de la fila
+
+            currentWorksheet.mergeCells(`C${currentRowIndex}:G${currentRowIndex}`);
+            const mergedCellbcdef = currentWorksheet.getCell(`C${currentRowIndex}`);
+            mergedCellbcdef.value = row[0];
+            mergedCellbcdef.alignment = { vertical: 'middle', horizontal: 'left', indent: 5 };
+
+            currentWorksheet.mergeCells(`H${currentRowIndex}:K${currentRowIndex}`);
+            const mergedCellijklm = currentWorksheet.getCell(`H${currentRowIndex}`);
+            mergedCellijklm.value = row[1];
+            mergedCellijklm.alignment = { vertical: 'middle', horizontal: 'left', indent: 9};
+
+            newRow.commit();
+            currentRowIndex++;
         });
 
-        const nextRow = worksheet.getRow(startRow + 1);
-        nextRow.eachCell((cell, colNumber) => {
-            cell.border = {
-                bottom: { style: 'thin' },
-            };
-        });
-    };
+        // Calcular el ancho total de las columnas de la 1 a la 11 para la imagen de pie de página
+        const footerTotalWidth = currentWorksheet.columns.slice(1, 12).reduce((acc, col) => acc + col.width * 7,83, 0);
 
-    addHorizontalLines(7);
+        // Añadir imagen de pie de página al final de la hoja antes de pasar a la siguiente
+        const footerImagePosition = {
+            tl: { col: 1, row: 32 },
+            ext: { width: footerTotalWidth, height: 8 }
+        };
+        currentWorksheet.addImage(imageIdline, footerImagePosition);
 
-    // Añadir tabla de datos
-    worksheet.columns = [
-        { header: 'Columna 1', key: 'col1', width: 30 },
-        { header: 'Columna 2', key: 'col2', width: 30 }
-    ];
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        res.setHeader('Content-Disposition', 'attachment; filename="reporte.xlsx"');
 
-    datosTabla.forEach((row, index) => {
-        worksheet.addRow({
-            col1: row[0],
-            col2: row[1]
-        });
-    });
+        await workbook.xlsx.write(res);
+        res.end();
 
-    // Estilizar celdas
-    worksheet.getRow(8).font = { bold: true }; // Encabezados de las columnas
-    worksheet.eachRow((row, rowNumber) => {
-        row.eachCell((cell) => {
-            cell.border = {
-                top: { style: 'thin' },
-                left: { style: 'thin' },
-                bottom: { style: 'thin' },
-                right: { style: 'thin' },
-            };
-        });
-    });
-
-    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    res.setHeader('Content-Disposition', 'attachment; filename="reporte.xlsx"');
-
-    await workbook.xlsx.write(res);
-    res.end();
+    } catch (error) {
+        console.error('Error al generar el archivo Excel:', error.message);
+        res.status(500).json({ error: 'Error al generar el archivo Excel' });
+    }
 });
-
 
 router.post('/pdfmaestros', (req, res) => {
    const { datosTabla } = req.body;
@@ -323,9 +379,9 @@ router.post('/pdfmaestros', (req, res) => {
        }
 
        doc.text(row[0], 65, yPosition)
-           .text(row[1], 170, yPosition)
-           .text(row[2], 400, yPosition)
-           .text(row[3], 635, yPosition);
+          .text(row[1], 170, yPosition)
+          .text(row[2], 400, yPosition)
+          .text(row[3], 635, yPosition);
        yPosition += rowHeight;
    });
 
@@ -338,113 +394,199 @@ router.post('/pdfmaestros', (req, res) => {
 router.post('/xlsmaestros', async (req, res) => {
     const { datosTabla } = req.body;
 
-    const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet('Reporte Maestros');
+    try {
+        const workbook = new ExcelJS.Workbook();
 
-    // Añadir imagen
-    const imagePath = path.join(__dirname, '../../../public/img/Chakana.png');
-    const imageId = workbook.addImage({
-        filename: imagePath,
-        extension: 'png',
-    });
+        // Establecer propiedades del documento
+        workbook.creator = 'Nombre del Creador';
+        workbook.lastModifiedBy = 'Nombre del Modificador';
+        workbook.created = new Date();
+        workbook.modified = new Date();
 
-    worksheet.addImage(imageId, {
-        tl: { col: 0, row: 0 },
-        ext: { width: 50, height: 50 }
-    });
+        // Añadir imágenes
+        const imagePath = path.join(__dirname, '../../../public/img/Chakana_texto.png');
+        const imageId = workbook.addImage({
+            filename: imagePath,
+            extension: 'png',
+        });
 
-    // Añadir encabezado
-    worksheet.mergeCells('C1:F1');
-    worksheet.getCell('C1').value = 'REPORTE DE BONO ZONA';
-    worksheet.getCell('C1').alignment = { vertical: 'middle', horizontal: 'center' };
-    worksheet.getCell('C1').font = { size: 14, bold: true };
+        const imagePathline = path.join(__dirname, '../../../public/img/line.png');
+        const imageIdline = workbook.addImage({
+            filename: imagePathline,
+            extension: 'png',
+        });
 
-    worksheet.mergeCells('C2:F2');
-    worksheet.getCell('C2').value = 'CENTROS EDUCATIVOS';
-    worksheet.getCell('C2').alignment = { vertical: 'middle', horizontal: 'center' };
-    worksheet.getCell('C2').font = { size: 12, bold: true };
+        // Configuración de márgenes
+        const pageSetupConfig = {
+            orientation: 'landscape',
+            margins: {
+                left: 0.30, // margen izquierdo en pulgadas
+                right: 0, // margen derecho en pulgadas
+                top: 0.25, // margen superior en pulgadas
+                bottom: 0.25, // margen inferior en pulgadas
+                header: 0.1, // margen del encabezado en pulgadas
+                footer: 0.1 // margen del pie de página en pulgadas
+            }
+        };
 
-    // Añadir texto adicional del encabezado
-    worksheet.mergeCells('B3:C3');
-    worksheet.getCell('B3').value = 'ESTADO PLURINACIONAL DE';
-    worksheet.getCell('B3').alignment = { vertical: 'middle', horizontal: 'left' };
-    worksheet.getCell('B3').font = { size: 5 };
+        const createWorksheetWithHeader = (sheetName) => {
+            const worksheet = workbook.addWorksheet(sheetName, { pageSetup: pageSetupConfig });
 
-    worksheet.mergeCells('D3:E3');
-    worksheet.getCell('D3').value = 'BOLIVIA';
-    worksheet.getCell('D3').alignment = { vertical: 'middle', horizontal: 'center' };
-    worksheet.getCell('D3').font = { name: 'Arial', size: 19 };
+            worksheet.addImage(imageId, {
+                tl: { col: 1.5, row: .5 },
+                ext: { width: 200, height: 80 }
+            });
 
-    worksheet.mergeCells('B4:C4');
-    worksheet.getCell('B4').value = 'MINISTERIO DE EDUCACION';
-    worksheet.getCell('B4').alignment = { vertical: 'middle', horizontal: 'left' };
-    worksheet.getCell('B4').font = { size: 5 };
+            // Configurar las columnas para la tabla de datos
+            worksheet.columns = [
+                { header: '', key: 'col1', width: 2 },  // Columna A
+                { header: '', key: 'col2', width: 13 },  // Columna B (ancho ajustado)
+                { header: '', key: 'col3', width: 7 },  // Columna C
+                { header: '', key: 'col4', width: 10 },  // Columna D
+                { header: '', key: 'col5', width: 10 },  // Columna E
+                { header: '', key: 'col6', width: 10 },
+                { header: '', key: 'col7', width: 15 },
+                { header: '', key: 'col8', width: 21 },
+                { header: '', key: 'col9', width: 10 },
+                { header: '', key: 'col10', width: 16 },
+                { header: '', key: 'col11', width: 6 },
+                { header: '', key: 'col12', width: 8 },
+                { header: '', key: 'col13', width: 2 }
+            ];
 
-    worksheet.mergeCells('B5:C5');
-    worksheet.getCell('B5').value = 'DIRECCION DEPARTAMENTAL DE';
-    worksheet.getCell('B5').alignment = { vertical: 'middle', horizontal: 'left' };
-    worksheet.getCell('B5').font = { size: 5 };
+            // Calcular el ancho total de las columnas de la 1 a la 12
+            const totalWidth = worksheet.columns.slice(1, 12).reduce((acc, col) => acc + col.width * 7,83, 0);
 
-    worksheet.mergeCells('B6:C6');
-    worksheet.getCell('B6').value = 'EDUCACION DE SANTA CRUZ';
-    worksheet.getCell('B6').alignment = { vertical: 'middle', horizontal: 'left' };
-    worksheet.getCell('B6').font = { size: 5 };
-
-    // Añadir líneas horizontales
-    const addHorizontalLines = (startRow) => {
-        const row = worksheet.getRow(startRow);
-        row.eachCell((cell, colNumber) => {
-            cell.border = {
-                top: { style: 'thin' },
+            const headerImagePosition = {
+                tl: { col: 1, row: 5 },
+                ext: { width: totalWidth, height: 8 }
             };
+
+            worksheet.addImage(imageIdline, headerImagePosition);
+
+            // Añadir encabezado y centrar
+            const mergeRange1 = `A2:M2`; // Ajustar el rango según el número total de columnas (A a M para 14 columnas)
+            const mergeRange2 = `A3:M3`; // Ajustar el rango según el número total de columnas (A a M para 14 columnas)
+
+            // Añadir encabezado
+            worksheet.mergeCells(mergeRange1);
+            worksheet.getCell('A2').value = 'REPORTE DE BONO ZONA';
+            worksheet.getCell('A2').alignment = { vertical: 'middle', horizontal: 'center' };
+            worksheet.getCell('A2').font = { size: 14, bold: true };
+
+            worksheet.mergeCells(mergeRange2);
+            worksheet.getCell('A3').value = 'CENTROS EDUCATIVOS';
+            worksheet.getCell('A3').alignment = { vertical: 'middle', horizontal: 'center' };
+            worksheet.getCell('A3').font = { size: 14, bold: true };
+
+            // Añadir encabezados de la tabla
+            worksheet.getRow(5).getCell(2).value = 'RDA'; // Mover a la columna D
+            worksheet.getRow(5).getCell(4).value = 'MAESTRO_A'; // Mantener en la columna E
+            worksheet.getRow(5).getCell(8).value = 'CARGO';
+            worksheet.getRow(5).getCell(11).value = 'SERVICIO_ITEM';
+            worksheet.getRow(5).font = { bold: true , size: 12}; // Encabezados de las columnas
+
+            // Combinar las celdas C, D y E en la fila 5
+            worksheet.mergeCells('B5:C5');
+            const mergedCell = worksheet.getCell('B5');
+            mergedCell.alignment = { vertical: 'middle', horizontal: 'left', indent: 3 }; // Centrar texto
+
+            // Combinar las celdas J, K y L en la fila 5 y centrar texto
+            worksheet.mergeCells('D5:F5');
+            const mergedCellhi = worksheet.getCell('D5');
+            mergedCellhi.alignment = { vertical: 'middle', horizontal: 'left', indent: 5 }; // Ajustar la alineación horizontal y el margen izquierdo
+
+            // Combinar las celdas J, K y L en la fila 5 y centrar texto
+            worksheet.mergeCells('H5:I5');
+            const mergedCellJK = worksheet.getCell('H5');
+            mergedCellJK.alignment = { vertical: 'middle', horizontal: 'left', indent: 7 }; // Ajustar la alineación horizontal y el margen izquierdo
+
+            // Combinar las celdas J, K y L en la fila 5 y centrar texto
+            worksheet.mergeCells('K5:L5');
+            const mergedCellJKL = worksheet.getCell('K5');
+            mergedCellJKL.alignment = { vertical: 'middle', horizontal: 'center' }; // Ajustar la alineación horizontal y el margen izquierdo
+
+            return worksheet;
+        };
+
+        // Añadir datos a la tabla y combinarlas celdas en cada fila
+        const maxRowsPerPage = 23; // Ajusta según el número de filas que quieres por página
+        let currentSheetIndex = 1;
+        let currentWorksheet = createWorksheetWithHeader(`Reporte ${currentSheetIndex}`);
+        let currentRowIndex = 7; // Comenzar después del encabezado
+
+        datosTabla.forEach((row, index) => {
+            if ((index + 1) % maxRowsPerPage === 0) {
+
+                // Calcular el ancho total de las columnas de la 1 a la 11 para la imagen de pie de página
+                const footerTotalWidth = currentWorksheet.columns.slice(1, 12).reduce((acc, col) => acc + col.width * 7,83, 0);
+
+                // Añadir imagen de pie de página al final de la hoja antes de pasar a la siguiente
+                const footerImagePosition = {
+                    tl: { col: 1, row: 29},
+                    ext: { width: footerTotalWidth, height: 8 }
+                };
+                currentWorksheet.addImage(imageIdline, footerImagePosition);
+
+                
+                currentSheetIndex++;
+                currentWorksheet = createWorksheetWithHeader(`Reporte ${currentSheetIndex}`);
+                currentRowIndex = 7;
+            }
+
+            const newRow = currentWorksheet.getRow(currentRowIndex);
+            newRow.height = 21; // Aumentar la altura de la fila
+
+            currentWorksheet.mergeCells(`B${currentRowIndex}:B${currentRowIndex}`);
+            const mergedCellbcdef = currentWorksheet.getCell(`B${currentRowIndex}`);
+            mergedCellbcdef.value = row[0];
+            mergedCellbcdef.alignment = { vertical: 'middle', horizontal: 'left', indent: 1.9};
+
+            currentWorksheet.mergeCells(`C${currentRowIndex}:G${currentRowIndex}`);
+            const mergedCellijklm = currentWorksheet.getCell(`C${currentRowIndex}`);
+            mergedCellijklm.value = row[1];
+            mergedCellijklm.alignment = { vertical: 'middle', horizontal: 'left', indent: 1};
+
+            currentWorksheet.mergeCells(`H${currentRowIndex}:J${currentRowIndex}`);
+            const mergedCellhij = currentWorksheet.getCell(`H${currentRowIndex}`);
+            mergedCellhij.value = row[2];
+            mergedCellhij.alignment = { vertical: 'middle', horizontal: 'left'};
+
+            currentWorksheet.mergeCells(`K${currentRowIndex}:L${currentRowIndex}`);
+            const mergedCellkl = currentWorksheet.getCell(`K${currentRowIndex}`);
+            mergedCellkl.value = row[3];
+            mergedCellkl.alignment = { vertical: 'middle', horizontal: 'right'};
+
+            // Ajustar tamaño de fuente para los títulos
+            mergedCellbcdef.font = { size: 12}
+            mergedCellijklm.font = { size: 12};
+            mergedCellhij.font = { size: 12}
+            mergedCellkl.font = { size: 12}
+
+            newRow.commit();
+            currentRowIndex++;
         });
 
-        const nextRow = worksheet.getRow(startRow + 1);
-        nextRow.eachCell((cell, colNumber) => {
-            cell.border = {
-                bottom: { style: 'thin' },
-            };
-        });
-    };
+        // Calcular el ancho total de las columnas de la 1 a la 11 para la imagen de pie de página
+        const footerTotalWidth = currentWorksheet.columns.slice(1, 12).reduce((acc, col) => acc + col.width * 7,83, 0);
 
-    addHorizontalLines(7);
+        // Añadir imagen de pie de página al final de la hoja antes de pasar a la siguiente
+        const footerImagePosition = {
+            tl: { col: 1, row: 32 },
+            ext: { width: footerTotalWidth, height: 8 }
+        };
+        currentWorksheet.addImage(imageIdline, footerImagePosition);
 
-    // Añadir encabezados de la tabla
-    worksheet.columns = [
-        { header: 'RDA', key: 'rda', width: 30 },
-        { header: 'MAESTRO_A', key: 'maestro', width: 30 },
-        { header: 'CARGO', key: 'cargo', width: 30 },
-        { header: 'SERVICIO_ITEM', key: 'servicio', width: 30 }
-    ];
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        res.setHeader('Content-Disposition', 'attachment; filename="reporte.xlsx"');
 
-    // Añadir datos de la tabla
-    datosTabla.forEach(row => {
-        worksheet.addRow({
-            rda: row[0],
-            maestro: row[1],
-            cargo: row[2],
-            servicio: row[3]
-        });
-    });
+        await workbook.xlsx.write(res);
+        res.end();
 
-    // Estilizar celdas
-    worksheet.getRow(8).font = { bold: true }; // Encabezados de las columnas
-    worksheet.eachRow((row, rowNumber) => {
-        row.eachCell((cell) => {
-            cell.border = {
-                top: { style: 'thin' },
-                left: { style: 'thin' },
-                bottom: { style: 'thin' },
-                right: { style: 'thin' },
-            };
-        });
-    });
-
-    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    res.setHeader('Content-Disposition', 'attachment; filename="reporte.xlsx"');
-
-    await workbook.xlsx.write(res);
-    res.end();
+    } catch (error) {
+        console.error('Error al generar el archivo Excel:', error.message);
+        res.status(500).json({ error: 'Error al generar el archivo Excel' });
+    }
 });
 
 module.exports = router 

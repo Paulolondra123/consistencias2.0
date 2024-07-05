@@ -8,7 +8,7 @@ const mssql = require('mssql');
 
 class Usersmodel {
   // Método para obtener todas las medidas
-  static async getAll(distrito, gestion, mes, coddis) {
+  static async getAll( gestion, mes, coddis) {
     try {
       const pool = await connectToMssql();
       if (!pool) {
@@ -24,7 +24,7 @@ class Usersmodel {
               b_cargo c on b.cargo=c.cargo inner join 
               B_rda	rda on b.carnet=rda.carnet
         where     (b.gestion = ${gestion}) and (b.mes = ${mes}) AND B.COD_DEP=7 AND B.CARNET<>'00000000' AND B.bonozona>0  AND SUBSTRING(B.servicio, 8, 1) IN (1,2,3,4,5,6,7,8) AND B.COD_UE=${coddis} 
-        AND B.COD_DIS=${distrito} ORDER BY B.SERVICIO, B.ITEM
+         ORDER BY B.SERVICIO, B.ITEM
       `;
 
       const result = await pool.request().query(query);

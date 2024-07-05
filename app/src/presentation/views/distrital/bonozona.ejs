@@ -24,7 +24,7 @@
           <!-- Chart Start -->
           <div class="container-fluid back-minedu">
             <div class="pt-0 px-4 d-flex" id="chart">
-              <div class="row g-4 col-md-6">
+              <div class="row g-4 col-md-12">
                 <div class="text-dark rounded pt-4 px-4">
                   <!-- Top div with title and button -->
                   <div class="d-flex align-items-center justify-content-between mb-4">
@@ -68,14 +68,17 @@
                       <button type="submit" class="btn btn-primary col-md-12 text-white">Buscar</button>
                     </form>
                   </div>
+                  <div class="rcol-md-12">
+                    <form class=" d-flex gap-1 justify-content-end">
+                      <button type="submit" class="btn btn-outline-primary col-md-1" id="imprimir"
+                        style="display: none;"><i class="fas fa-file-pdf"></i></button>
+                      <button type="submit" class="btn btn-outline-success col-md-1" id="imprimirxls"
+                        style="display: none;"><i class="fas fa-file-excel"></i></button>
+                    </form>
+                  </div>
                 </div>
               </div>
-              <div class="col-md-6">
-                <form class="col-md-12 mb-3 d-flex justify-content-start align-items-start">
-                  <button type="submit" class="btn btn-primary col-md-2" id="imprimir"
-                    style="display: none;">PDF</button>
-                </form>
-              </div>
+              
               
             </div>
 

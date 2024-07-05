@@ -477,23 +477,13 @@ document.getElementById('imprimir').addEventListener('click', async function (ev
 
   const token = localStorage.getItem("token");
   if (!token) {
-    window.location.href = "http://localhost:3009/login.html";
+    window.location.href = "http://localhost:3009/login";
     return;
   }
 
-  // Obtener los datos de la tabla
-  const table = document.getElementById('myTable');
-  const rows = table.getElementsByTagName('tr');
-  const datosTabla = [];
-
-  for (let i = 1; i < rows.length; i++) { // Empezar en 1 para saltar el encabezado
-    const cells = rows[i].getElementsByTagName('td');
-    const rowData = [];
-    for (let j = 0; j < cells.length; j++) {
-      rowData.push(cells[j].innerText);
-    }
-    datosTabla.push(rowData);
-  }
+  // Obtener todos los datos de la tabla (sin importar la paginación)
+  const table = $('#myTable').DataTable();
+  const datosTabla = table.data().toArray();
 
   if (!coddis) {
     try {
@@ -559,6 +549,8 @@ document.getElementById('imprimir').addEventListener('click', async function (ev
 
 });
 
+
+
 document.getElementById('imprimirxls').addEventListener('click', async function (event) {
   event.preventDefault();
 
@@ -568,20 +560,11 @@ document.getElementById('imprimirxls').addEventListener('click', async function 
     return;
   }
 
-  // Obtener los datos de la tabla
-  const table = document.getElementById('myTable');
-  const rows = table.getElementsByTagName('tr');
-  const datosTabla = [];
+  // Obtener todos los datos de la tabla (sin importar la paginación)
+  const table = $('#myTable').DataTable();
+  const datosTabla = table.rows({ search: 'applied' }).data().toArray();
 
-  for (let i = 1; i < rows.length; i++) { // Empezar en 1 para saltar el encabezado
-    const cells = rows[i].getElementsByTagName('td');
-    const rowData = [];
-    for (let j = 0; j < cells.length; j++) {
-      rowData.push(cells[j].innerText);
-    }
-    datosTabla.push(rowData);
-  }
-
+  console.log(datosTabla);
   if (!coddis) {
     try {
       const response = await fetch('http://localhost:3009/xls', {
@@ -640,7 +623,7 @@ document.getElementById('imprimirxls').addEventListener('click', async function 
 
     } catch (error) {
       console.error('Error:', error.message);
-      alert('Error al generar el PDF');
+      alert('Error al generar el Excel');
     }
   }
 
@@ -660,11 +643,10 @@ async function descargarmaesbonopdf(codigosie) {
   event.preventDefault();
 
    // Obtener los valores del formulario
-   const distrito = document.getElementById("distrito").value;
    const gestion = document.getElementById("gestion").value;
    const mes = document.getElementById("mes").value;
    coddis = codigosie;
-
+   
   const token = localStorage.getItem("token");
   if (!token) {
     window.location.href = "http://localhost:3009/login";
@@ -679,7 +661,6 @@ async function descargarmaesbonopdf(codigosie) {
               'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            distrito,
             gestion,
             mes,
             coddis
@@ -689,6 +670,8 @@ async function descargarmaesbonopdf(codigosie) {
       if (!response.ok) {
           throw new Error('Error en la solicitud');
       }
+
+      coddis = null;
 
       // Convertir la respuesta en un Blob
       const blob = await response.blob();
@@ -714,7 +697,6 @@ async function descargarmaesbonoxls(codigosie) {
   event.preventDefault();
 
    // Obtener los valores del formulario
-   const distrito = document.getElementById("distrito").value;
    const gestion = document.getElementById("gestion").value;
    const mes = document.getElementById("mes").value;
    coddis = codigosie;
@@ -733,7 +715,6 @@ async function descargarmaesbonoxls(codigosie) {
               'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            distrito,
             gestion,
             mes,
             coddis
@@ -743,6 +724,8 @@ async function descargarmaesbonoxls(codigosie) {
       if (!response.ok) {
           throw new Error('Error en la solicitud');
       }
+
+      coddis = null;
 
       // Convertir la respuesta en un Blob
       const blob = await response.blob();
