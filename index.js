@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '300mb' }));
 app.use(bodyParser.json({ limit: '300mb' }));
 
 const corsOptions = {
-  origin: ['http://localhost:3009', 'https://la-holandesa-vercel-kwld.vercel.app','https://la-holandesa.vercel.app'],
+  origin: ['http://localhost:3009','https://cyd.vercel.app'],
   methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'PATCH', 'DELETE'],
   allowedHeaders: ['X-Requested-With', 'Content-Type', 'Authorization'],
   credentials: true
