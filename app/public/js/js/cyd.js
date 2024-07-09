@@ -1,14 +1,24 @@
+const baseURL = 'http://localhost:3009';
+
+
+const obtenerTokenre = () => {
+  // Hacer una solicitud HTTP al servidor para obtener el token
+  const token = localStorage.getItem("token");
+  if (!token) {
+    // Si el token no está presente, redirigir al usuario a la página de inicio de sesión
+    window.location.href = `${baseURL}/login`;
+    return; // Detener la ejecución del código
+  }
+  return token;
+};
+
 // Función para obtener el token del servidor
 const obtenerToken = async () => {
   try {
     // Hacer una solicitud HTTP al servidor para obtener el token
-    const token = localStorage.getItem("token");
-    if (!token) {
-      // Si el token no está presente, redirigir al usuario a la página de inicio de sesión
-      window.location.href = "http://localhost:3009/login.html";
-      return; // Detener la ejecución del código
-    }
-    const respuesta = await fetch('http://localhost:3009/usuario_aut', {
+    const token = obtenerTokenre();
+
+    const respuesta = await fetch(`${baseURL}/usuario_aut`, {
       method: 'GET',
       headers: {
         "Content-Type": "application/json",
@@ -70,60 +80,6 @@ function mayus(e) {
   e.value = e.value.toUpperCase();
 }
 //*********************************poner en mayuscula**********************************/
-/* const token = localStorage.getItem('token');
-if (token) {
-  console.log('Token JWT encontrado:', token);
-} else {
-  console.log('No se encontró ningún token JWT en el localStorage.');
-} */
-//***********************************crear categoria*************************************/
-/* const formAgregarcod_dis = document.getElementById("myForm");
-
-formAgregarcod_dis.addEventListener("submit", async function (event) {
-  event.preventDefault(); // Evitar que se recargue la página al enviar el formulario
-
-  // Obtener los valores del formulario
-  const nombre_medida = document.getElementById("nombre_medida").value;
-  const descripcion = document.getElementById("descripcion").value;
-
-  try {
-    // Verificar si el token está presente en el localStorage
-    const token = localStorage.getItem("token");
-    if (!token) {
-      // Si el token no está presente, redirigir al cod_dis a la página de inicio de sesión
-      window.location.href = "http://127.0.0.1:5500/frond/Z.administrador/login.html";
-      return; // Detener la ejecución del código
-    }
-    // Enviar los datos al servidor para crear el nuevo cod_dis
-    const response = await fetch(
-      "http://localhost:3009/DDE/create_medida",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          nombre_medida,
-          descripcion,
-        }),
-      }
-    );
-
-    if (response.ok) {
-      // Destruir DataTable antes de eliminar la fila
-      
-      // Actualizar la tabla después de cambiar el estado
-    } else {
-      const errorData = await response.json();
-       // Actualizar la tabla después de cambiar el estado
-    }
-  } catch (error) {
-    console.error("Error al enviar la solicitud:", error);
-    alert("Error al enviar la solicitud");
-  }
-}); */
-//***********************************crear categoria*************************************/
 
 
 document.getElementById("movimientopersonal").addEventListener("change", function () {
@@ -235,16 +191,11 @@ document.getElementById("formbuscar").addEventListener("submit", async function 
     spinner.style.opacity = "0.5"; // Ajusta la opacidad aquí
 
     // Hacer una solicitud HTTP al servidor para obtener el token
-    const token = localStorage.getItem("token");
-    if (!token) {
-      // Si el token no está presente, redirigir al cod_dis a la página de inicio de sesión
-      window.location.href = "http://localhost:3009/login.html";
-      return; // Detener la ejecución del código
-    }
+    const token = obtenerTokenre();
 
     // Enviar los datos al servidor para realizar la búsqueda
     const response = await fetch(
-      'http://localhost:3009/buscar', // Cambia la URL según tu endpoint
+      `${baseURL}/buscar`, // Cambia la URL según tu endpoint
       {
         method: "POST", // Usa POST si estás enviando datos
         headers: {
@@ -425,34 +376,3 @@ const limpiarTabla = () => {
   }
 };
 
-/* $('#myTable').DataTable({
-  language: {
-    decimal: "",
-    emptyTable: "No hay información",
-    info: "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-    infoEmpty: "Mostrando 0 to 0 of 0 Entradas",
-    infoFiltered: "(Filtrado de _MAX_ total entradas)",
-    infoPostFix: "",
-    thousands: ",",
-    lengthMenu: "Mostrar _MENU_ Entradas",
-    loadingRecords: "Cargando...",
-    processing: "Procesando...",
-    search: "Buscar:",
-    zeroRecords: "Sin resultados encontrados",
-    paginate: {
-      first: "Primero",
-      last: "Ultimo",
-      next: ">",
-      previous: "<"
-    }
-  },
-  lengthMenu: [
-    [5, 10, 25, 50, -1],
-    [5, 10, 25, 50, "Todos"]
-  ],
-  pageLength: 5,
-  responsive: true,
-  autoWidth: true,
-  order: [],
-  searching: true // Deshabilitar el buscador global
-}); */

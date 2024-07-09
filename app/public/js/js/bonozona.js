@@ -1,3 +1,17 @@
+const baseURL = 'http://localhost:3009';
+
+
+const obtenerTokenre = () => {
+  // Hacer una solicitud HTTP al servidor para obtener el token
+  const token = localStorage.getItem("token");
+  if (!token) {
+    // Si el token no está presente, redirigir al usuario a la página de inicio de sesión
+    window.location.href = `${baseURL}/login`;
+    return; // Detener la ejecución del código
+  }
+  return token;
+};
+
 let datosUsuario = null;
 let coddis = null;
 
@@ -5,13 +19,8 @@ let coddis = null;
 const obtenerToken = async () => {
   try {
     // Hacer una solicitud HTTP al servidor para obtener el token
-    const token = localStorage.getItem("token");
-    if (!token) {
-      // Si el token no está presente, redirigir al usuario a la página de inicio de sesión
-      window.location.href = "http://localhost:3009/login";
-      return; // Detener la ejecución del código
-    }
-    const respuesta = await fetch('http://localhost:3009/usuario_aut', {
+    const token = obtenerTokenre();
+    const respuesta = await fetch(`${baseURL}/usuario_aut`, {
       method: 'GET',
       headers: {
         "Content-Type": "application/json",
@@ -78,14 +87,9 @@ function mayus(e) {
 
 const getAlldistrito = async () => {
   try {
-    // Verificar si el token está presente en el localStorage
-    const token = localStorage.getItem("token");
-    if (!token) {
-      // Si el token no está presente, redirigir al usuario a la página de inicio de sesión
-      window.location.href = "http://localhost:3009/login";
-      return; // Detener la ejecución del código
-    }
-    const response = await fetch("http://localhost:3009/distrito", {
+    // Hacer una solicitud HTTP al servidor para obtener el token
+    const token = obtenerTokenre();
+    const response = await fetch(`${baseURL}/distrito`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -107,38 +111,6 @@ const getAlldistrito = async () => {
     return [];
   }
 };
-
-/* const getAllgestion = async () => {
-  try {
-    // Verificar si el token está presente en el localStorage
-    const token = localStorage.getItem("token");
-    if (!token) {
-      // Si el token no está presente, redirigir al usuario a la página de inicio de sesión
-      window.location.href = "http://127.0.0.1:5500/frond/login.html";
-      return; // Detener la ejecución del código
-    }
-    const response = await fetch("http://localhost:3009/DDE/gestion",{
-      method:"GET",
-      headers:{
-        Authorization: `Bearer ${token}`,
-      }
-    });
-    if (!response.ok) {
-      throw new Error("Error en la solicitud");
-    }
-    const result = await response.json();
-    console.log(result.data)
-    if (result.error) {
-      console.error("Error:", result.message);
-      return [];
-    } else {
-      return result.data;
-    }
-  } catch (error) {
-    console.error("Error:", error.message);
-    return [];
-  }
-}; */
 
 const populateSelect = (selectElement, options, valueFieldName, textFieldName) => {
   selectElement.innerHTML = '<option value="">Seleccione una opción</option>';
@@ -300,15 +272,10 @@ const realizarBusqueda = async (params) => {
     spinner.style.opacity = "0.5"; // Ajusta la opacidad aquí
 
     // Hacer una solicitud HTTP al servidor para obtener el token
-    const token = localStorage.getItem("token");
-    if (!token) {
-      // Si el token no está presente, redirigir al usuario a la página de inicio de sesión
-      window.location.href = "http://localhost:3009/login.html";
-      return; // Detener la ejecución del código
-    }
+    const token = obtenerTokenre();
 
     // Enviar los datos al servidor para realizar la búsqueda
-    const response = await fetch('http://localhost:3009/bonozona', {
+    const response = await fetch(`${baseURL}/bonozona`, {
       method: "POST", // Usa POST si estás enviando datos
       headers: {
         "Content-Type": "application/json",
@@ -475,11 +442,8 @@ const mostrarDatosdelaUE = (data, coddis) => {
 document.getElementById('imprimir').addEventListener('click', async function (event) {
   event.preventDefault();
 
-  const token = localStorage.getItem("token");
-  if (!token) {
-    window.location.href = "http://localhost:3009/login";
-    return;
-  }
+  // Hacer una solicitud HTTP al servidor para obtener el token
+  const token = obtenerTokenre();
 
   // Obtener todos los datos de la tabla (sin importar la paginación)
   const table = $('#myTable').DataTable();
@@ -487,7 +451,7 @@ document.getElementById('imprimir').addEventListener('click', async function (ev
 
   if (!coddis) {
     try {
-      const response = await fetch('http://localhost:3009/pdf', {
+      const response = await fetch(`${baseURL}/pdf`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -517,7 +481,7 @@ document.getElementById('imprimir').addEventListener('click', async function (ev
     }
   } else {
     try {
-      const response = await fetch('http://localhost:3009/pdfmaestros', {
+      const response = await fetch(`${baseURL}/pdfmaestros`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -554,20 +518,16 @@ document.getElementById('imprimir').addEventListener('click', async function (ev
 document.getElementById('imprimirxls').addEventListener('click', async function (event) {
   event.preventDefault();
 
-  const token = localStorage.getItem("token");
-  if (!token) {
-    window.location.href = "http://localhost:3009/login";
-    return;
-  }
+  // Hacer una solicitud HTTP al servidor para obtener el token
+  const token = obtenerTokenre();
 
   // Obtener todos los datos de la tabla (sin importar la paginación)
   const table = $('#myTable').DataTable();
   const datosTabla = table.rows({ search: 'applied' }).data().toArray();
 
-  console.log(datosTabla);
   if (!coddis) {
     try {
-      const response = await fetch('http://localhost:3009/xls', {
+      const response = await fetch(`${baseURL}/xls`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -597,7 +557,7 @@ document.getElementById('imprimirxls').addEventListener('click', async function 
     }
   } else {
     try {
-      const response = await fetch('http://localhost:3009/xlsmaestros', {
+      const response = await fetch(`${baseURL}/xlsmaestros`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -642,53 +602,50 @@ const limpiarTabla = () => {
 async function descargarmaesbonopdf(codigosie) {
   event.preventDefault();
 
-   // Obtener los valores del formulario
-   const gestion = document.getElementById("gestion").value;
-   const mes = document.getElementById("mes").value;
-   coddis = codigosie;
-   
-  const token = localStorage.getItem("token");
-  if (!token) {
-    window.location.href = "http://localhost:3009/login";
-    return;
-  }
+  // Obtener los valores del formulario
+  const gestion = document.getElementById("gestion").value;
+  const mes = document.getElementById("mes").value;
+  coddis = codigosie;
+
+  // Hacer una solicitud HTTP al servidor para obtener el token
+  const token = obtenerTokenre();
 
   try {
-      const response = await fetch(`http://localhost:3009/desmaesbonopdf`, {
-          method: 'POST',
-          headers: {
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            gestion,
-            mes,
-            coddis
-          })
-      });
+    const response = await fetch(`${baseURL}/desmaesbonopdf`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        gestion,
+        mes,
+        coddis
+      })
+    });
 
-      if (!response.ok) {
-          throw new Error('Error en la solicitud');
-      }
+    if (!response.ok) {
+      throw new Error('Error en la solicitud');
+    }
 
-      coddis = null;
+    coddis = null;
 
-      // Convertir la respuesta en un Blob
-      const blob = await response.blob();
+    // Convertir la respuesta en un Blob
+    const blob = await response.blob();
 
-      // Crear un enlace temporal y disparar la descarga
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.style.display = 'none';
-      a.href = url;
-      a.download = 'Recibo.pdf';
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
+    // Crear un enlace temporal y disparar la descarga
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = url;
+    a.download = 'Recibo.pdf';
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
 
   } catch (error) {
-      console.error('Error:', error.message);
-      alert('Error al generar el PDF');
+    console.error('Error:', error.message);
+    alert('Error al generar el PDF');
   }
 }
 
@@ -696,52 +653,49 @@ async function descargarmaesbonopdf(codigosie) {
 async function descargarmaesbonoxls(codigosie) {
   event.preventDefault();
 
-   // Obtener los valores del formulario
-   const gestion = document.getElementById("gestion").value;
-   const mes = document.getElementById("mes").value;
-   coddis = codigosie;
+  // Obtener los valores del formulario
+  const gestion = document.getElementById("gestion").value;
+  const mes = document.getElementById("mes").value;
+  coddis = codigosie;
 
-  const token = localStorage.getItem("token");
-  if (!token) {
-    window.location.href = "http://localhost:3009/login";
-    return;
-  }
+  // Hacer una solicitud HTTP al servidor para obtener el token
+  const token = obtenerTokenre();
 
   try {
-      const response = await fetch(`http://localhost:3009/desmaesbonoxls`, {
-          method: 'POST',
-          headers: {
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            gestion,
-            mes,
-            coddis
-          })
-      });
+    const response = await fetch(`${baseURL}/desmaesbonoxls`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        gestion,
+        mes,
+        coddis
+      })
+    });
 
-      if (!response.ok) {
-          throw new Error('Error en la solicitud');
-      }
+    if (!response.ok) {
+      throw new Error('Error en la solicitud');
+    }
 
-      coddis = null;
+    coddis = null;
 
-      // Convertir la respuesta en un Blob
-      const blob = await response.blob();
+    // Convertir la respuesta en un Blob
+    const blob = await response.blob();
 
-      // Crear un enlace temporal y disparar la descarga
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.style.display = 'none';
-      a.href = url;
-      a.download = 'reportes.xlsx';
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
+    // Crear un enlace temporal y disparar la descarga
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = url;
+    a.download = 'reportes.xlsx';
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
 
   } catch (error) {
-      console.error('Error:', error.message);
-      alert('Error al generar el Excel');
+    console.error('Error:', error.message);
+    alert('Error al generar el Excel');
   }
 }

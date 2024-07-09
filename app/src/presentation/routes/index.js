@@ -6,7 +6,7 @@ const distritalRoutes = require('./distritalRoutes'); // Importa las rutas del v
 
 // Ruta de inicio
 router.get('/', (req, res) => {
-    res.render('',{title: 'Dashboard'});
+    res.render('index',{title: 'Inicio'});
 });
 
 // Ruta de login
@@ -21,17 +21,17 @@ router.get('/Perfil', (req, res) => {
   
 // Ruta de usuarios
 router.get('/Usuarios', (req, res) => {
-    res.render('usuarios',{title: 'Usuarios🎇'});
+    res.render('usuarios',{title: 'Usuarios 👩‍🎨'});
 });
   
 // Ruta de medidas
 router.get('/Cyd', (req, res) => {
-    res.render('cyd',{title: 'Consistencias🧱'});
+    res.render('cyd',{title: 'Consistencias ⚙'});
 });
 
 // Ruta de categorias
 router.get('/Bonozona', (req, res) => {
-    res.render('bonozona',{title: 'bonozona🐊'});
+    res.render('bonozona',{title: 'Bono zona 💰'});
 });
 
 // Ruta de productos
