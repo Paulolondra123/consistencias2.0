@@ -1,6 +1,9 @@
 // tokenHelper.js
 //import  {baseURL1}  from '../../../../../src/shared/constants/baseURL';
-const baseURL1 = 'http://localhost:3009'
+
+//const baseURL1 = 'http://localhost:3009'
+const baseURL1 = 'http://consistencias-cyd.vercel.app'
+
 
 let userId = null; // Variable global para almacenar el ID del usuario
 
@@ -57,7 +60,7 @@ const verificarprimerlogin = async () => {
     try {
         const token = localStorage.getItem("token");
         if (!token) {
-          window.location.href = `http://consistencias-cyd.vercel.app/login`;
+          window.location.href = `${baseURL1}/login`;
           return;
         }
         const response = await fetch(`${baseURL1}/verify-auth`, {
@@ -82,11 +85,11 @@ const verificarprimerlogin = async () => {
                 await verificarAutenticacion();
             }
         } else {
-            window.location.href = `http://consistencias-cyd.vercel.app/login`;
+            window.location.href = `${baseURL1}/login`;
         }
     } catch (error) {
         console.error("Error al verificar autenticación:", error);
-        window.location.href = `http://consistencias-cyd.vercel.app/login`;
+        window.location.href = `${baseURL1}/login`;
     }
 };
 
@@ -120,7 +123,7 @@ const verificarAutenticacion = async () => {
                     timer: 1500,
                     showConfirmButton: false
                 });
-                window.location.href = `http://consistencias-cyd.vercel.app/distrital/cyd`;
+                window.location.href = `${baseURL1}/distrital/cyd`;
             } else if (perfil === 'ADMINISTRADOR') {
                 await Swal.fire({
                     title: "Logueado correctamente!",
@@ -128,7 +131,7 @@ const verificarAutenticacion = async () => {
                     timer: 1500,
                     showConfirmButton: false
                 });
-                window.location.href = `http://consistencias-cyd.vercel.app`;
+                window.location.href = `${baseURL1}`;
             }  else if (perfil === 'DEPARTAMENTAL') {
                 await Swal.fire({
                     title: "Logueado correctamente!",
@@ -136,7 +139,7 @@ const verificarAutenticacion = async () => {
                     timer: 1500,
                     showConfirmButton: false
                 });
-                window.location.href = `http://consistencias-cyd.vercel.app/departamental/cyd`;
+                window.location.href = `${baseURL1}/departamental/cyd`;
             } else {
                 window.location.href = `${baseURL1}/login`;
             }
