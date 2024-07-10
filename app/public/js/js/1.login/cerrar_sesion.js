@@ -4,7 +4,7 @@ const baseURL2 = 'http://localhost:3009'
 const logoutButton = document.getElementById('logout-session');
 logoutButton.addEventListener('click', async (e) => {
     e.preventDefault();
-
+    console.log("hisiste click")
     try {
         // Envía una solicitud al servidor para cerrar la sesión
         const response = await fetch(`${baseURL2}/logout`, {
@@ -18,7 +18,7 @@ logoutButton.addEventListener('click', async (e) => {
             // Elimina el token del almacenamiento local
             localStorage.removeItem('token');
             // Redirige al usuario a la página de inicio de sesión
-            window.location.href = `${baseURL1}/login`;
+            window.location.href = `${baseURL2}/login`;
         } else {
             const errorData = await response.json();
             console.error('Error al cerrar sesión:', errorData.error);

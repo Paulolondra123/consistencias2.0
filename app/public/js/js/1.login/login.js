@@ -1,9 +1,6 @@
 // tokenHelper.js
 //import  {baseURL1}  from '../../../../../src/shared/constants/baseURL';
-
-//const baseURL1 = 'http://localhost:3009'
-const baseURL1 = 'http://consistencias-cyd.vercel.app'
-
+const baseURL1 = 'http://localhost:3009'
 
 let userId = null; // Variable global para almacenar el ID del usuario
 
@@ -131,7 +128,7 @@ const verificarAutenticacion = async () => {
                     timer: 1500,
                     showConfirmButton: false
                 });
-                window.location.href = `${baseURL1}`;
+                window.location.href = `${baseURL1}/usuarios`;
             }  else if (perfil === 'DEPARTAMENTAL') {
                 await Swal.fire({
                     title: "Logueado correctamente!",
