@@ -128,7 +128,7 @@ const verificarAutenticacion = async () => {
                     timer: 1500,
                     showConfirmButton: false
                 });
-                window.location.href = `http://consistencias-cyd.vercel.app/usuarios`;
+                window.location.href = `http://consistencias-cyd.vercel.app`;
             }  else if (perfil === 'DEPARTAMENTAL') {
                 await Swal.fire({
                     title: "Logueado correctamente!",
