@@ -120,7 +120,7 @@ const verificarAutenticacion = async () => {
                     timer: 1500,
                     showConfirmButton: false
                 });
-                window.location.href = `${baseURL1}/distrital/cyd`;
+                window.location.href = `http://consistencias-cyd.vercel.app/distrital/cyd`;
             } else if (perfil === 'ADMINISTRADOR') {
                 await Swal.fire({
                     title: "Logueado correctamente!",
@@ -128,7 +128,7 @@ const verificarAutenticacion = async () => {
                     timer: 1500,
                     showConfirmButton: false
                 });
-                window.location.href = `${baseURL1}/usuarios`;
+                window.location.href = `http://consistencias-cyd.vercel.app/usuarios`;
             }  else if (perfil === 'DEPARTAMENTAL') {
                 await Swal.fire({
                     title: "Logueado correctamente!",
@@ -136,7 +136,7 @@ const verificarAutenticacion = async () => {
                     timer: 1500,
                     showConfirmButton: false
                 });
-                window.location.href = `${baseURL1}/departamental/cyd`;
+                window.location.href = `http://consistencias-cyd.vercel.app/departamental/cyd`;
             } else {
                 window.location.href = `${baseURL1}/login`;
             }
