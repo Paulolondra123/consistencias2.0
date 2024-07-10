@@ -7,11 +7,12 @@ const config = {
   password: process.env.DB_PASSWORD,
   server: process.env.DB_HOST, // Puedes cambiar esto por la dirección de tu servidor SQL Server
   database: process.env.DB_NAME,
+  port: parseInt(process.env.DB_PORT, 10),
   options: {
       encrypt: false, // Si estás usando una conexión encriptada, por ejemplo, con Azure
       trustServerCertificate: true,
-      connectTimeout: 30000, // 30 segundos
-      requestTimeout: 30000 // 30 segundos
+      connectTimeout: 120000, // 2 minutos
+      requestTimeout: 120000 //  2 minutos
   }
 };
 
