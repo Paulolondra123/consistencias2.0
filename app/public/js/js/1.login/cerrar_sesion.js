@@ -18,7 +18,7 @@ logoutButton.addEventListener('click', async (e) => {
             // Elimina el token del almacenamiento local
             localStorage.removeItem('token');
             // Redirige al usuario a la página de inicio de sesión
-            window.location.href = `${baseURL2}/login`;
+            window.location.href = `http://consistencias-cyd.vercel.app/login`;
         } else {
             const errorData = await response.json();
             console.error('Error al cerrar sesión:', errorData.error);

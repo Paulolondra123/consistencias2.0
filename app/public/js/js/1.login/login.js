@@ -57,7 +57,7 @@ const verificarprimerlogin = async () => {
     try {
         const token = localStorage.getItem("token");
         if (!token) {
-          window.location.href = `${baseURL1}/login`;
+          window.location.href = `http://consistencias-cyd.vercel.app/login`;
           return;
         }
         const response = await fetch(`${baseURL1}/verify-auth`, {
@@ -82,11 +82,11 @@ const verificarprimerlogin = async () => {
                 await verificarAutenticacion();
             }
         } else {
-            window.location.href = `${baseURL1}/login`;
+            window.location.href = `http://consistencias-cyd.vercel.app/login`;
         }
     } catch (error) {
         console.error("Error al verificar autenticación:", error);
-        window.location.href = `${baseURL1}/login`;
+        window.location.href = `http://consistencias-cyd.vercel.app/login`;
     }
 };
 

@@ -88,16 +88,16 @@ const authMiddleware = require('./app/src/presentation/middleware/authMiddleware
 
 app.use(indexRoutes);
 app.use(authRoutes);
-app.use(usuarioRoutes);
+app.use(usuarioRoutes,authMiddleware );
 //app.use(dashboardRoutes,authMiddleware);
-app.use(cydRoutes);
-app.use(bonozonaRoutes);
+app.use(cydRoutes,authMiddleware);
+app.use(bonozonaRoutes,authMiddleware);
 //app.use(productosRoutes,authMiddleware);
 //app.use(clienteRoutes,authMiddleware);
 //app.use(ventaRoutes,authMiddleware);
 //app.use(proveedorRoutes,authMiddleware);
 //app.use(compraRoutes,authMiddleware);
-app.use(perfilRoutes);
+app.use(perfilRoutes,authMiddleware);
 app.use(maesbono);
 
 
