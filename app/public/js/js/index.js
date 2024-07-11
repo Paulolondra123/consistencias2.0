@@ -1,4 +1,4 @@
-const baseURL = 'http://localhost:3009';
+const baseURL = 'https://consistencias-cyd.vercel.app';
 
 const obtenerTokenre = () => {
   // Hacer una solicitud HTTP al servidor para obtener el token

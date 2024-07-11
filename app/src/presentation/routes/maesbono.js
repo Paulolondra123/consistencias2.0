@@ -317,7 +317,7 @@ router.post('/desmaesbonoxls', async (req, res) => {
 
        // Añadir imagen de pie de página al final de la hoja antes de pasar a la siguiente
        const footerImagePosition = {
-           tl: { col: 1, row: 32 },
+           tl: { col: 1, row: 36 },
            ext: { width: footerTotalWidth, height: 8 }
        };
        currentWorksheet.addImage(imageIdline, footerImagePosition);
