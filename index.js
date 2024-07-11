@@ -112,5 +112,5 @@ const PORT = process.env.PORT || 3000;
 // app.use('/La_holandesa/protected', authMiddleware, protectedRoutes);
 
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}/usuarios`);
+  console.log(`Servidor corriendo en https://consistencias-cyd.vercel.app/usuarios`);
 });
