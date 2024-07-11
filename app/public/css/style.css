@@ -7,7 +7,7 @@
 }
 
 .back-minedu{
-    background-image: url(https://consistencias-cyd.vercel.app/minedu-background-2021-cruz.png);
+    background-image: url(/minedu-background-2021-cruz.png);
     background-size: contain;
     background-repeat: inherit;
 }
@@ -26,7 +26,7 @@
 }
 
 .font-svg{
-    background-image: url(https://consistencias-cyd.vercel.app/fono-azul.jpg);
+    background-image: url(/fono-azul.jpg);
     background-size: 100% 100%;
     background-repeat: no-repeat;
 }
