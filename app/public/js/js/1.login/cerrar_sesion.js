@@ -1,4 +1,4 @@
-const baseURL2 = 'http://localhost:3009'
+const baseURL2 = 'https://consistencias-cyd.vercel.app'
 
 // Agrega un evento de clic al botón de cerrar sesión
 const logoutButton = document.getElementById('logout-session');
