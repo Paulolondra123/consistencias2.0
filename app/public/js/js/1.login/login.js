@@ -1,6 +1,6 @@
 // tokenHelper.js
 //import  {baseURL1}  from '../../../../../src/shared/constants/baseURL';
-const baseURL1 = 'https://consistencias-cyd.vercel.app'
+const baseURL1 = 'http://localhost:3009'
 
 let userId = null; // Variable global para almacenar el ID del usuario
 
@@ -112,7 +112,7 @@ const verificarAutenticacion = async () => {
             
             const { perfil } = data;
 
-            console.log(perfil);
+            
             if (perfil === 'DISTRITAL') {
                 await Swal.fire({
                     title: "Logueado correctamente!",

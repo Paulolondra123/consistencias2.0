@@ -1,4 +1,4 @@
-const baseURL = 'https://consistencias-cyd.vercel.app';
+const baseURL = 'http://localhost:3009';
 
 const obtenerTokenre = () => {
   // Hacer una solicitud HTTP al servidor para obtener el token
@@ -28,7 +28,7 @@ const obtenerToken = async () => {
       // Verificar si la respuesta fue exitosa (código de estado 200)
       if (respuesta.ok) {
         const datosUsuario = await respuesta.json();
-        console.log(datosUsuario)
+        //console.log(datosUsuario)
         // Mostrar los datos en un formulario
         mostrarDatosEnFormulario(datosUsuario);
       } else {

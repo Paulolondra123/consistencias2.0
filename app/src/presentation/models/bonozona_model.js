@@ -53,7 +53,7 @@ class Usersmodel {
 
       const result = await pool.request().query(query);
       await disconnectFromMssql(pool);
-      console.log(result.recordset) 
+      //console.log(result.recordset) 
       if (result.recordset.length === 0) {
         return {
           data: null,

@@ -1,4 +1,4 @@
-const baseURL = 'https://consistencias-cyd.vercel.app';
+const baseURL = 'http://localhost:3009';
 
 
 const obtenerTokenre = () => {
@@ -114,10 +114,6 @@ formcanbiarcontra.addEventListener("submit", async function (event) {
   const contraseñaActual = document.getElementById("contraseña_actual").value;
   const nuevaContraseña = document.getElementById("nueva_contraseña").value;
   const confirmarContraseña = document.getElementById("confirmar_contraseña").value;
-
-  console.log(contraseñaActual)
-  console.log(nuevaContraseña)
-  console.log(confirmarContraseña)
 
   // Verificar si las contraseñas nuevas coinciden
   if (nuevaContraseña !== confirmarContraseña) {

@@ -1,0 +1,7 @@
+node_modules
+
+.gitignore
+
+vercel.json
+
+npm-debug.log

@@ -66,7 +66,7 @@ class LoginController {
               isAuthenticated: true // Agregar isAuthenticated al payload
           };
           const token = jwt.sign(tokenPayload, 'secretkey');
-          console.log("Tipo de token:", typeof token); // Agregar este registro de consola
+          //console.log("Tipo de token:", typeof token); // Agregar este registro de consola
           /* // Establecer la sesión del usuario
           req.session.user = user;
           req.session.isAuthenticated = true; */
@@ -83,8 +83,7 @@ class LoginController {
       try {
           const { nuevaContraseña } = req.body;
           const userId = req.body.userId; // Obteniendo el ID del usuario desde el cuerpo de la solicitud
-          console.log(userId)
-          console.log(nuevaContraseña)
+        
           // Actualizar la contraseña en la base de datos
           const isUpdated = await buscarusers.updatePassword(userId, nuevaContraseña);
 

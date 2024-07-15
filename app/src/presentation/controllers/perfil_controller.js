@@ -5,9 +5,7 @@ class UserController {
         try {
             const { contraseñaActual, nuevaContraseña } = req.body;
             const userId = req.body.userId; // Obteniendo el ID del usuario desde el cuerpo de la solicitud
-            console.log(userId)
-            console.log(nuevaContraseña)
-            console.log(contraseñaActual)
+            
             // Actualizar la contraseña en la base de datos
             const isUpdated = await UsersModel.updatePassword(userId, nuevaContraseña, contraseñaActual);
 

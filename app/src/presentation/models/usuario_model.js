@@ -68,7 +68,7 @@ class Usersmodel {
         // Ejecutar la consulta con parámetros
         const result = await pool.request().query(query);
 
-        console.log('Usuario creado correctamente');
+        //console.log('Usuario creado correctamente');
         return true;
     } catch (error) {
         console.error('Error al crear el usuario:', error);
@@ -104,7 +104,7 @@ class Usersmodel {
       // Ejecutar la consulta con parámetros
       await pool.request().query(query);
 
-      console.log('Usuario actualizado correctamente');
+      //console.log('Usuario actualizado correctamente');
       return true;
     } catch (error) {
       console.error('Error al actualizar el usuario:', error);
