@@ -22,5 +22,24 @@ router.get('/Bonozona', (req, res) => {
     res.render('departamental/bonozona',{title: 'Bono zona🙍‍♂️'});
 });
 
+// Ruta de nueva venta
+router.get('/Servicioitem', (req, res) => {
+    res.render('departamental/servicioitem',{title: 'Servicio Item 💰'});
+});
+
+// Ruta de nueva venta
+router.get('/Xcarnet', (req, res) => {
+    res.render('departamental/xcarnet',{title: 'X Carnet 💰'});
+});
+
+// Ruta de nueva venta
+router.get('/Acefalias', (req, res) => {
+    res.render('departamental/acefalias',{title: 'Acefalias 💰'});
+});
+
+// Ruta de Acefalias
+router.get('/MostrarAcefalias', (req, res) => {
+    res.render('epartamental/mostraracefalias',{title: 'Mostrar Acefalias⛺'});
+});
 
 module.exports = router;

@@ -22,7 +22,7 @@ CREATE TABLE usuario (
 INSERT INTO usuario (nombres, apellidos, perfil, distrito, usuario, contraseña, fecha_registro)
 VALUES 
 ('MAURICIO', 'DE LA FUENTE AYALA', 'ADMINISTRADOR', 700, 'MAURI', '$2a$12$MH66.Ob.fy.MnPqmeKLfeOorQBnvHBIT/WATlOYO4Az4uPKwucwy2', CURRENT_TIMESTAMP),
-('PAULO CESAR', 'CASTRO LEIGUE', 'DISTRITAL', 701, 'PAULO', '$2a$12$MH66.Ob.fy.MnPqmeKLfeOorQBnvHBIT/WATlOYO4Az4uPKwucwy2', CURRENT_TIMESTAMP),
+('PAULO CESAR', 'CASTRO LEIGUE', 'DISTRITAL', 707, 'PAULO', '$2a$12$MH66.Ob.fy.MnPqmeKLfeOorQBnvHBIT/WATlOYO4Az4uPKwucwy2', CURRENT_TIMESTAMP),
 ('NELSON NERY', 'ALCOCER COCA', 'DEPARTAMENTAL', 700, 'NELSON', '$2a$12$MH66.Ob.fy.MnPqmeKLfeOorQBnvHBIT/WATlOYO4Az4uPKwucwy2', CURRENT_TIMESTAMP);
 
 --select * from detalle_venta; 

@@ -9,42 +9,72 @@
 
 <!-- Sidebar Start -->
 <div class="sidebar bg-white border-end" style="height: 100%;">
-  <div style="display: flex;flex-direction: column;justify-content: space-between;height: 100%;">
-  <div style="height: 87%;">
-      <nav class="navbar navbar-dark ">
-      <a href="/" style="display: flex; justify-content: center; width: 100%; height: 57px; " class="border-bottom">
-        <img style="width: 100%;" class="img-responsive img-fluid" alt="Responsive image" src="/minedu-background-2021.png"
-          alt="" />
-        <img style="width: 88%;" class="img-responsive img-fluid position-absolute px-3 py-1" alt="Responsive image" src="/logo-minedu-2023_5.png"
-        alt="" />
-      </a>
-      <div class="d-flex align-items-center ms-4 mb-4 mt-4">
-        <div class="position-relative">
-          <img class="rounded-circle" src="/user.jpg" alt="" style="width: 40px; height: 40px" />
-          <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
-        </div>
-        <div class="ms-3">
-          <h6 class="mb-0 text-dark" id="usernav">adm</h6>
-          <span id="perfi" class="text-dark">adm</span>
-        </div>
+  <div style="display: flex; flex-direction: column; height: 100%;">
+    <a href="/" style="display: flex; justify-content: center; width: 100%; height: 57px;" class="border-bottom">
+      <img style="width: 100%;" class="img-responsive img-fluid" alt="Responsive image"
+        src="/minedu-background-2021.png" alt="" />
+      <img style="width: 88%;" class="img-responsive img-fluid position-absolute px-3 py-1" alt="Responsive image"
+        src="/logo-minedu-2023_5.png" alt="" />
+    </a>
+    <div class="d-flex align-items-center ms-4 mb-4 mt-4">
+      <div class="position-relative">
+        <img class="rounded-circle" src="/user2.png" alt="" style="width: 40px; height: 40px" />
+        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
       </div>
-      <div class="navbar-nav w-100">
-        <a href="/" class="fonts nav-item nav-link <%= currentRoute === '/' ? 'active' : '' %>"><i class=" fi-sr-dashboard me-2"></i>Inicio</a>
-        <a href="/usuarios" class="fonts nav-item nav-link <%= currentRoute === '/usuarios' ? 'active' : '' %>"><i class=" fi-sr-users-alt me-2"></i>Usuarios</a>
-        <a href="/cyd" class="fonts nav-item nav-link <%= currentRoute === '/cyd' ? 'active' : '' %>"><i class="fi fi-sr-scale me-2"></i>Consistencias</a>
-        <a href="/bonozona" class="fonts nav-item nav-link <%= currentRoute === '/bonozona' ? 'active' : '' %>"><i class="fi fi-sr-category-alt me-2"></i>Bonozona</a>
+      <div class="ms-3">
+        <h6 class="mb-0 text-dark" id="usernav">adm</h6>
+        <span id="perfi" class="text-dark">adm</span>
       </div>
-    </nav>
-    </div> 
-    
+    </div>
+    <!-- Contenedor de navegación con scroll -->
+    <div style="flex: 1; overflow-y: auto;">
+      <nav class="navbar navbar-dark">
+
+        <div class="navbar-nav w-100">
+          <a href="/" class="fonts nav-item nav-link <%= currentRoute === '/' ? 'active' : '' %>"><i
+              class="fi-sr-dashboard me-2"></i>Inicio</a>
+          <a href="/usuarios" class="fonts nav-item nav-link <%= currentRoute === '/usuarios' ? 'active' : '' %>"><i
+              class="fi-sr-users-alt me-2"></i>Usuarios</a>
+          <a href="/cyd" class="fonts nav-item nav-link <%= currentRoute === '/cyd' ? 'active' : '' %>"><i
+              class="fi fi-sr-scale me-2"></i>Consistencias</a>
+          <a href="/bonozona" class="fonts nav-item nav-link <%= currentRoute === '/bonozona' ? 'active' : '' %>"><i
+              class="fi fi-sr-category-alt me-2"></i>Bonozona</a>
+          <!-- <a href="/InformacionUE" class="fonts nav-item nav-link <%= currentRoute === '/InformacionUE' ? 'active' : '' %>" style="display: flex; align-items: center; justify-content: space-between;">
+              <span style="flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><i class="fi-sr-info-guide me-2"></i>Información de UE-CEA-CEE</span>
+          </a> -->
+          <!-- <div class="nav-item dropdown">
+            <a href="#"
+              class="fonts nav-link dropdown-toggle <%= ['/clientes', '/nueva-venta', '/ventas'].includes(currentRoute) ? 'active' : '' %>"
+              data-bs-toggle="dropdown"><i class="fi-sr-newspaper me-2"></i>Reportes SEP</a>
+            <div class="dropdown-menu bg-transparent border-0">
+              <a href="/#" class="dropdown-item <%= currentRoute === '/clientes' ? 'active' : '' %>">Distrito</a>
+            </div>
+          </div> -->
+          <div class="nav-item dropdown">
+            <a href="#"
+              class="fonts nav-link dropdown-toggle <%= ['/servicioitem', '/xcarnet', '/acefalias'].includes(currentRoute) ? 'active' : '' %>"
+              data-bs-toggle="dropdown"><i class="fi-sr-audit me-2"></i>Consultas SEP</a>
+            <div class="dropdown-menu bg-transparent border-0">
+              <a href="/servicioitem"
+                class="dropdown-item <%= currentRoute === '/servicioitem' ? 'active' : '' %>">Servicio ITEM</a>
+              <a href="/xcarnet" class="dropdown-item <%= currentRoute === '/xcarnet' ? 'active' : '' %>">X Carnet</a>
+              <a href="/acefalias"
+                class="dropdown-item <%= currentRoute === '/acefalias' ? 'active' : '' %>">Acefalias</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <!-- Contenedor de imágenes estático al final -->
     <div style="display: flex; justify-content: center; width: 100%; height: 85px;">
-        <img style="width: 100%;" class="img-responsive img-fluid" alt="Responsive image" src="/minedu-background-2021.png"
-          alt="" />
-        <img style="width: 250%; margin-top: 4.5%;" class="img-responsive img-fluid position-absolute " alt="Responsive image" src="/logo_dde_2024.png"
-        alt="" />
+      <img style="width: 100%;" class="img-responsive img-fluid" alt="Responsive image"
+        src="/minedu-background-2021.png" alt="" />
+      <img style="width: 250%; margin-top: 4.5%;" class="img-responsive img-fluid position-absolute"
+        alt="Responsive image" src="/logo_dde_2024.png" alt="" />
     </div>
   </div>
-  
-  
 </div>
+
+
 <!-- Sidebar End -->

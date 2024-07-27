@@ -23,14 +23,14 @@
         <!-- Sign In Start -->
         <div class="container-fluid font-svg">
             <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
-                <div class="col-12 col-sm-8 col-md-6 col-lg-7 col-xl-7 d-flex flex-column">
+                <div class="col-12 col-sm-8 col-md-6 col-lg-7 col-xl-7 d-flex flex-column ">
                     <div class="row flex-grow-1">
                         <div class="col-md-6 p-0"> <!-- Aquí añadí la clase p-0 -->
                             <!-- Aquí va tu imagen -->
                             <img src="/DISEÑO_LOGO_D.D.E_SC_ORIGINAL_ACT.png" class="img-fluid w-100 h-100" alt="Imagen de fondo">
                         </div>
-                        <div class="col-md-6 p-0"> <!-- Aquí añadí la clase p-0 -->
-                            <form class=" p-4 p-sm-4 w-100 h-100 rounded-1" id="login-form">
+                        <div class="col-md-6 p-0" > <!-- Aquí añadí la clase p-0 -->
+                            <form class=" p-4 p-sm-4 h-100 w-100 rounded-1" id="login-form">
                                 <div class="d-flex align-items-center justify-content-center mb-5">
                                     <span style="background: #0073e6;width: 100%;height: 50px;"></span>
                                     <!-- <img src="/minedu-background-2021.png" alt=""> -->
@@ -56,8 +56,8 @@
 
         <div class=" position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center" id="change-password-container" style="z-index: -1;opacity: 0; transition: all .3s;" >
             <div class="col-sm-12 col-xl-3">
-                <div class="bg-secondary rounded h-100 p-4">
-                    <h6 class="mb-4">Cambiar Contraseña</h6>
+                <div class="bg-white rounded h-100 p-4">
+                    <h6 class="mb-4 text-dark">Cambiar Contraseña</h6>
                     <form id="change-password-form">
                         <div class="mb-3">
                             <!-- <div class="form-text">We'll never share your email with anyone else.
@@ -65,21 +65,21 @@
                         </div>
                         <div class="mb-3">
                             <div class="form-floating mb-3">
-                                <input type="password" class="form-control" id="nueva_contraseña" placeholder="Nueva contraseña" value="">
-                                <label for="floatingInput">Nueva contraseña:</label>
+                                <input type="password" class="form-control bg-claro-gris" id="nueva_contraseña" placeholder="Nueva contraseña" value="">
+                                <label for="floatingInput" class="text-dark">Nueva contraseña:</label>
                             </div>
                             <!-- <div class="form-text">We'll never share your email with anyone else.
                             </div> -->
                         </div>
                         <div class="mb-3">
                             <div class="form-floating mb-3">
-                                <input type="password" class="form-control" id="confirmar_contraseña" placeholder="Confirmar contraseña" value="">
-                                <label for="floatingInput">Confirmar contraseña:</label>
+                                <input type="password" class="form-control bg-claro-gris" id="confirmar_contraseña" placeholder="Confirmar contraseña" value="">
+                                <label for="floatingInput" class="text-dark">Confirmar contraseña:</label>
                             </div>
                             <!-- <div class="form-text">We'll never share your email with anyone else.
                             </div> -->
                         </div>
-                        <button type="submit" class="btn btn-primary">Confirmar</button>
+                        <button type="submit" class="btn btn-primary text-white">Confirmar</button>
                     </form>
                 </div>
             </div>
@@ -87,6 +87,10 @@
         <!-- Sign In End -->
 
     </div>
+    <script>
+        // Limpiar el localStorage al cargar la página
+        localStorage.clear();
+    </script>
     <%- include('partials/scripts/scripts') %>
     <script type="module" src="/js/1.login/login.js"></script>
   </body>

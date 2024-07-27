@@ -52,6 +52,13 @@
                           </select>
                         </div>
                       </div>
+                      <div class="d-flex justify-content-between col-md-12">
+                        <div class="col-md-5 mb-3">
+                          <label for="inputGestion" class="form-label">SUBSISTEMA:</label>
+                          <select type="number" class="form-control bg-claro-gris" id="subsistema">
+                          </select>
+                        </div>
+                      </div>
                       <div class="col-md-3 mb-3 d-flex align-items-end">
                         <button type="submit" class="btn btn-primary text-white ">Buscar</button>
                       </div>
@@ -60,12 +67,13 @@
                   <div class="row mb-3">
                     <div class="row mb-3"></div>
                     <div class="col-md-9 mb-3 align-items-end">
-                      <label for="nombres" class="form-label">BUSCAR MAESTROS CON BONO ZONA</label>
+                      <label for="nombres" class="form-label">BUSCAR POR SIE</label>
                       <input type="text" class="form-control col-md-6 bg-claro-gris" placeholder="CODIGO SIE"
                         id="coddis" required>
                     </div>
                     <form id="buscarmaestros" class="col-md-3 mb-3 align-items-end d-flex">
-                      <button type="submit" class="btn btn-primary col-md-12 text-white">Buscar</button>
+                      <button type="submit" class="btn btn-primary col-md-12 text-white" id="btn-buscar"
+                        disabled>Buscar</button>
                     </form>
                   </div>
                   <div class="rcol-md-12">
@@ -78,8 +86,8 @@
                   </div>
                 </div>
               </div>
-              
-              
+
+
             </div>
 
             <div class="container-fluid px-4 row g-4">
@@ -108,7 +116,9 @@
       </div>
       <!-- Content End -->
       <!-- Back to Top -->
-      <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+      <!-- <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a> -->
+
       <!-- Back to Top -->
   </div>
   <!-- Content Padre End -->
@@ -147,6 +157,7 @@
         });
       });
     </script>
+
     <script src="/js/bonozona.js"></script>
 </body>
 

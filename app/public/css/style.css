@@ -5,10 +5,19 @@
     font-weight: 100 900;
     font-style: normal;
 }
+#cursor {
+    cursor: pointer;
+}
 
 .back-minedu{
     background-image: url(/minedu_background_2021_cruz.png);
     background-size: contain;
+    background-repeat: inherit;
+}
+
+.back-minedu-acefalias{
+    background-image: url(/minedu_background_2021_cruz.png);
+    background-size: cover;
     background-repeat: inherit;
 }
 
@@ -103,6 +112,7 @@ input[readonly] {
 
 #myTable td {
     word-wrap: break-word;
+    text-align: center;
 }
 
 
@@ -381,7 +391,6 @@ body * {
 
 .sidebar .navbar .dropdown-toggle::after {
     position: absolute;
-    top: 15px;
     right: 15px;
     border: none;
     content: "\f107";
@@ -397,12 +406,12 @@ body * {
 .sidebar .navbar .dropdown-item {
     padding-left: 25px;
     border-radius: 0 30px 30px 0;
-    color: var(--light);
+    color: var(--dark);
 }
 
 .sidebar .navbar .dropdown-item:hover,
 .sidebar .navbar .dropdown-item.active {
-    background: var(--dark);
+    background: var(--gris-claro);
 }
 
 .content .navbar .navbar-nav .nav-link {
@@ -518,3 +527,8 @@ body * {
     background: var(--dark);
     border-color: var(--primary);
 }
+
+
+
+
+

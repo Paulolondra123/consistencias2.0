@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    <%= title %>
+  </title>
+  <meta content="" name="keywords" />
+  <meta content="" name="description" />
+  <%- include('partials/links/links') %>
+</head>
+
+<body>
+
+  <!-- Content Padre Start -->
+  <div class="container-fluid position-relative d-flex p-0 padre">
+    <%- include('partials/navegacion/sidebar') %>
+      <!-- Content Start -->
+      <div class="content position-relative bg-white">
+        <%- include('partials/navegacion/navbar') %>
+
+          <!-- Chart Start -->
+          <div class="container-fluid back-minedu">
+            <div class="pt-0 px-4 d-flex" id="chart">
+              <div class="row g-4 col-md-12">
+                <div class="text-dark rounded pt-4 px-4">
+                  <!-- Top div with title and button -->
+                  <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h6 class="mb-0 font-title text-dark">X Carnet</h6>
+                  </div>
+                  <!-- Responsive Horizontal Form -->
+                  <form id="formbuscar" center>
+                    <div class="row mb-3 col-md-12">
+                      <div class="col-md-6 mb-3">
+                        <label for="inputServicio" class="form-label">CI:</label>
+                        <input type="number" class="form-control bg-claro-gris" id="ci" placeholder="INGRESAR EL CARNET">
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="inputItem" class="form-label">GESTION:</label>
+                        <select type="number" class="form-select bg-claro-gris" id="gestion">
+                        </select>
+                      </div>
+                      <div class="col-md-12 d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary text-white">Buscar</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <div class="container-fluid px-4 row g-4">
+              <div class="text-center rounded p-4">
+                <div class="table-responsive">
+                  <table id="myTable" class="bg-white text-dark display table align-middle table-bordered table-hover mb-0">
+                    <thead>
+                      <tr class="text-white" style="background: #002060;">
+                        <th>MES</th>
+                        <th>DISTRITO EDUCATIVO</th>
+                        <th>UNIDAD EDUCATIVA</th>
+                        <th>MAESTRO_A</th>
+                        <th>CARGO</th>
+                        <th>SERVICIO_ITEM</th>
+                        <th>HORAS</th>
+                        <th>TOTAL GANADO</th>
+                      </tr>
+                    </thead>
+                    <tbody id="medida">
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <%- include('partials/footer/footer') %>
+          </div>
+          <!-- Chart End -->
+      </div>
+      <!-- Content End -->
+      <!-- Back to Top -->
+      <!-- <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a> -->
+  </div>
+  <!-- Content Padre End -->
+  <%- include('partials/scripts/scripts') %>
+  <script src="/js/xcarnet.js"></script>
+</body>
+
+</html>

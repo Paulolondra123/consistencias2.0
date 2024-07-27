@@ -111,7 +111,6 @@ const getAlldistrito = async () => {
     return [];
   }
 };
-
 const populateSelect = (selectElement, options, valueFieldName, textFieldName) => {
   selectElement.innerHTML = '<option value="">Seleccione una opción</option>';
   options.forEach(option => {
@@ -126,12 +125,40 @@ const initializeSelect2 = () => {
   $('#distrito').select2({ width: 'resolve' });
   $('#gestion').select2({ width: 'resolve' });
   $('#mes').select2({ width: 'resolve' });
+  $('#subsistema').select2({ width: 'resolve' });
 };
 
 const adjustSelect2Width = () => {
   $('#distrito').select2('destroy').select2({ width: '100%' });
   $('#gestion').select2('destroy').select2({ width: '100%' });
   $('#mes').select2('destroy').select2({ width: '100%' });
+  $('#subsistema').select2('destroy').select2({ width: '100%' });
+};
+
+const populateSubsistemaSelect = () => {
+  const subsistemaSelect = document.getElementById("subsistema");
+  const subsistema = [
+    { value: '1,2,3', text: 'Regular' },
+    { value: '4,8', text: 'Superior' },
+    { value: '5', text: 'Alternativa' },
+    { value: '6', text: 'Especial' },
+    { value: '7', text: 'Permanente' }
+  ];
+
+  subsistemaSelect.innerHTML = ''; // Limpiar el select antes de llenarlo
+
+  subsistema.forEach(option => {
+    const optionElement = document.createElement("option");
+    optionElement.value = option.value;
+    optionElement.textContent = option.text;
+    subsistemaSelect.appendChild(optionElement);
+  });
+
+  // Inicializa Select2 después de haber poblado las opciones
+  $('#subsistema').select2({ width: 'resolve' });
+
+  // Ajustar Select2 al cambiar el tamaño de la ventana
+  window.addEventListener('resize', adjustSelect2Width);
 };
 
 const populateGestionSelect = () => {
@@ -217,11 +244,11 @@ const populateFormSelects = async () => {
   // Poblar los selects de gestión y mes
   populateGestionSelect();
   populateMesSelect();
+  populateSubsistemaSelect();
 };
 
 // Llama a esta función para poblar los select cuando la página se carga
 document.addEventListener('DOMContentLoaded', populateFormSelects);
-
 
 
 let datosTabla = [];
@@ -235,15 +262,16 @@ document.getElementById("formbuscar").addEventListener("submit", async function 
   const distrito = document.getElementById("distrito").value;
   const gestion = document.getElementById("gestion").value;
   const mes = document.getElementById("mes").value;
+  const subsistema = document.getElementById("subsistema").value;
 
   // Validar campos
-  if (!distrito || !gestion || !mes) {
+  if (!distrito || !gestion || !mes || !subsistema) {
     showWarningToast('Por favor, complete todos los campos requeridos');
     return;
   }
 
   // Realizar la búsqueda
-  await realizarBusqueda({ distrito, gestion, mes });
+  await realizarBusqueda({ distrito, gestion, mes,subsistema });
 });
 
 document.getElementById("buscarmaestros").addEventListener("submit", async function (event) {
@@ -253,17 +281,20 @@ document.getElementById("buscarmaestros").addEventListener("submit", async funct
   const distrito = document.getElementById("distrito").value;
   const gestion = document.getElementById("gestion").value;
   const mes = document.getElementById("mes").value;
+  const subsistema = document.getElementById("subsistema").value;
   coddis = document.getElementById("coddis").value;
 
   // Validar campos
-  if (!distrito || !gestion || !mes || !coddis) {
+  if (!distrito || !gestion || !mes || !coddis || !subsistema) {
     showWarningToast('Por favor, complete todos los campos requeridos');
     return;
   }
 
   // Realizar la búsqueda
-  await realizarBusqueda({ distrito, gestion, mes, coddis });
+  await realizarBusqueda({ distrito, gestion, mes, coddis, subsistema });
 });
+
+let busquedaExitosa = false;
 
 const realizarBusqueda = async (params) => {
   try {
@@ -294,6 +325,8 @@ const realizarBusqueda = async (params) => {
       // Mostrar el botón de imprimir
       document.getElementById("imprimir").style.display = "block";
       document.getElementById("imprimirxls").style.display = "block";
+      busquedaExitosa = true;
+      verificarEstadoBoton();
     } else {
       const errorData = await response.json();
       console.error("Error al enviar la solicitud:", errorData);
@@ -304,6 +337,8 @@ const realizarBusqueda = async (params) => {
       // Ocultar el botón de imprimir en caso de error
       document.getElementById("imprimir").style.display = "none";
       document.getElementById("imprimirxls").style.display = "none";
+      busquedaExitosa = false; // Actualizar el estado de búsqueda fallida
+      verificarEstadoBoton();
     }
   } catch (error) {
     console.error("Error al enviar la solicitud:", error);
@@ -311,6 +346,8 @@ const realizarBusqueda = async (params) => {
     // Ocultar el botón de imprimir en caso de error
     document.getElementById("imprimir").style.display = "none";
     document.getElementById("imprimirxls").style.display = "none";
+    busquedaExitosa = false; // Actualizar el estado de búsqueda fallida
+    verificarEstadoBoton();
   }
 };
 
@@ -394,9 +431,9 @@ const mostrarDatosdelaUE = (data, coddis) => {
         <td>${row.DISTRITO}</td>
         <td>${row.UNIDAD_EDUCATIVA}</td>
         <td class="d-flex col-md-12 gap-1">
-          <button type="submit" onclick="descargarmaesbonopdf(${row.CODIGO_SIE})" class="btn btn-outline-primary col-md-6"
+          <button type="submit" onclick="descargarmaesbonopdf(${row.CODIGO_SIE},'${row.UNIDAD_EDUCATIVA}')" class="btn btn-outline-primary col-md-6"
           ><i class="fas fa-file-pdf"></i></button>
-          <button type="submit" onclick="descargarmaesbonoxls(${row.CODIGO_SIE})" class="btn btn-outline-success col-md-6"
+          <button type="submit" onclick="descargarmaesbonoxls(${row.CODIGO_SIE},'${row.UNIDAD_EDUCATIVA}')" class="btn btn-outline-success col-md-6"
           ><i class="fas fa-file-excel"></i></button>
         </td>
       `;
@@ -599,9 +636,9 @@ const limpiarTabla = () => {
 };
 
 
-async function descargarmaesbonopdf(codigosie) {
+async function descargarmaesbonopdf(codigosie,sieue) {
   event.preventDefault();
-
+  
   // Obtener los valores del formulario
   const gestion = document.getElementById("gestion").value;
   const mes = document.getElementById("mes").value;
@@ -620,7 +657,8 @@ async function descargarmaesbonopdf(codigosie) {
       body: JSON.stringify({
         gestion,
         mes,
-        coddis
+        coddis,
+        sieue
       })
     });
 
@@ -650,14 +688,14 @@ async function descargarmaesbonopdf(codigosie) {
 }
 
 
-async function descargarmaesbonoxls(codigosie) {
+async function descargarmaesbonoxls(codigosie,sieu) {
   event.preventDefault();
+  console.log(sieu)
 
   // Obtener los valores del formulario
   const gestion = document.getElementById("gestion").value;
   const mes = document.getElementById("mes").value;
   coddis = codigosie;
-
   // Hacer una solicitud HTTP al servidor para obtener el token
   const token = obtenerTokenre();
 
@@ -671,7 +709,8 @@ async function descargarmaesbonoxls(codigosie) {
       body: JSON.stringify({
         gestion,
         mes,
-        coddis
+        coddis,
+        sieu
       })
     });
 
@@ -699,3 +738,23 @@ async function descargarmaesbonoxls(codigosie) {
     alert('Error al generar el Excel');
   }
 }
+
+
+
+
+
+// Función para verificar el estado del botón
+const verificarEstadoBoton = () => {
+  const buscarButton = document.getElementById("btn-buscar");
+  const inputField = document.getElementById("coddis");
+  
+  if (inputField.value.trim() !== "" && busquedaExitosa) {
+    buscarButton.disabled = false;
+  } else {
+    buscarButton.disabled = true;
+  }
+};
+
+document.getElementById("coddis").addEventListener("input", function() {
+  verificarEstadoBoton(); // Verificar el estado del botón cuando el usuario escribe en el campo
+});

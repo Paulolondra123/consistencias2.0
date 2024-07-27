@@ -84,7 +84,7 @@ router.post('/pdf', (req, res) => {
    };
 
    // Función para agregar líneas horizontales al final de la página
-   const addFooterLines = () => {
+   const addFooterLines = (pageNumber,totalPages) => {
        const finalYPosition = doc.page.height - 50; // Ajusta la posición Y según sea necesario
        doc.moveTo(25, finalYPosition)
            .lineTo(762, finalYPosition)
@@ -93,7 +93,12 @@ router.post('/pdf', (req, res) => {
        doc.moveTo(25, finalYPosition + 3)
            .lineTo(762, finalYPosition + 3)
            .stroke();
+
+        doc.fontSize(8)
+           .text(`Página ${pageNumber} de ${totalPages}`, doc.page.width - 100, finalYPosition + 10, { align: 'left'});
    };
+
+   let pageNumber = 1; // Inicializar el número de página
 
    // Añadir encabezado inicial
    addHeader();
@@ -102,10 +107,11 @@ router.post('/pdf', (req, res) => {
    let yPosition = 105;
    const rowHeight = 20;
    const maxRowsPerPage = Math.floor((doc.page.height - yPosition - 50) / rowHeight);
-
+   const totalPages = Math.ceil(datosTabla.length / maxRowsPerPage);
+   
    datosTabla.forEach((row, index) => {
        if (index > 0 && index % maxRowsPerPage === 0) {
-           addFooterLines(); // Añadir líneas horizontales al final de la página antes de añadir una nueva
+           addFooterLines(pageNumber, totalPages); // Añadir líneas horizontales al final de la página antes de añadir una nueva
            doc.addPage();
            addHeader();
            yPosition = 105;
@@ -117,8 +123,8 @@ router.post('/pdf', (req, res) => {
        yPosition += rowHeight;
    });
 
-   // Añadir líneas horizontales al final de la última página
-   addFooterLines();
+   // Añadir líneas horizontales al final de la última página con numeración
+   addFooterLines(pageNumber, totalPages);
 
    doc.end();
 });
@@ -158,7 +164,16 @@ router.post('/xls', async (req, res) => {
                 bottom: 0.25, // margen inferior en pulgadas
                 header: 0.1, // margen del encabezado en pulgadas
                 footer: 0.1 // margen del pie de página en pulgadas
-            }
+            }, 
+            printOptions: {
+               horizontalCentered: true,
+               verticalCentered: true
+           },
+           fitToPage: true,
+           fitToHeight: 1,
+           fitToWidth: 1,
+           horizontalDpi: 300,
+           verticalDpi: 300
         };
 
         const createWorksheetWithHeader = (sheetName) => {
@@ -177,18 +192,19 @@ router.post('/xls', async (req, res) => {
                 { header: '', key: 'col4', width: 10 },  // Columna D
                 { header: '', key: 'col5', width: 10 },  // Columna E
                 { header: '', key: 'col6', width: 10 },
-                { header: '', key: 'col7', width: 18 },
-                { header: '', key: 'col8', width: 18 },
+                { header: '', key: 'col7', width: 14 },
+                { header: '', key: 'col8', width: 14 },
                 { header: '', key: 'col9', width: 10 },
                 { header: '', key: 'col10', width: 10 },
                 { header: '', key: 'col11', width: 10 },
                 { header: '', key: 'col12', width: 10 },
-                { header: '', key: 'col13', width: 2 }
+                { header: '', key: 'col13', width: 10 },
+                { header: '', key: 'col14', width: 10 }
             ];
 
             // Calcular el ancho total de las columnas de la 1 a la 12
-            const totalWidth = worksheet.columns.slice(1, 12).reduce((acc, col) => acc + col.width * 7,83, 0);
-
+            const totalWidth = worksheet.columns.slice(1, 12).reduce((acc, col) => acc + col.width * 8.50, 0);
+            worksheet.headerFooter.oddFooter = '&RPágina &P de &N';
             const headerImagePosition = {
                 tl: { col: 1, row: 5 },
                 ext: { width: totalWidth, height: 8 }
@@ -197,8 +213,8 @@ router.post('/xls', async (req, res) => {
             worksheet.addImage(imageIdline, headerImagePosition);
 
             // Añadir encabezado y centrar
-            const mergeRange1 = `A2:M2`; // Ajustar el rango según el número total de columnas (A a M para 14 columnas)
-            const mergeRange2 = `A3:M3`; // Ajustar el rango según el número total de columnas (A a M para 14 columnas)
+            const mergeRange1 = `A2:N2`; // Ajustar el rango según el número total de columnas (A a M para 14 columnas)
+            const mergeRange2 = `A3:N3`; // Ajustar el rango según el número total de columnas (A a M para 14 columnas)
 
             // Añadir encabezado
             worksheet.mergeCells(mergeRange1);
@@ -217,14 +233,14 @@ router.post('/xls', async (req, res) => {
             worksheet.getRow(5).font = { bold: true }; // Encabezados de las columnas
 
             // Combinar las celdas C, D y E en la fila 5
-            worksheet.mergeCells('D5:F5');
-            const mergedCell = worksheet.getCell('D5');
-            mergedCell.alignment = { vertical: 'middle', horizontal: 'left', indent: 3 }; // Centrar texto
+            worksheet.mergeCells('D5:G5');
+            const mergedCell = worksheet.getCell('G5');
+            mergedCell.alignment = { vertical: 'middle', horizontal: 'center' }; // Centrar texto
 
             // Combinar las celdas J, K y L en la fila 5 y centrar texto
-            worksheet.mergeCells('I5:K5');
+            worksheet.mergeCells('I5:L5');
             const mergedCellJKL = worksheet.getCell('I5');
-            mergedCellJKL.alignment = { vertical: 'middle', horizontal: 'left' }; // Ajustar la alineación horizontal y el margen izquierdo
+            mergedCellJKL.alignment = { vertical: 'middle', horizontal: 'center' }; // Ajustar la alineación horizontal y el margen izquierdo
 
             return worksheet;
         };
@@ -239,7 +255,7 @@ router.post('/xls', async (req, res) => {
             if ((index + 1) % maxRowsPerPage === 0) {
 
                 // Calcular el ancho total de las columnas de la 1 a la 11 para la imagen de pie de página
-                const footerTotalWidth = currentWorksheet.columns.slice(1, 12).reduce((acc, col) => acc + col.width * 7,83, 0);
+                const footerTotalWidth = currentWorksheet.columns.slice(1, 12).reduce((acc, col) => acc + col.width * 8.50, 0);
 
                 // Añadir imagen de pie de página al final de la hoja antes de pasar a la siguiente
                 const footerImagePosition = {
@@ -260,19 +276,19 @@ router.post('/xls', async (req, res) => {
             currentWorksheet.mergeCells(`C${currentRowIndex}:G${currentRowIndex}`);
             const mergedCellbcdef = currentWorksheet.getCell(`C${currentRowIndex}`);
             mergedCellbcdef.value = row[0];
-            mergedCellbcdef.alignment = { vertical: 'middle', horizontal: 'left', indent: 5 };
+            mergedCellbcdef.alignment = { vertical: 'middle', horizontal: 'left', indent: 10 };
 
-            currentWorksheet.mergeCells(`H${currentRowIndex}:K${currentRowIndex}`);
-            const mergedCellijklm = currentWorksheet.getCell(`H${currentRowIndex}`);
+            currentWorksheet.mergeCells(`I${currentRowIndex}:M${currentRowIndex}`);
+            const mergedCellijklm = currentWorksheet.getCell(`I${currentRowIndex}`);
             mergedCellijklm.value = row[1];
-            mergedCellijklm.alignment = { vertical: 'middle', horizontal: 'left', indent: 9};
+            mergedCellijklm.alignment = { vertical: 'middle', horizontal: 'left', indent: 3};
 
             newRow.commit();
             currentRowIndex++;
         });
 
         // Calcular el ancho total de las columnas de la 1 a la 11 para la imagen de pie de página
-        const footerTotalWidth = currentWorksheet.columns.slice(1, 12).reduce((acc, col) => acc + col.width * 7,83, 0);
+        const footerTotalWidth = currentWorksheet.columns.slice(1, 12).reduce((acc, col) => acc + col.width * 8.50, 0);
 
         // Añadir imagen de pie de página al final de la hoja antes de pasar a la siguiente
         const footerImagePosition = {

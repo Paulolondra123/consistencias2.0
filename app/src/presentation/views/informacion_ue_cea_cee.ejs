@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+        <%= title %>
+    </title>
+    <meta content="" name="keywords" />
+    <meta content="" name="description" />
+    <%- include('partials/links/links') %>
+</head>
+
+<body>
+    <!-- Content Padre Start -->
+    <div class="container-fluid position-relative d-flex p-0 padre ">
+        <%- include('partials/navegacion/sidebar') %>
+            <!-- Content Start -->
+            <div class="content position-relative">
+                <%- include('partials/navegacion/navbar') %>
+
+                    <!-- Chart Start -->
+                    <div class="back-minedu pt-1 vh-100 bg-white">
+                        <div class="pt-0 px-4 d-flex bg-white" id="chart">
+                            <div class="row g-4 col-md-12 ">
+                                <div class="text-dark rounded pt-4 px-4">
+                                    <!-- Top div with title and button -->
+                                    <div class="d-flex align-items-center justify-content-between mb-4">
+                                        <h6 class="mb-0 font-title text-dark">Informacion de UE CEA CEE</h6>
+                                    </div>
+                                    <!-- Buttons div -->
+                                    <div class="d-flex justify-content-start col-md-12">
+                                        <a href="#" id="rue-button" class="btn btn-primary me-2 text-white col-2">RUE</a>
+                                        <a href="#" class="btn btn-primary text-white col-2">SIE</a>
+                                    </div>
+                                </div>
+                                <!-- iFrame Container -->
+                                <div id="iframe-container" class="pt-4 px-4 col-md-12">
+                                    <iframe id="data-iframe" height="755" frameborder="0" class="col-12"></iframe>
+                                </div>  
+                                
+                                <!-- iFrame Overlay -->
+                                <div class="iframe-overlay" id="iframe-overlay"></div>
+                            </div>
+
+                            
+
+                        </div>
+                        <%- include('partials/footer/footer') %>
+                    </div>
+                    <!-- Chart End -->
+            </div>
+            <!-- Content End -->
+            <!-- Back to Top -->
+            <!-- <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"
+        ><i class="bi bi-arrow-up"></i
+      ></a> -->
+            <!-- Back to Top -->
+    </div>
+    <!-- Content Padre End -->
+    <%- include('partials/scripts/scripts') %>
+        <script src="/js/informacionueceacee.js"></script>
+</body>
+
+</html>

@@ -1,4 +1,5 @@
 const express = require('express');
+const axios = require('axios');
 const session = require('express-session');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
@@ -14,15 +15,16 @@ const app = express();
 
 
 // Configurar bodyParser para analizar datos de formularios
-app.use(bodyParser.urlencoded({ extended: true, limit: '300mb' }));
-app.use(bodyParser.json({ limit: '300mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '1000mb' }));
+app.use(bodyParser.json({ limit: '1000mb' }));
 
 const corsOptions = {
-  origin: ['http://consistencias:3009','http://localhost:3009','https://cyd.vercel.app','https://consistencias-cyd.vercel.app'],
+  origin: ['https://rue.sie.gob.bo','http://consistencias:3009', 'http://localhost:3009', 'https://cyd.vercel.app', 'https://consistencias-cyd.vercel.app'],
   methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'PATCH', 'DELETE'],
   allowedHeaders: ['X-Requested-With', 'Content-Type', 'Authorization'],
   credentials: true
 };
+
 
 app.use(cookieParser());
 app.use(cors(corsOptions));
@@ -70,17 +72,17 @@ app.use('/select2', express.static(path.join(__dirname, 'node_modules/select2/di
 const indexRoutes = require('./app/src/presentation/routes/index')
 const authRoutes = require('./app/src/presentation/routes/authRoutes')
 const usuarioRoutes = require('./app/src/presentation/routes/usuarioRoutes')
-//const dashboardRoutes = require('./app/src/presentation/routes/dashboardRoutes')
 const cydRoutes = require('./app/src/presentation/routes/cydRoutes')
 const bonozonaRoutes = require('./app/src/presentation/routes/bonozonaRoutes')
-//const productosRoutes = require('./app/src/presentation/routes/productosRoutes')
-//const clienteRoutes = require('./app/src/presentation/routes/clienteRoutes')
+const servicioitem = require('./app/src/presentation/routes/servicioitemRoutes')
+const acefalias = require('./app/src/presentation/routes/acefaliasRoutes')
+const xcarnet = require('./app/src/presentation/routes/xcarnetRoutes')
 //const ventaRoutes = require('./app/src/presentation/routes/ventaRoutes')
 //const proveedorRoutes = require('./app/src/presentation/routes/proveedorRouter')
 //const compraRoutes = require('./app/src/presentation/routes/compraRoutes')
 const perfilRoutes = require('./app/src/presentation/routes/perfilRoutes')
+const proxy = require('./app/src/presentation/routes/informacionueceacee')
 const maesbono = require('./app/src/presentation/routes/maesbono')
-
 
 
 //const authRoutes = require('./app/src/presentation/routes/authRoutes');
@@ -89,17 +91,17 @@ const authMiddleware = require('./app/src/presentation/middleware/authMiddleware
 app.use(indexRoutes);
 app.use(authRoutes);
 app.use(usuarioRoutes,authMiddleware );
-//app.use(dashboardRoutes,authMiddleware);
 app.use(cydRoutes,authMiddleware);
 app.use(bonozonaRoutes,authMiddleware);
-//app.use(productosRoutes,authMiddleware);
-//app.use(clienteRoutes,authMiddleware);
+app.use(servicioitem,authMiddleware);
+app.use(acefalias,authMiddleware);
+app.use(xcarnet,authMiddleware);
 //app.use(ventaRoutes,authMiddleware);
 //app.use(proveedorRoutes,authMiddleware);
 //app.use(compraRoutes,authMiddleware);
 app.use(perfilRoutes,authMiddleware);
+app.use(proxy,authMiddleware);
 app.use(maesbono);
-
 
 //app.use('/auth', authRoutes);
 // Asegurar rutas protegidas con middleware de autenticación

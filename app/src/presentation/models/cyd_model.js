@@ -19,14 +19,14 @@ class Usersmodel {
       //`SELECT gestion,mes,cod_dis, servicio,item,horas FROM B_planilla WHERE CARNET='${carnet}' and gestion=2022 and mes=12 ORDER BY GESTION,MES,SERVICIO,ITEM`
       if (queryType === 'first') {
         query = `
-          SELECT gestion, mes, cod_dis, servicio, item, horas 
-          FROM B_planilla 
-          WHERE GESTION = 2023 AND CARNET = '${carnet}'
-          UNION
-          SELECT gestion, mes, cod_dis, servicio, item, horas 
-          FROM B_planilla 
-          WHERE CARNET = '${carnet}' AND gestion = 2022 AND mes = 12 
-          ORDER BY gestion, mes, servicio, item
+        SELECT B.gestion, B.mes, (RTRIM(DIS.cod_dis)+'-'+RTRIM(DIS.DESCRIPCION))cod_dis, (rtrim(SUBSTRING(b.servicio,4,5))+' - '+ rtrim(b.item))servicio, b.horas, (rtrim(car.cargo)+'---'+ rtrim(car.descripcion))cargo 
+        FROM B_planilla B INNER JOIN B_DISTRITO DIS ON B.COD_DIS=DIS.COD_DIS inner join b_cargo car on b.cargo=car.cargo
+        WHERE B.GESTION = 2024 AND B.CARNET = '${carnet}'
+        UNION
+        SELECT B.gestion, B.mes, (RTRIM(DIS.cod_dis)+'-'+RTRIM(DIS.DESCRIPCION))cod_dis, (rtrim(SUBSTRING(b.servicio,4,5))+' - '+ rtrim(b.item))servicio, b.horas, (rtrim(car.cargo)+'---'+ rtrim(car.descripcion))cargo 
+        FROM B_planilla B INNER JOIN B_DISTRITO DIS ON B.COD_DIS=DIS.COD_DIS inner join b_cargo car on b.cargo=car.cargo 
+        WHERE b.CARNET ='${carnet}' AND b.gestion = 2023 AND b.mes = 12 
+        ORDER BY b.gestion, b.mes
         `;
       } else if (queryType === 'second') {
         query = `
@@ -80,6 +80,25 @@ class Usersmodel {
             ON RDA.cod_rda = VISTA.cod_rda 
         WHERE 
             RDA.CARNET = '${carnet}';
+        `
+      } else if (queryType === 'quinto') {
+        query = `
+        SELECT 
+            RTRIM(rda.cod_rda) AS cod_rda,
+            (RTRIM(rda.paterno) + ' ' + RTRIM(rda.materno) + ' ' + RTRIM(rda.nombre1) + ' ' + RTRIM(rda.nombre2)) AS MAESTRO_A, 
+            vista.desc_formprof,
+            vista.desc_tipodoc, 
+            vista.desc_espec, 
+            vista.desc_nivel, 
+            vista.desc_entidad, 
+              CONVERT(varchar,vista.fecha_emi,3) fecha_emi
+        FROM  
+            B_rda rda 
+        INNER JOIN 
+            dbrda.dbo.V_DUP_FORMACION vista ON rda.cod_rda = vista.cod_rda 
+        WHERE  
+            rda.CARNET = '${carnet}';
+
         `
       } 
       const result = await pool.request().query(query);

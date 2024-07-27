@@ -6,8 +6,8 @@ class Users {
   // Método para obtener todas las categorias
   static async getAll(req, res) {
     try {
-      const { distrito, gestion, mes, coddis } = req.body;
-      const data = await Usersmodel.getAll(distrito, gestion, mes, coddis);
+      const { distrito, gestion, mes, coddis, subsistema } = req.body;
+      const data = await Usersmodel.getAll(distrito, gestion, mes, coddis, subsistema);
 
       if (!data) {
         return res.status(404).json({ error: message });

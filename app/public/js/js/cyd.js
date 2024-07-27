@@ -87,7 +87,7 @@ document.getElementById("movimientopersonal").addEventListener("change", functio
     document.getElementById("añosprovincia").checked = false;
     document.getElementById("ap").checked = false; 
     document.getElementById("observados").checked = false; 
-
+    document.getElementById("formacionpersonal").checked = false; 
   }
 });
 
@@ -96,6 +96,7 @@ document.getElementById("añosprovincia").addEventListener("change", function ()
     document.getElementById("movimientopersonal").checked = false;
     document.getElementById("ap").checked = false; 
     document.getElementById("observados").checked = false; 
+    document.getElementById("formacionpersonal").checked = false; 
   }
 });
 
@@ -104,6 +105,7 @@ document.getElementById("ap").addEventListener("change", function () {
     document.getElementById("movimientopersonal").checked = false;
     document.getElementById("añosprovincia").checked = false; 
     document.getElementById("observados").checked = false; 
+    document.getElementById("formacionpersonal").checked = false; 
   }
 });
 
@@ -112,8 +114,19 @@ document.getElementById("observados").addEventListener("change", function () {
     document.getElementById("movimientopersonal").checked = false;
     document.getElementById("añosprovincia").checked = false; 
     document.getElementById("ap").checked = false; 
+    document.getElementById("formacionpersonal").checked = false; 
   }
 });
+
+document.getElementById("formacionpersonal").addEventListener("change", function () {
+  if (this.checked) {
+    document.getElementById("movimientopersonal").checked = false;
+    document.getElementById("añosprovincia").checked = false; 
+    document.getElementById("ap").checked = false; 
+    document.getElementById("observados").checked = false; 
+  }
+});
+
 document.getElementById("formbuscar").addEventListener("submit", async function (event) {
   event.preventDefault(); // Evitar que se recargue la página al enviar el formulario
 
@@ -144,10 +157,11 @@ document.getElementById("formbuscar").addEventListener("submit", async function 
   const añosprovinciaChecked = document.getElementById("añosprovincia").checked;
   const prdChecked = document.getElementById("ap").checked;
   const observadosChecked = document.getElementById("observados").checked;
+  const formacionpersonalChecked = document.getElementById("formacionpersonal").checked;
 
 
 
-  if (!movimientopersonalChecked && !añosprovinciaChecked && !prdChecked && !observadosChecked) {
+  if (!movimientopersonalChecked && !añosprovinciaChecked && !prdChecked && !observadosChecked && !formacionpersonalChecked) {
     const Toast = Swal.mixin({
       toast: true,
       position: "bottom-end",
@@ -179,7 +193,9 @@ document.getElementById("formbuscar").addEventListener("submit", async function 
   if (observadosChecked) {
     queryType = 'cuarto';
   }
- 
+  if (formacionpersonalChecked) {
+    queryType = 'quinto';
+  }
 
 
 
@@ -271,12 +287,14 @@ const mostrarDatosEnFormulari = (data, queryType) => {
   thead.innerHTML = `
     <tr class="text-white" style="background: #002060;">
     ${queryType === 'first' 
-      ? `<th>GESTION</th><th>MES</th><th>DISTRITO</th><th>SERVICIO</th><th>ITEM</th><th>HORAS</th>`
+      ? `<th>GESTION</th><th>MES</th><th>DISTRITO</th><th>SERVICIO_ITEM</th><th>CARGO</th><th>HORAS</th>`
       : queryType === 'second' 
           ? `<th>GESTION</th><th>DISTRITO</th><th>MAESTRO_A</th><th>CARGO</th><th>SERVICIO</th><th>ITEM</th><th>HORAPR</th><th>CANTIDAD_MESES</th>`
           : queryType === 'tercer'
-          ? `<th>COD_RDA</th><th>MAESTRO_A</th><th>NOMBRE2</th><th>NUM_DOC</th><th>FRONTERA</th><th>DESDE</th><th>HASTA</th><th>HORAS</th>`
-          : `<th>CARNET</th><th>PATERNO</th><th>MATERNO</th><th>NOMBRE1</th><th>NOMBRE2</th><th>MOTIVO</th>`
+            ? `<th>COD_RDA</th><th>MAESTRO_A</th><th>NOMBRE2</th><th>NUM_DOC</th><th>FRONTERA</th><th>DESDE</th><th>HASTA</th><th>HORAS</th>`
+            : queryType === 'cuarto'
+            ? `<th>CARNET</th><th>PATERNO</th><th>MATERNO</th><th>NOMBRE1</th><th>NOMBRE2</th><th>MOTIVO</th>`
+            : `<th>COD_RDA</th><th>MAESTRO_A</th><th>DESC_FORMPRONF</th><th>DESC_TIPODOC</th><th>DESC_ESPEC</th><th>DESC_NIVEL</th><th>DESC_ENTIDAD</th><th>FECHA_EMI</th>`
           }
     </tr>
   `;
@@ -297,7 +315,7 @@ const mostrarDatosEnFormulari = (data, queryType) => {
     <td>${row.mes}</td>
     <td>${row.cod_dis}</td>
     <td>${row.servicio}</td>
-    <td>${row.item}</td>
+    <td>${row.cargo}</td>
     <td>${row.horas}</td>
   `
   : queryType === 'second' 
@@ -312,24 +330,35 @@ const mostrarDatosEnFormulari = (data, queryType) => {
       <td>${row.CANTIDAD_MESES}</td>
     `
     : queryType === 'tercer'
-    ? `
-      <td>${row.cod_rda}</td>
-      <td>${row.MAESTRO_A}</td>
-      <td>${row.nombre2}</td>
-      <td>${row.NUM_DOC}</td>
-      <td>${row.FRONTERA}</td>
-      <td>${row.DESDE}</td>
-      <td>${row.HASTA}</td>
-      <td>${row.HORAS}</td>
-    `
-    : `
-      <td>${row.carnet}</td>
-      <td>${row.PATERNO}</td>
-      <td>${row.MATERNO}</td>
-      <td>${row.nombre1}</td>
-      <td>${row.NOMBRE2}</td>
-      <td>${row.MOTIVO}</td>
-    `;
+      ? `
+        <td>${row.cod_rda}</td>
+        <td>${row.MAESTRO_A}</td>
+        <td>${row.nombre2}</td>
+        <td>${row.NUM_DOC}</td>
+        <td>${row.FRONTERA}</td>
+        <td>${row.DESDE}</td>
+        <td>${row.HASTA}</td>
+        <td>${row.HORAS}</td>
+      `
+      : queryType === 'cuarto'
+        ? `
+          <td>${row.carnet}</td>
+          <td>${row.PATERNO}</td>
+          <td>${row.MATERNO}</td>
+          <td>${row.nombre1}</td>
+          <td>${row.NOMBRE2}</td>
+          <td>${row.MOTIVO}</td>
+        `
+        : `
+          <td>${row.cod_rda}</td>
+          <td>${row.MAESTRO_A}</td>
+          <td>${row.desc_formprof}</td>
+          <td>${row.desc_tipodoc}</td>
+          <td>${row.desc_espec}</td>
+          <td>${row.desc_nivel}</td>
+          <td>${row.desc_entidad}</td>
+          <td>${row.fecha_emi}</td>
+        `;
     tbody.appendChild(tr);
   });
   // Inicializar DataTables

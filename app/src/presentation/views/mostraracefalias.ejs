@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %>
+    </title>
+    <meta content="" name="keywords" />
+    <meta content="" name="description" />
+    <%- include('partials/links/links') %>
+</head>
+
+<body class="back-minedu-acefalias">
+    <div class="container">
+        
+        <div class="container-fluid px-4 row g-4">
+            <div class="text-center rounded p-4">
+              <div class="table-responsive">
+                <table id="myTable" class="bg-white text-dark display table align-middle table-bordered table-hover mb-0">
+                  <thead>
+                    <tr class="text-white" style="background: #002060;">
+                      <th>MES</th>
+                      <th>DISTRITO EDUCATIVO</th>
+                      <th>UNIDAD EDUCATIVA</th>
+                      <th>ESTADO_PLANILLA</th>
+                      <th>CARGO</th>
+                      <th>SERVICIO_ITEM</th>
+                      <th>HORAS</th>
+                    </tr>
+                  </thead>
+                  <tbody id="medida">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+    
+    </div>
+    <%- include('partials/scripts/scripts') %>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Obtener los parámetros de la URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const responseData = JSON.parse(decodeURIComponent(urlParams.get('data')));
+
+            // Verificar si los datos están dentro de una propiedad 'data'
+            const data = responseData.data;
+
+            // Rellenar la tabla con los resultados de la consulta
+            const tbody = document.querySelector('#medida');
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${row.MES}</td>
+                    <td>${row.DISTRITO_EDUCATIVO}</td>
+                    <td>${row.UNIDAD_EDUCATIVA}</td>
+                    <td>${row.ESTADO_PLANILLA}</td>
+                    <td>${row.CARGO}</td>
+                    <td>${row.SERVICIO_ITEM}</td>
+                    <td>${row.HORAS}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            // Inicializar DataTables después de rellenar la tabla
+            $('#myTable').DataTable({
+                language: {
+                    decimal: "",
+                    emptyTable: "No hay información",
+                    info: "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    infoEmpty: "Mostrando 0 a 0 de 0 Entradas",
+                    infoFiltered: "(Filtrado de _MAX_ entradas totales)",
+                    lengthMenu: "Mostrar _MENU_ Entradas",
+                    loadingRecords: "Cargando...",
+                    processing: "Procesando...",
+                    search: "Buscar:",
+                    zeroRecords: "Sin resultados encontrados",
+                    paginate: {
+                        first: "Primero",
+                        last: "Último",
+                        next: ">",
+                        previous: "<"
+                    }
+                },
+                lengthMenu: [
+                    [5, 10, 25, 50, -1],
+                    [5, 10, 25, 50, "Todos"]
+                ],
+                pageLength: 10,
+                responsive: true,
+                autoWidth: true,
+                order: [],
+                searching: true // Habilitar el buscador global
+            });
+        });
+    </script>
+</body>
+
+</html>

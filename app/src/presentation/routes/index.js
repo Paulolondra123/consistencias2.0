@@ -34,28 +34,34 @@ router.get('/Bonozona', (req, res) => {
     res.render('bonozona',{title: 'Bono zona 💰'});
 });
 
-// Ruta de productos
-/*router.get('/Productos', (req, res) => {
-    res.render('productos',{title: 'Productos📦'});
+// Ruta de Servicio item
+router.get('/Servicioitem', (req, res) => {
+    res.render('servicioitem',{title: 'Servicio Item📦'});
 });
 
-// Ruta de clientes
-router.get('/Clientes', (req, res) => {
-    res.render('clientes',{title: 'Clientes🙍‍♂️'});
+// Ruta de X carnet
+router.get('/Xcarnet', (req, res) => {
+    res.render('xcarnet',{title: 'X Carnet🙍‍♂️'});
 });
 
-// Ruta de nueva venta
-router.get('/Nueva-venta', (req, res) => {
-    res.render('nueva_venta',{title: 'Nueva venta⛺'});
+// Ruta de Acefalias
+router.get('/Acefalias', (req, res) => {
+    res.render('acefalias',{title: 'Acefalias⛺'});
 });
 
-// Ruta de venta
-router.get('/Ventas', (req, res) => {
-    res.render('ventas',{title: 'Ventas⛺⛺⛺'});
+// Ruta de Acefalias
+router.get('/MostrarAcefalias', (req, res) => {
+    res.render('mostraracefalias',{title: 'Mostrar Acefalias⛺'});
 });
+
+// Ruta de Informacion UE CEA CEE    
+router.get('/InformacionUE', (req, res) => {
+    res.render('informacion_ue_cea_cee',{title: 'Informacion⛺⛺⛺'});
+});
+
 
 // Ruta de proveedores
-router.get('/Proveedores', (req, res) => {
+/*router.get('/Proveedores', (req, res) => {
     res.render('proveedores',{title: 'Proveedores🚚'});
 });
 

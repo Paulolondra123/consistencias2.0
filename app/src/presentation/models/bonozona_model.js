@@ -7,9 +7,9 @@ const mssql = require('mssql');
 
 class Usersmodel {
   // Método para obtener todas las medidas
-  static async getAll(distrito, gestion, mes, coddis) {
+  static async getAll(distrito, gestion, mes, coddis, subsistema) {
     try {
-      console
+      
       const pool = await connectToMssql();
       if (!pool) {
         throw new Error("Error al conectar con PostgreSQL");
@@ -25,7 +25,7 @@ class Usersmodel {
               b_distrito s on b.cod_dis = s.cod_dis inner join
               b_cargo c on b.cargo=c.cargo inner join 
               B_rda	rda on b.carnet=rda.carnet
-        where     (b.gestion = ${gestion}) and (b.mes = ${mes}) AND B.COD_DEP=7 AND B.CARNET<>'00000000' AND B.bonozona>0  AND SUBSTRING(B.servicio, 8, 1) IN (1,2,3,4,5,6,7,8) AND B.COD_UE=${coddis} 
+        where     (b.gestion = ${gestion}) and (b.mes = ${mes}) AND B.COD_DEP=7 AND B.CARNET<>'00000000' AND B.bonozona>0  AND SUBSTRING(B.servicio, 8, 1) IN (${subsistema}) AND B.COD_UE=${coddis} 
         AND B.COD_DIS=${distrito} ORDER BY B.SERVICIO, B.ITEM
       `;
     } else if (distrito === '700') {
@@ -35,7 +35,7 @@ class Usersmodel {
               b_rue r on b.cod_ue = r.cod_ue inner join
               b_distrito s on b.cod_dis = s.cod_dis inner join
               b_cargo c on b.cargo=c.cargo
-        where     (b.gestion = ${gestion}) and (b.mes = ${mes}) AND B.COD_DEP=7 AND B.CARNET<>'00000000' AND B.bonozona>0  AND SUBSTRING(B.servicio, 8, 1) IN (1,2,3,4,5,6,7,8)  
+        where     (b.gestion = ${gestion}) and (b.mes = ${mes}) AND B.COD_DEP=7 AND B.CARNET<>'00000000' AND B.bonozona>0  AND SUBSTRING(B.servicio, 8, 1) IN (${subsistema})  
         GROUP BY s.cod_dis, s.descripcion, r.cod_ue, r.des_ue ORDER BY s.cod_dis, r.cod_ue
       `;
     } else {
@@ -45,12 +45,11 @@ class Usersmodel {
               b_rue r on b.cod_ue = r.cod_ue inner join
               b_distrito s on b.cod_dis = s.cod_dis inner join
               b_cargo c on b.cargo=c.cargo
-        where     (b.gestion = ${gestion}) and (b.mes = ${mes}) AND B.COD_DEP=7 AND B.CARNET<>'00000000' AND B.bonozona>0  AND SUBSTRING(B.servicio, 8, 1) IN (1,2,3,4,5,6,7,8) AND B.COD_DIS=${distrito} 
+        where     (b.gestion = ${gestion}) and (b.mes = ${mes}) AND B.COD_DEP=7 AND B.CARNET<>'00000000' AND B.bonozona>0  AND SUBSTRING(B.servicio, 8, 1) IN (${subsistema}) AND B.COD_DIS=${distrito} 
         GROUP BY s.cod_dis, s.descripcion, r.cod_ue, r.des_ue ORDER BY s.cod_dis, r.cod_ue
         
       `;
     }
-
       const result = await pool.request().query(query);
       await disconnectFromMssql(pool);
       //console.log(result.recordset) 

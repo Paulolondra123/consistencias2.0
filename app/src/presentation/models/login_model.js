@@ -34,7 +34,7 @@ const bcrypt = require('bcryptjs');
             // Conectarse a la base de datos
             pool = await connectToMssql();
             if (!pool) {
-                throw new Error('Error al conectar con PostgreSQL');
+                throw new Error('Error al conectar con la base de datos');
             }
 
             // Consultar la base de datos para obtener el usuario
@@ -93,7 +93,7 @@ const bcrypt = require('bcryptjs');
 
             pool = await connectToMssql();
             if (!pool) {
-                throw new Error('Error al conectar con PostgreSQL');
+                throw new Error('Error al conectar con la base de datos');
             }
 
             // Buscar el usuario por ID
