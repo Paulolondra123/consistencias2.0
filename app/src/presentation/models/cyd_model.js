@@ -38,8 +38,8 @@ class Usersmodel {
           FROM b_planilla B
           INNER JOIN b_rue R ON B.cod_ue = R.cod_ue
           INNER JOIN b_distrito S ON B.cod_dis = S.cod_dis
-          WHERE SUBSTRING(B.servicio, 7, 1) IN (2, 3) AND B.carnet = '${carnet}'
-          GROUP BY B.GESTION, B.cod_dis, S.descripcion, B.CARNET, B.PATERNO, B.MATERNO, B.nombre1, B.nombre2, B.CARGO, B.servicio, B.item, B.horapr
+          WHERE SUBSTRING(B.servicio, 7, 1) IN (2, 3) AND B.carnet = '${carnet}' and  b.cargo not in (4080,80,81,4081,4083,83,82,4082,9082)
+          GROUP BY B.GESTION, B.cod_dis, S.descripcion, B.CARNET, B.PATERNO, B.MATERNO, B.nombre1, B.nombre2, cargo, B.servicio, B.item, B.horapr
           ORDER BY B.GESTION, B.cod_dis, B.CARGO, B.servicio, B.item
         `;
       } else if (queryType === 'tercer') {

@@ -14,119 +14,145 @@ router.post('/bonozona', Users.getAll);
 router.get('/gestion', Users.gestion);
 
 router.post('/pdf', (req, res) => {
-   const { datosTabla } = req.body;
-   //console.log(JSON.stringify({ datosTabla }));
+    const { datosTabla } = req.body;
 
-   // Crear un nuevo documento PDF en orientación horizontal con margen de 10
-   const doc = new PDFDocument({ layout: 'landscape', margin: 10 });
-   let filename = 'reporte.pdf';
-   filename = encodeURIComponent(filename);
+    // Crear un nuevo documento PDF en orientación vertical con margen de 10
+    const doc = new PDFDocument({ layout: 'portrait', margin: 10 });
+    let filename = 'reporte.pdf';
+    filename = encodeURIComponent(filename);
 
-   res.setHeader('Content-disposition', 'attachment; filename="' + filename + '"');
-   res.setHeader('Content-type', 'application/pdf');
+    res.setHeader('Content-disposition', 'attachment; filename="' + filename + '"');
+    res.setHeader('Content-type', 'application/pdf');
 
-   doc.pipe(res);
+    doc.pipe(res);
 
-   // Ruta al archivo TTF de Arialzz
-   const fontPath = path.join(__dirname, '../../../public/font/Arial.ttf');
-   const fontPat = path.join(__dirname, '../../../public/font/Arial_Bold.ttf');
-   const fontPa = path.join(__dirname, '../../../public/font/MSung_HK_Medium.ttf');
+    // Ruta al archivo TTF de Arial
+    const fontPath = path.join(__dirname, '../../../public/font/Arial.ttf');
+    const fontPat = path.join(__dirname, '../../../public/font/Arial_Bold.ttf');
+    const fontPa = path.join(__dirname, '../../../public/font/MSung_HK_Medium.ttf');
 
-   // Registrar la fuente Arial en PDFKit
-   doc.registerFont('Arial', fontPath);
-   doc.registerFont('Arial-Bold', fontPat);
-   doc.registerFont('MSung', fontPa);
+    // Registrar la fuente Arial en PDFKit
+    doc.registerFont('Arial', fontPath);
+    doc.registerFont('Arial-Bold', fontPat);
+    doc.registerFont('MSung', fontPa);
 
+    // Obtener la fecha actual y formatearla como DD/MM/YYYY
+    const currentDate = new Date();
+    const formattedDate = `${String(currentDate.getDate()).padStart(2, '0')}/${String(currentDate.getMonth() + 1).padStart(2, '0')}/${currentDate.getFullYear()}`;
 
+    // Añadir encabezado e imagen
+    const imagePath = path.join(__dirname, '../../../public/img/Chakana.png');
+    doc.image(imagePath, 30, 20, { width: 50 });
 
-   // Añadir encabezado e imagen
-   const imagePath = path.join(__dirname, '../../../public/img/Chakana.png');
-   doc.image(imagePath, 50, 20, { width: 55 });
+    // Ajustar tamaño y centrar texto "REPORTE DE BONO ZONA"
+    const headerText1 = 'REPORTE DE BONO ZONA';
+    const headerText2 = 'CENTROS EDUCATIVOS';
+    const headerTextWidth1 = doc.widthOfString(headerText1);
+    const headerTextWidth2 = doc.widthOfString(headerText2);
+    const headerTextX1 = (doc.page.width - headerTextWidth1) / 2;
+    const headerTextX2 = (doc.page.width - headerTextWidth2) / 2;
+    const headerTextY = 30;
 
-   // Ajustar tamaño y centrar texto "REPORTE DE BONO ZONA" y "CENTROS EDUCATIVOS"
-   const headerText1 = 'REPORTE DE BONO ZONA';
-   const headerText2 = 'CENTROS EDUCATIVOS';
-   const headerTextWidth1 = doc.widthOfString(headerText1);
-   const headerTextWidth2 = doc.widthOfString(headerText2);
-   const headerTextX1 = (doc.page.width - headerTextWidth1) / 2;
-   const headerTextX2 = (doc.page.width - headerTextWidth2) / 2;
-   const headerTextY = 30;
+    // Función para agregar encabezado
+    const addHeader = () => {
+        doc.image(imagePath, 30, 20, { width: 50 });
 
-   // Función para agregar encabezado
-   const addHeader = () => {
-       doc.image(imagePath, 50, 20, { width: 55 });
+        doc.font('Arial-Bold').fontSize(10) // Usar Arial-Bold en lugar de Helvetica-Bold
+            .text(headerText1, headerTextX1, headerTextY)
+            .text(headerText2, headerTextX2, headerTextY);
 
-       doc.font('Arial-Bold').fontSize(10) // Usar Arial-Bold en lugar de Helvetica-Bold
-           .text(headerText1, headerTextX1, headerTextY)
-           .moveDown()
-           .text(headerText2, headerTextX2, doc.y - 10);
+        doc.fontSize(5).text('ESTADO PLURINACIONAL DE', 90, 25)
+            .font('MSung').fontSize(19).text('BOLIVIA', 87, 24)
+            .font('Arial-Bold').fontSize(5).text('MINISTERIO DE EDUCACION', 90, 47)
+            .font('Arial-Bold').fontSize(5).text('DIRECCION DEPARTAMENTAL DE', 85, 53)
+            .font('Arial-Bold').fontSize(5).text('EDUCACION DE SANTA CRUZ', 89, 60);
 
-       doc.fontSize(5).text('ESTADO PLURINACIONAL DE', 120, 30)
-           .font('MSung').fontSize(19).text('BOLIVIA', 117, 29)
-           .font('Arial-Bold').fontSize(5).text('MINISTERIO DE EDUCACION', 120, 52)
-           .font('Arial-Bold').fontSize(5).text('DIRECCION DEPARTAMENTAL DE', 115, 58)
-           .font('Arial-Bold').fontSize(5).text('EDUCACION DE SANTA CRUZ', 119, 65);
+        // Añadir la fecha en la parte superior derecha
+        doc.font('Arial').fontSize(8)
+            .text(formattedDate, doc.page.width - 80, 30);
 
-       doc.font('Arial-Bold')
-           .moveTo(25, 90)
-           .lineTo(762, 90)
-           .stroke();
+        doc.font('Arial-Bold')
+            .moveTo(25, 90)
+            .lineTo(570, 90)
+            .stroke();
 
-       doc.font('Arial-Bold')
-           .moveTo(25, 93)
-           .lineTo(762, 93)
-           .stroke();
+        doc.font('Arial-Bold')
+            .moveTo(25, 93)
+            .lineTo(570, 93)
+            .stroke();
+    };
 
-       doc.moveDown();
-       doc.fontSize(8)
-           .text('DISTRITO EDUCATIVO:', 160, 80)
-           .text('CENTROS EDUCATIVOS', 500, 80);
-   };
+    // Función para agregar líneas horizontales al final de la página
+    const addFooterLines = (pageNumber, totalPages) => {
+        const finalYPosition = doc.page.height - 50; // Ajusta la posición Y según sea necesario
+        doc.moveTo(25, finalYPosition)
+            .lineTo(570, finalYPosition)
+            .stroke();
 
-   // Función para agregar líneas horizontales al final de la página
-   const addFooterLines = (pageNumber,totalPages) => {
-       const finalYPosition = doc.page.height - 50; // Ajusta la posición Y según sea necesario
-       doc.moveTo(25, finalYPosition)
-           .lineTo(762, finalYPosition)
-           .stroke();
-
-       doc.moveTo(25, finalYPosition + 3)
-           .lineTo(762, finalYPosition + 3)
-           .stroke();
+        doc.moveTo(25, finalYPosition + 3)
+            .lineTo(570, finalYPosition + 3)
+            .stroke();
 
         doc.fontSize(8)
-           .text(`Página ${pageNumber} de ${totalPages}`, doc.page.width - 100, finalYPosition + 10, { align: 'left'});
-   };
+            .text(`Página ${pageNumber} de ${totalPages}`, doc.page.width - 100, finalYPosition + 10, { align: 'left' });
+    };
 
-   let pageNumber = 1; // Inicializar el número de página
+    let pageNumber = 1; // Inicializar el número de página
 
-   // Añadir encabezado inicial
-   addHeader();
+    // Añadir encabezado inicial
+    addHeader();
 
-   // Añadir tabla de datos
-   let yPosition = 105;
-   const rowHeight = 20;
-   const maxRowsPerPage = Math.floor((doc.page.height - yPosition - 50) / rowHeight);
-   const totalPages = Math.ceil(datosTabla.length / maxRowsPerPage);
-   
-   datosTabla.forEach((row, index) => {
-       if (index > 0 && index % maxRowsPerPage === 0) {
-           addFooterLines(pageNumber, totalPages); // Añadir líneas horizontales al final de la página antes de añadir una nueva
-           doc.addPage();
-           addHeader();
-           yPosition = 105;
-       }
+    // Añadir tabla de datos
+    let yPosition = 110;
+    const rowHeight = 20;
+    const maxRowsPerPage = Math.floor((doc.page.height - yPosition - 50) / rowHeight);
+    const totalPages = Math.ceil(datosTabla.length / maxRowsPerPage);
 
-       doc.font('Arial').fontSize(8) // Usar Arial en lugar de la fuente por defecto
-           .text(row[0], 120, yPosition)
-           .text(row[1], 480, yPosition);
-       yPosition += rowHeight;
-   });
+    // Agrupar datos por distrito
+    const groupedData = datosTabla.reduce((acc, row) => {
+        const [distrito, centro] = row;
+        if (!acc[distrito]) {
+            acc[distrito] = [];
+        }
+        acc[distrito].push(centro);
+        return acc;
+    }, {});
 
-   // Añadir líneas horizontales al final de la última página con numeración
-   addFooterLines(pageNumber, totalPages);
+    Object.entries(groupedData).forEach(([distrito, centros], index) => {
+        if (yPosition + rowHeight * (centros.length + 1) > doc.page.height - 50) {
+            addFooterLines(pageNumber, totalPages);
+            doc.addPage();
+            pageNumber++;
+            addHeader();
+            yPosition = 110;
+        }
 
-   doc.end();
+        // Añadir el nombre del distrito
+        doc.font('Arial-Bold').fontSize(11).text(`DISTRITO EDUCATIVO: ${distrito}`, 80, yPosition);
+        yPosition += rowHeight;
+
+        // Añadir centros educativos del distrito
+        centros.forEach(centro => {
+            if (yPosition + rowHeight > doc.page.height - 50) {
+                addFooterLines(pageNumber, totalPages);
+                doc.addPage();
+                pageNumber++;
+                addHeader();
+                yPosition = 110;
+
+                // Repetir el nombre del distrito en la nueva página
+                doc.font('Arial-Bold').fontSize(11).text(`DISTRITO EDUCATIVO: ${distrito}`, 80, yPosition);
+                yPosition += rowHeight;
+            }
+            doc.font('Arial').fontSize(8).text(centro, 100, yPosition);
+            yPosition += rowHeight;
+        });
+    });
+
+    // Añadir líneas horizontales al final de la última página con numeración
+    addFooterLines(pageNumber, totalPages);
+
+    doc.end();
 });
 
 router.post('/xls', async (req, res) => {

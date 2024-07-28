@@ -226,7 +226,7 @@ const populateFormSelects = async () => {
     // Seleccionar automáticamente el distrito si datosUsuario está disponible y cod_dis no es 700
     if (datosUsuario) {
       const userDistrito = datosUsuario.distrito;
-      if (userDistrito !== 700) {
+      if (userDistrito !== 700) { 
         distritoSelect.value = userDistrito;
         distritoSelect.disabled = true; // Bloquear el select si distrito no es 700
       }

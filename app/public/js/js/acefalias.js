@@ -34,6 +34,7 @@ const obtenerToken = async () => {
             //console.log(datosUsuario)
             // Mostrar los datos en un formulario
             mostrarDatosEnFormulario(datosUsuario);
+            
         } else {
             console.error('Error al obtener el token:', respuesta.statusText);
         }
@@ -261,6 +262,9 @@ document.getElementById("formbuscar").addEventListener("submit", async function 
             // Manejar la respuesta exitosa (por ejemplo, actualizar la tabla)
             // Mostrar los datos en un formulario
             mostrarDatosEnFormulari(data);
+            // Mostrar el botón descargar pdf-excel
+            document.getElementById("imprimir").style.display = "block";
+            document.getElementById("imprimirxls").style.display = "block";
         } else {
             const errorData = await response.json();
             console.error("Error al enviar la solicitud:", error);
