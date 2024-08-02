@@ -42,12 +42,14 @@
               class="fi fi-sr-category-alt me-2"></i>Bonozona</a>
           <div class="nav-item dropdown">
             <a href="#"
-              class="fonts   nav-link dropdown-toggle <%= ['/departamental/servicioitem', '/departamental/xcarnet', '/departamental/acefalias'].includes(currentRoute) ? 'active' : '' %>"
+              class="fonts   nav-link dropdown-toggle <%= ['/departamental/servicioitem', '/departamental/xcarnet', '/departamental/acefalias', '/departamental/xnombre'].includes(currentRoute) ? 'active' : '' %>"
               data-bs-toggle="dropdown"><i class="fi-sr-audit me-2"></i>Consultas SEP</a>
             <div class="dropdown-menu bg-transparent border-0">
               <a href="/departamental/servicioitem"
                 class="dropdown-item <%= currentRoute === '/departamental/servicioitem' ? 'active' : '' %>">Servicio ITEM</a>
               <a href="/departamental/xcarnet" class="dropdown-item <%= currentRoute === '/departamental/xcarnet' ? 'active' : '' %>">X Carnet</a>
+              <a href="/departamental/xnombre"
+                class="dropdown-item <%= currentRoute === '/departamental/xnombre' ? 'active' : '' %>">X Nombre</a>
               <a href="/departamental/acefalias"
                 class="dropdown-item <%= currentRoute === '/departamental/acefalias' ? 'active' : '' %>">Acefalias</a>
             </div>

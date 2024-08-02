@@ -14,6 +14,7 @@ const obtenerTokenre = () => {
 
 let datosUsuario = null;
 
+
 // Función para obtener el token del servidor
 const obtenerToken = async () => {
     try {
@@ -34,7 +35,6 @@ const obtenerToken = async () => {
             //console.log(datosUsuario)
             // Mostrar los datos en un formulario
             mostrarDatosEnFormulario(datosUsuario);
-            
         } else {
             console.error('Error al obtener el token:', respuesta.statusText);
         }
@@ -76,160 +76,26 @@ const mostrarDatosEnFormulario = (datosUsuario) => {
 obtenerToken();
 
 
-
-const getAlldistrito = async () => {
-    try {
-        // Hacer una solicitud HTTP al servidor para obtener el token
-        const token = obtenerTokenre();
-        const response = await fetch(`${baseURL}/distrito`, {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${token}`,
-            }
-        });
-        if (!response.ok) {
-            throw new Error("Error en la solicitud");
-        }
-        const result = await response.json();
-        //console.log(result.data)
-        if (result.error) {
-            console.error("Error:", result.message);
-            return [];
-        } else {
-            return result.data;
-        }
-    } catch (error) {
-        console.error("Error:", error.message);
-        return [];
-    }
-};
-
-const populateSelect = (selectElement, options, valueFieldName, textFieldName) => {
-    selectElement.innerHTML = '<option value="">Seleccione una opción</option>';
-    options.forEach(option => {
-        const optionElement = document.createElement("option");
-        optionElement.value = option[valueFieldName];
-        optionElement.textContent = option[textFieldName];
-        selectElement.appendChild(optionElement);
-    });
-};
-
-const initializeSelect2 = () => {
-    $('#distrito').select2({ width: 'resolve' });
-    $('#gestion').select2({ width: 'resolve' });
-    $('#mes').select2({ width: 'resolve' });
-};
-
-const adjustSelect2Width = () => {
-    $('#distrito').select2('destroy').select2({ width: '100%' });
-    $('#gestion').select2('destroy').select2({ width: '100%' });
-    $('#mes').select2('destroy').select2({ width: '100%' });
-};
-
-const populateGestionSelect = () => {
-    const gestionSelect = document.getElementById("gestion");
-    const currentYear = new Date().getFullYear();
-    const startYear = 1998;
-
-    gestionSelect.innerHTML = ''; // Limpiar el select antes de llenarlo
-
-    for (let year = startYear; year <= currentYear; year++) {
-        const optionElement = document.createElement("option");
-        optionElement.value = year;
-        optionElement.textContent = year;
-        gestionSelect.appendChild(optionElement);
-    }
-
-    // Inicializa Select2 después de haber poblado las opciones
-    $('#gestion').select2({ width: 'resolve' });
-
-    // Ajustar Select2 al cambiar el tamaño de la ventana
-    window.addEventListener('resize', adjustSelect2Width);
-};
-
-const populateMesSelect = () => {
-    const mesSelect = document.getElementById("mes");
-    const meses = [
-        { value: 1, text: 'Enero' },
-        { value: 2, text: 'Febrero' },
-        { value: 3, text: 'Marzo' },
-        { value: 4, text: 'Abril' },
-        { value: 5, text: 'Mayo' },
-        { value: 6, text: 'Junio' },
-        { value: 7, text: 'Julio' },
-        { value: 8, text: 'Agosto' },
-        { value: 9, text: 'Septiembre' },
-        { value: 10, text: 'Octubre' },
-        { value: 11, text: 'Noviembre' },
-        { value: 12, text: 'Diciembre' }
-    ];
-
-    mesSelect.innerHTML = ''; // Limpiar el select antes de llenarlo
-
-    meses.forEach(mes => {
-        const optionElement = document.createElement("option");
-        optionElement.value = mes.value;
-        optionElement.textContent = mes.text;
-        mesSelect.appendChild(optionElement);
-    });
-
-    // Inicializa Select2 después de haber poblado las opciones
-    $('#mes').select2({ width: 'resolve' });
-
-    // Ajustar Select2 al cambiar el tamaño de la ventana
-    window.addEventListener('resize', adjustSelect2Width);
-};
-
-const populateFormSelects = async () => {
-    const distritoSelect = document.getElementById("distrito");
-
-    try {
-        const distrito = await getAlldistrito();
-
-        populateSelect(distritoSelect, distrito, "cod_dis", "distrito_descripcion");
-
-        // Seleccionar automáticamente el distrito si datosUsuario está disponible y cod_dis no es 700
-        if (datosUsuario) {
-            const userDistrito = datosUsuario.distrito;
-            if (userDistrito !== 700) {
-                distritoSelect.value = userDistrito;
-                distritoSelect.disabled = true; // Bloquear el select si distrito no es 700
-            }
-        }
-
-        // Inicializa Select2 después de haber poblado las opciones
-        $('#distrito').select2({ width: 'resolve' });
-
-        // Ajustar Select2 al cambiar el tamaño de la ventana
-        window.addEventListener('resize', adjustSelect2Width);
-    } catch (error) {
-        console.error("Error al poblar los select:", error);
-    }
-
-    // Poblar los selects de gestión y mes
-    populateGestionSelect();
-    populateMesSelect();
-};
-
-// Llama a esta función para poblar los select cuando la página se carga
-document.addEventListener('DOMContentLoaded', populateFormSelects);
-
-
+//*********************************poner en mayuscula**********************************/
+function mayus(e) {
+    e.value = e.value.toUpperCase();
+  }
+  //*********************************poner en mayuscula**********************************/
+  
 
 document.getElementById("formbuscar").addEventListener("submit", async function (event) {
     event.preventDefault(); // Evitar que se recargue la página al enviar el formulario
 
     // Obtener los valores del formulario
-    const distrito = document.getElementById("distrito").value;
-    const gestion = document.getElementById("gestion").value;
-    const mes = document.getElementById("mes").value;
+    const nombres = document.getElementById("nombres").value;
+    const apellidopa = document.getElementById("apellidopa").value;
+    const apellidoma = document.getElementById("apellidoma").value;
 
     // Validar campos
-    if (!distrito || !gestion || !mes) {
-        showWarningToast('Por favor, complete todos los campos requeridos');
+    if (!nombres && !apellidopa && !apellidoma) {
+        showWarningToast('Por favor, complete uno de los campos requeridos');
         return;
     }
-
 
     try {
         // Mostrar el spinner y ajustar la opacidad
@@ -240,17 +106,16 @@ document.getElementById("formbuscar").addEventListener("submit", async function 
         const token = obtenerTokenre();
 
         // Enviar los datos al servidor para realizar la búsqueda
-        const response = await fetch(`${baseURL}/acefalias`, {
+        const response = await fetch(`${baseURL}/xnombre`, {
             method: "POST", // Usa POST si estás enviando datos
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
-                distrito,
-                gestion,
-                mes
-
+                nombres,
+                apellidopa,
+                apellidoma
             })
         });
 
@@ -262,9 +127,6 @@ document.getElementById("formbuscar").addEventListener("submit", async function 
             // Manejar la respuesta exitosa (por ejemplo, actualizar la tabla)
             // Mostrar los datos en un formulario
             mostrarDatosEnFormulari(data);
-            // Mostrar el botón descargar pdf-excel
-            document.getElementById("imprimir").style.display = "block";
-            document.getElementById("imprimirxls").style.display = "block";
         } else {
             const errorData = await response.json();
             console.error("Error al enviar la solicitud:", error);
@@ -278,7 +140,7 @@ document.getElementById("formbuscar").addEventListener("submit", async function 
 
             Toast.fire({
                 icon: "error",
-                title: `No se encontraron acefalias`,
+                title: `No se encuentra en registro`,
             });
             limpiarTabla();
 
@@ -295,11 +157,145 @@ document.getElementById("formbuscar").addEventListener("submit", async function 
 
         Toast.fire({
             icon: "error",
-            title: `No se encontraron acefalias`,
+            title: `No se encuentra el registro`,
         });
     }
-});
 
+    /* if (datosUsuario) {
+        const userDistrito = datosUsuario.distrito;
+        if (userDistrito !== 700) {
+            try {
+                // Mostrar el spinner y ajustar la opacidad
+                spinner.classList.add("show");
+                spinner.style.opacity = "0.5"; // Ajusta la opacidad aquí
+
+                // Hacer una solicitud HTTP al servidor para obtener el token
+                const token = obtenerTokenre();
+
+                // Enviar los datos al servidor para realizar la búsqueda
+                const response = await fetch(`${baseURL}/servicioitem`, {
+                    method: "POST", // Usa POST si estás enviando datos
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({
+                        servicio,
+                        item,
+                        gestion
+                    })
+                });
+
+                // Ocultar el spinner después de recibir la respuesta
+                spinner.classList.remove("show");
+
+                if (response.ok) {
+                    const data = await response.json();
+                    // Manejar la respuesta exitosa (por ejemplo, actualizar la tabla)
+                    // Mostrar los datos en un formulario
+                    mostrarDatosEnFormulari(data);
+                } else {
+                    const errorData = await response.json();
+                    console.error("Error al enviar la solicitud:", error);
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "bottom-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                    });
+
+                    Toast.fire({
+                        icon: "error",
+                        title: `No se encuentra registro con el servicio: ${servicio} e item: ${item} en la gestion ${gestion}`,
+                    });
+                    limpiarTabla();
+
+                }
+            } catch (error) {
+                console.error("Error al enviar la solicitud:", error);
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "bottom-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                });
+
+                Toast.fire({
+                    icon: "error",
+                    title: `No se encuentra registro con el servicio: ${servicio} e item: ${item} en la gestion ${gestion}`,
+                });
+            }
+        } else {
+            distrito = userDistrito;
+            try {
+                // Mostrar el spinner y ajustar la opacidad
+                spinner.classList.add("show");
+                spinner.style.opacity = "0.5"; // Ajusta la opacidad aquí
+
+                // Hacer una solicitud HTTP al servidor para obtener el token
+                const token = obtenerTokenre();
+
+                // Enviar los datos al servidor para realizar la búsqueda
+                const response = await fetch(`${baseURL}/servicioitem`, {
+                    method: "POST", // Usa POST si estás enviando datos
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({
+                        servicio,
+                        item,
+                        gestion,
+                        distrito
+                    })
+                });
+
+                // Ocultar el spinner después de recibir la respuesta
+                spinner.classList.remove("show");
+
+                if (response.ok) {
+                    const data = await response.json();
+                    // Manejar la respuesta exitosa (por ejemplo, actualizar la tabla)
+                    // Mostrar los datos en un formulario
+                    mostrarDatosEnFormulari(data);
+                } else {
+                    const errorData = await response.json();
+                    console.error("Error al enviar la solicitud:", error);
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "bottom-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                    });
+
+                    Toast.fire({
+                        icon: "error",
+                        title: `No se encuentra registro con el servicio: ${servicio} e item: ${item} en la gestion ${gestion}`,
+                    });
+                    limpiarTabla();
+
+                }
+            } catch (error) {
+                console.error("Error al enviar la solicitud:", error);
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "bottom-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                });
+
+                Toast.fire({
+                    icon: "error",
+                    title: `No se encuentra registro con el servicio: ${servicio} e item: ${item} en la gestion ${gestion}`,
+                });
+            }
+        };
+    } */
+});
 
 
 const mostrarDatosEnFormulari = (data) => {
@@ -307,21 +303,16 @@ const mostrarDatosEnFormulari = (data) => {
 
     // Obtener referencia al cuerpo de la tabla
     const tbody = document.getElementById('medida');
+    tbody.innerHTML = ''; // Limpiar el contenido anterior de la tabla
 
     // Iterar sobre los datos recibidos y crear filas dinámicamente
     data.data.forEach((row) => {
         const tr = document.createElement('tr');
         tr.id = 'cursor';
         tr.innerHTML = `
-        <td>${row.MES}</td>
-        <td>${row.DISTRITO_EDUCATIVO}</td>
-        <td>${row.UNIDAD_EDUCATIVA}</td>
-        <td>${row.ESTADO_PLANILLA}</td>
-        <td>${row.CARGO}</td>
-        <td>${row.SERVICIO_ITEM}</td>
-        <td>${row.HORAS}</td>
-      `;
-
+            <td>${row.carnet}</td>
+            <td>${row.MAESTRO_A}</td>
+          `;
         // Agregar el evento de doble clic a la fila
         tr.addEventListener('dblclick', async () => {
             try {
@@ -333,16 +324,14 @@ const mostrarDatosEnFormulari = (data) => {
                 const token = obtenerTokenre();
 
                 // Enviar los datos al servidor para realizar la búsqueda
-                const response = await fetch(`${baseURL}/mostraracefalias`, {
+                const response = await fetch(`${baseURL}/mostrarporcarnet`, {
                     method: "POST", // Usa POST si estás enviando datos
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${token}`,
                     },
                     body: JSON.stringify({
-                        item: row.ITEM,
-                        servicio: row.SERVICIO,
-                        gestion: row.GESTION
+                        carnet: row.carnet
                     })
                 });
 
@@ -352,22 +341,22 @@ const mostrarDatosEnFormulari = (data) => {
                 if (response.ok) {
                     const data = await response.json();
                     // Redirigir a la nueva página con los datos de la fila y los resultados
-                    const url = `/mostraracefalias?data=${encodeURIComponent(JSON.stringify(data))}`;
+                    const url = `/mostrarcarnet?data=${encodeURIComponent(JSON.stringify(data))}`;
                     window.open(url, '_blank');
                 } else {
                     console.error("Error al enviar la solicitud:", response.statusText);
-                    showWarningToast('No se encontraron acefalias');
+                    showWarningToast('No se encontraron datos');
                 }
             } catch (error) {
                 console.error("Error al enviar la solicitud:", error);
-                showWarningToast('No se encontraron acefalias');
+                showWarningToast('No se encontraron datos');
             }
         });
 
         tbody.appendChild(tr);
     });
 
-    // Inicializar DataTables
+    // Reinicializar DataTables
     $('#myTable').DataTable({
         language: {
             decimal: "",
@@ -401,7 +390,6 @@ const mostrarDatosEnFormulari = (data) => {
     });
 };
 
-
 // Función para mostrar un toast de advertencia
 const showWarningToast = (message) => {
     const Toast = Swal.mixin({
@@ -427,4 +415,3 @@ const limpiarTabla = () => {
         $('#myTable').DataTable().clear().destroy(); // Limpiar y destruir DataTables
     }
 };
-

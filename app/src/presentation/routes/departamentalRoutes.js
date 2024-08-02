@@ -27,9 +27,14 @@ router.get('/Servicioitem', (req, res) => {
     res.render('departamental/servicioitem',{title: 'Servicio Item 💰'});
 });
 
-// Ruta de nueva venta
+// Ruta de X carnet
 router.get('/Xcarnet', (req, res) => {
     res.render('departamental/xcarnet',{title: 'X Carnet 💰'});
+});
+
+// Ruta de X nombre
+router.get('/Xnombre', (req, res) => {
+    res.render('departamental/xnombre',{title: 'X Nombre🙍‍♂️'});
 });
 
 // Ruta de nueva venta

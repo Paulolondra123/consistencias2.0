@@ -52,12 +52,14 @@
           </div> -->
           <div class="nav-item dropdown">
             <a href="#"
-              class="fonts nav-link dropdown-toggle <%= ['/servicioitem', '/xcarnet', '/acefalias'].includes(currentRoute) ? 'active' : '' %>"
+              class="fonts nav-link dropdown-toggle <%= ['/servicioitem', '/xcarnet', '/acefalias', '/xnombre'].includes(currentRoute) ? 'active' : '' %>"
               data-bs-toggle="dropdown"><i class="fi-sr-audit me-2"></i>Consultas SEP</a>
             <div class="dropdown-menu bg-transparent border-0">
               <a href="/servicioitem"
                 class="dropdown-item <%= currentRoute === '/servicioitem' ? 'active' : '' %>">Servicio ITEM</a>
               <a href="/xcarnet" class="dropdown-item <%= currentRoute === '/xcarnet' ? 'active' : '' %>">X Carnet</a>
+              <a href="/xnombre"
+                class="dropdown-item <%= currentRoute === '/xnombre' ? 'active' : '' %>">X Nombre</a>
               <a href="/acefalias"
                 class="dropdown-item <%= currentRoute === '/acefalias' ? 'active' : '' %>">Acefalias</a>
             </div>

@@ -31,6 +31,11 @@ router.get('/Xcarnet', (req, res) => {
     res.render('distrital/xcarnet',{title: 'X Carnet 💰'});
 });
 
+// Ruta de X nombre
+router.get('/Xnombre', (req, res) => {
+    res.render('distrital/xnombre',{title: 'X Nombre🙍‍♂️'});
+});
+
 // Ruta de nueva venta
 router.get('/Acefalias', (req, res) => {
     res.render('distrital/acefalias',{title: 'Acefalias 💰'});

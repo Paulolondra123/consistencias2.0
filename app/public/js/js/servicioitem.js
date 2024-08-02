@@ -325,7 +325,7 @@ const mostrarDatosEnFormulari = (data) => {
       [5, 10, 25, 50, -1],
       [5, 10, 25, 50, "Todos"]
     ],
-    pageLength: 5,
+    pageLength: 25,
     responsive: true,
     autoWidth: true,
     order: [],

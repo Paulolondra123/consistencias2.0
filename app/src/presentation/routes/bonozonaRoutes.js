@@ -14,7 +14,7 @@ router.post('/bonozona', Users.getAll);
 router.get('/gestion', Users.gestion);
 
 router.post('/pdf', (req, res) => {
-    const { datosTabla } = req.body;
+    const { datosTabla,subsistema } = req.body;
 
     // Crear un nuevo documento PDF en orientación vertical con margen de 10
     const doc = new PDFDocument({ layout: 'portrait', margin: 10 });
@@ -47,10 +47,13 @@ router.post('/pdf', (req, res) => {
     // Ajustar tamaño y centrar texto "REPORTE DE BONO ZONA"
     const headerText1 = 'REPORTE DE BONO ZONA';
     const headerText2 = 'CENTROS EDUCATIVOS';
+    const headerText3 = `SUBSISTEMA: ${subsistema}`;
     const headerTextWidth1 = doc.widthOfString(headerText1);
     const headerTextWidth2 = doc.widthOfString(headerText2);
+    const headerTextWidth3 = doc.widthOfString(headerText3);
     const headerTextX1 = (doc.page.width - headerTextWidth1) / 2;
     const headerTextX2 = (doc.page.width - headerTextWidth2) / 2;
+    const headerTextX3 = (doc.page.width - headerTextWidth3) / 2;
     const headerTextY = 30;
 
     // Función para agregar encabezado
@@ -59,7 +62,10 @@ router.post('/pdf', (req, res) => {
 
         doc.font('Arial-Bold').fontSize(10) // Usar Arial-Bold en lugar de Helvetica-Bold
             .text(headerText1, headerTextX1, headerTextY)
-            .text(headerText2, headerTextX2, headerTextY);
+            .moveDown()
+            .text(headerText2, headerTextX2, doc.y - 10)
+            .moveDown()
+            .text(headerText3, headerTextX3, doc.y - 10);
 
         doc.fontSize(5).text('ESTADO PLURINACIONAL DE', 90, 25)
             .font('MSung').fontSize(19).text('BOLIVIA', 87, 24)
@@ -144,7 +150,7 @@ router.post('/pdf', (req, res) => {
                 doc.font('Arial-Bold').fontSize(11).text(`DISTRITO EDUCATIVO: ${distrito}`, 80, yPosition);
                 yPosition += rowHeight;
             }
-            doc.font('Arial').fontSize(8).text(centro, 100, yPosition);
+            doc.font('Arial').fontSize(9).text(centro, 150, yPosition);
             yPosition += rowHeight;
         });
     });

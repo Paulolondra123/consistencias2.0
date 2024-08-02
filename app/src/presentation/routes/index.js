@@ -44,6 +44,16 @@ router.get('/Xcarnet', (req, res) => {
     res.render('xcarnet',{title: 'X Carnet🙍‍♂️'});
 });
 
+// Ruta de X nombre
+router.get('/Xnombre', (req, res) => {
+    res.render('xnombre',{title: 'X Nombre🙍‍♂️'});
+});
+
+// Ruta de xcrnet nombre
+router.get('/Mostrarcarnet', (req, res) => {
+    res.render('mostrarcarnet',{title: 'Mostrar x carnet⛺'});
+});
+
 // Ruta de Acefalias
 router.get('/Acefalias', (req, res) => {
     res.render('acefalias',{title: 'Acefalias⛺'});

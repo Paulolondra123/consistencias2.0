@@ -138,11 +138,11 @@ const adjustSelect2Width = () => {
 const populateSubsistemaSelect = () => {
   const subsistemaSelect = document.getElementById("subsistema");
   const subsistema = [
-    { value: '1,2,3', text: 'Regular' },
-    { value: '4,8', text: 'Superior' },
-    { value: '5', text: 'Alternativa' },
-    { value: '6', text: 'Especial' },
-    { value: '7', text: 'Permanente' }
+    { value: '1,2,3', text: 'REGULAR' },
+    { value: '4,8', text: 'SUPERIOR' },
+    { value: '5', text: 'ALTERNATIVA' },
+    { value: '6', text: 'ESPECIAL' },
+    { value: '7', text: 'PERMANENTE' }
   ];
 
   subsistemaSelect.innerHTML = ''; // Limpiar el select antes de llenarlo
@@ -466,7 +466,7 @@ const mostrarDatosdelaUE = (data, coddis) => {
         [5, 10, 25, 50, -1],
         [5, 10, 25, 50, "Todos"]
       ],
-      pageLength: 5,
+      pageLength: 25,
       responsive: true,
       autoWidth: true,
       order: [],
@@ -478,6 +478,14 @@ const mostrarDatosdelaUE = (data, coddis) => {
 
 document.getElementById('imprimir').addEventListener('click', async function (event) {
   event.preventDefault();
+
+  const sub = document.getElementById('subsistema');
+
+  // Obtener el índice del elemento seleccionado
+  const selectedIndex = sub.selectedIndex;
+
+  // Obtener el texto del elemento seleccionado
+  const subsistema = sub.options[selectedIndex].text;
 
   // Hacer una solicitud HTTP al servidor para obtener el token
   const token = obtenerTokenre();
@@ -494,7 +502,7 @@ document.getElementById('imprimir').addEventListener('click', async function (ev
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ datosTabla }) // Enviar datos de la tabla
+        body: JSON.stringify({ datosTabla, subsistema }) // Enviar datos de la tabla
       });
 
       if (!response.ok) {

@@ -214,7 +214,6 @@ document.getElementById("formbuscar").addEventListener("submit", async function 
           <td>${row.CARGO}</td>
           <td>${row.SERVICIO_ITEM}</td>
           <td>${row.HORAS}</td>
-          <td>${row.TOTAL_GANADO}</td>
         `;
         tbody.appendChild(tr);
       });
@@ -245,7 +244,7 @@ document.getElementById("formbuscar").addEventListener("submit", async function 
           [5, 10, 25, 50, -1],
           [5, 10, 25, 50, "Todos"]
         ],
-        pageLength: 5,
+        pageLength: 25,
         responsive: true,
         autoWidth: true,
         order: [],

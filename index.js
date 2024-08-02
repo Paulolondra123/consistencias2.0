@@ -77,7 +77,7 @@ const bonozonaRoutes = require('./app/src/presentation/routes/bonozonaRoutes')
 const servicioitem = require('./app/src/presentation/routes/servicioitemRoutes')
 const acefalias = require('./app/src/presentation/routes/acefaliasRoutes')
 const xcarnet = require('./app/src/presentation/routes/xcarnetRoutes')
-//const ventaRoutes = require('./app/src/presentation/routes/ventaRoutes')
+const xnombreRoutes = require('./app/src/presentation/routes/xnombreRoutes')
 //const proveedorRoutes = require('./app/src/presentation/routes/proveedorRouter')
 //const compraRoutes = require('./app/src/presentation/routes/compraRoutes')
 const perfilRoutes = require('./app/src/presentation/routes/perfilRoutes')
@@ -96,7 +96,7 @@ app.use(bonozonaRoutes,authMiddleware);
 app.use(servicioitem,authMiddleware);
 app.use(acefalias,authMiddleware);
 app.use(xcarnet,authMiddleware);
-//app.use(ventaRoutes,authMiddleware);
+app.use(xnombreRoutes,authMiddleware);
 //app.use(proveedorRoutes,authMiddleware);
 //app.use(compraRoutes,authMiddleware);
 app.use(perfilRoutes,authMiddleware);

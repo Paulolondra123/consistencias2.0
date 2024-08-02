@@ -28,19 +28,22 @@
                 <div class="text-dark rounded pt-4 px-4">
                   <!-- Top div with title and button -->
                   <div class="d-flex align-items-center justify-content-between mb-4">
-                    <h6 class="mb-0 font-title text-dark">X Carnet</h6>
+                    <h6 class="mb-0 font-title text-dark">X Nombre</h6>
                   </div>
                   <!-- Responsive Horizontal Form -->
-                  <form id="formbuscar" center>
-                    <div class="row mb-3 col-md-12">
-                      <div class="col-md-6 mb-3">
-                        <label for="inputServicio" class="form-label">CI:</label>
-                        <input type="number" class="form-control bg-claro-gris" id="ci" placeholder="INGRESAR EL CARNET">
+                  <form id="formbuscar">
+                    <div class="row mb-3">
+                      <div class="col-md-4 mb-3">
+                        <label for="inputServicio" class="form-label">NOMBRE:</label>
+                        <input type="text" class="form-control bg-claro-gris" id="nombres" placeholder="INGRESAR NOMBRE" oninput="mayus(this)">
                       </div>
-                      <div class="col-md-6 mb-3">
-                        <label for="inputItem" class="form-label">GESTION:</label>
-                        <select type="number" class="form-select bg-claro-gris" id="gestion">
-                        </select>
+                      <div class="col-md-4 mb-3">
+                        <label for="inputItem" class="form-label">APELLIDO PATERNO:</label>
+                        <input type="text" class="form-control bg-claro-gris" id="apellidopa" placeholder="INGRESAR APELLIDO PATERNO" oninput="mayus(this)">
+                      </div>
+                      <div class="col-md-4 mb-3">
+                        <label for="inputGestion" class="form-label">APELLIDO MATERNO:</label>
+                        <input type="text" class="form-control bg-claro-gris" id="apellidoma" placeholder="INGRESAR APELLIDO MATERNO" oninput="mayus(this)">
                       </div>
                       <div class="col-md-12 d-flex justify-content-center">
                         <button type="submit" class="btn btn-primary text-white">Buscar</button>
@@ -57,13 +60,8 @@
                   <table id="myTable" class="bg-white text-dark display table align-middle table-bordered table-hover mb-0">
                     <thead>
                       <tr class="text-white" style="background: #002060;">
-                        <th>MES</th>
-                        <th>DISTRITO EDUCATIVO</th>
-                        <th>UNIDAD EDUCATIVA</th>
+                        <th>CARNET</th>
                         <th>MAESTRO_A</th>
-                        <th>CARGO</th>
-                        <th>SERVICIO_ITEM</th>
-                        <th>HORAS</th>
                       </tr>
                     </thead>
                     <tbody id="medida">
@@ -82,7 +80,7 @@
   </div>
   <!-- Content Padre End -->
   <%- include('partials/scripts/scripts') %>
-  <script src="/js/xcarnet.js"></script>
+  <script src="/js/xnombre.js"></script>
 </body>
 
 </html>
